@@ -1,0 +1,615 @@
+- user: |
+    解首先要使 $\lambda-$ 矩阵的(1,1)元变成能整除该矩阵的所有元素，从而可把第1行和第1列的其他元素变成0。然后把右下角矩阵的(1,1)元也变成能整除该矩阵的所有元素，依次进行下去。
+
+    [TARGET]
+    $$
+    \begin{array}{l} \boldsymbol {A} (\lambda) \xrightarrow [ ③ + ② ]{} \left( \begin{array}{c c c} \lambda - 1 & 3 & - 1 \\ - 4 & \lambda + 7 & \lambda - 1 \\ - 6 & 7 & \lambda \end{array} \right) \xrightarrow [ (① , ③) ]{} \left( \begin{array}{c c c} - 1 & 3 & \lambda - 1 \\ \lambda - 1 & \lambda + 7 & - 4 \\ \lambda & 7 & - 6 \end{array} \right) \\ \xrightarrow {\text {②} + \text {①} \cdot (\lambda - 1)} \left( \begin{array}{c c c} - 1 & 3 & \lambda - 1 \\ 0 & 4 \lambda + 4 & \lambda^ {2} - 2 \lambda - 3 \\ 0 & 3 \lambda + 7 & \lambda^ {2} - \lambda - 6 \end{array} \right) \longrightarrow \left( \begin{array}{c c c} - 1 & 0 & 0 \\ 0 & \lambda + 1 & \frac {1}{4} (\lambda - 3) (\lambda + 1) \\ 0 & 3 \lambda + 7 & \lambda^ {2} - \lambda - 6 \end{array} \right) \\ \xrightarrow [ ③ + ② \left[ - \frac {1}{4} (\lambda - 3) \right] ]{} \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & \lambda + 1 & 0 \\ 0 & 3 \lambda + 7 & \frac {1}{4} (\lambda - 3) (\lambda + 1) \end{array} \right) \\ \xrightarrow {③ + ② (- 3)} \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & \lambda + 1 & 0 \\ 0 & 4 & \frac {1}{4} (\lambda - 3) (\lambda + 1) \end{array} \right) \longrightarrow \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & 1 & (\lambda - 3) (\lambda + 1) \\ 0 & \lambda + 1 & 0 \end{array} \right) \\ \longrightarrow \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & 1 & (\lambda - 3) (\lambda + 1) \\ 0 & 0 & - (\lambda - 3) (\lambda + 1) ^ {2} \end{array} \right) \longrightarrow \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & (\lambda - 3) (\lambda + 1) ^ {2} \end{array} \right) \\ \end{array}
+    $$
+    [/TARGET]
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \begin{array}{l} \boldsymbol {A} (\lambda) \xrightarrow [ ③ + ② ]{} \left( \begin{array}{c c c} \lambda - 1 & 3 & - 1 \\ - 4 & \lambda + 7 & \lambda - 1 \\ - 6 & 7 & \lambda \end{array} \right) \xrightarrow [ (① , ③) ]{} \left( \begin{array}{c c c} - 1 & 3 & \lambda - 1 \\ \lambda - 1 & \lambda + 7 & - 4 \\ \lambda & 7 & - 6 \end{array} \right) \\ \xrightarrow {\text {②} + \text {①} \cdot (\lambda - 1)} \left( \begin{array}{c c c} - 1 & 3 & \lambda - 1 \\ 0 & 4 \lambda + 4 & \lambda^ {2} - 2 \lambda - 3 \\ 0 & 3 \lambda + 7 & \lambda^ {2} - \lambda - 6 \end{array} \right) \longrightarrow \left( \begin{array}{c c c} - 1 & 0 & 0 \\ 0 & \lambda + 1 & \frac {1}{4} (\lambda - 3) (\lambda + 1) \\ 0 & 3 \lambda + 7 & \lambda^ {2} - \lambda - 6 \end{array} \right) \\ \xrightarrow [ ③ + ② \left[ - \frac {1}{4} (\lambda - 3) \right] ]{} \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & \lambda + 1 & 0 \\ 0 & 3 \lambda + 7 & \frac {1}{4} (\lambda - 3) (\lambda + 1) \end{array} \right) \\ \xrightarrow {③ + ② (- 3)} \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & \lambda + 1 & 0 \\ 0 & 4 & \frac {1}{4} (\lambda - 3) (\lambda + 1) \end{array} \right) \longrightarrow \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & 1 & (\lambda - 3) (\lambda + 1) \\ 0 & \lambda + 1 & 0 \end{array} \right) \\ \longrightarrow \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & 1 & (\lambda - 3) (\lambda + 1) \\ 0 & 0 & - (\lambda - 3) (\lambda + 1) ^ {2} \end{array} \right) \longrightarrow \left( \begin{array}{c c c} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & (\lambda - 3) (\lambda + 1) ^ {2} \end{array} \right) \\ \end{array}
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \begin{array}{l} \boldsymbol{A}(\lambda) \xrightarrow [\text{③} + \text{②}]{} \left( \begin{array}{ccc} \lambda - 1 & 3 & -1 \\ -4 & \lambda + 7 & \lambda - 1 \\ -6 & 7 & \lambda \end{array} \right) \xrightarrow [(\text{①}, \text{③})]{} \left( \begin{array}{ccc} -1 & 3 & \lambda - 1 \\ \lambda - 1 & \lambda + 7 & -4 \\ \lambda & 7 & -6 \end{array} \right) \\ \xrightarrow{\substack{\text{②} + \text{①} \cdot (\lambda - 1) \\ \text{③} + \text{①}\lambda}} \left( \begin{array}{ccc} -1 & 0 & 0 \\ 0 & \lambda + 1 & \frac{1}{4}(\lambda - 3)(\lambda + 1) \\ 0 & 3\lambda + 7 & \lambda^{2} - \lambda - 6 \end{array} \right) \\ \xrightarrow[{\text{③} + \text{②}\left[ -\frac{1}{4}(\lambda - 3) \right]}]{} \left( \begin{array}{ccc} 1 & 0 & 0 \\ 0 & \lambda + 1 & 0 \\ 0 & 3\lambda + 7 & \frac{1}{4}(\lambda - 3)(\lambda + 1) \end{array} \right) \\ \xrightarrow {\text{③} + \text{②}(-3)} \left( \begin{array}{ccc} 1 & 0 & 0 \\ 0 & \lambda + 1 & 0 \\ 0 & 4 & \frac{1}{4}(\lambda - 3)(\lambda + 1) \end{array} \right) \longrightarrow \left( \begin{array}{ccc} 1 & 0 & 0 \\ 0 & 1 & (\lambda - 3)(\lambda + 1) \\ 0 & \lambda + 1 & 0 \end{array} \right) \\ \longrightarrow \left( \begin{array}{ccc} 1 & 0 & 0 \\ 0 & 1 & (\lambda - 3)(\lambda + 1) \\ 0 & 0 & -(\lambda - 3)(\lambda + 1)^{2} \end{array} \right) \longrightarrow \left( \begin{array}{ccc} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & (\lambda - 3)(\lambda + 1)^{2} \end{array} \right) \\ \end{array}
+    $$
+    [/FIX_RESULT]
+    
+
+- user: |
+    从（14）、（15）、（16）式得
+
+    [TARGET]
+    <table><tr><td>an</td><td>an-1</td><td>...</td><td>a1</td><td>a0</td></tr><tr><td></td><td>bn-1c</td><td>...</td><td>b1c</td><td>b0c</td></tr><tr><td>an</td><td>an-1 + bn-1c</td><td>...</td><td>a1 + b1c</td><td>a0 + b0c</td></tr><tr><td>||</td><td>||</td><td></td><td>||</td><td>||</td></tr><tr><td>bn-1</td><td>bn-2</td><td>...</td><td>b0</td><td>r</td></tr></table>
+    [/TARGET]
+  assistant: |
+    [FIX_ORIGIN]
+    <table><tr><td>an</td><td>an-1</td><td>...</td><td>a1</td><td>a0</td></tr><tr><td></td><td>bn-1c</td><td>...</td><td>b1c</td><td>b0c</td></tr><tr><td>an</td><td>an-1 + bn-1c</td><td>...</td><td>a1 + b1c</td><td>a0 + b0c</td></tr><tr><td>||</td><td>||</td><td></td><td>||</td><td>||</td></tr><tr><td>bn-1</td><td>bn-2</td><td>...</td><td>b0</td><td>r</td></tr></table>
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    [省略竖式计算过程]
+    [/FIX_RESULT]
+
+- user: |
+    例3设 $f(x) = x^4 +2x^3 -5x + 7,g(x) = x^2 -3x + 1$ 。用 $g(x)$ 去除 $f(x)$ ，求商式和余式。
+
+    解 $x^{2} - 3x + 1$
+
+    [TARGET]
+    $$
+    \left| \begin{array}{c c} x ^ {4} + 2 x ^ {3} & - 5 x + 7 \\ x ^ {4} - 3 x ^ {3} + x ^ {2} \\ \hline 5 x ^ {3} - x ^ {2} - 5 x + 7 \\ 5 x ^ {3} - 1 5 x ^ {2} + 5 x \\ \hline 1 4 x ^ {2} - 1 0 x + 7 \\ 1 4 x ^ {2} - 4 2 x + 1 4 \\ \hline 3 2 x - 7 \end{array} \right| x ^ {2} + 5 x + 1 4
+    $$
+    [/TARGET]
+
+    因此，商式为 $x^{2} + 5x + 14$ ，余式为 $32x - 7$ ，即
+
+    $$
+    f (x) = \left(x ^ {2} + 5 x + 1 4\right) g (x) + (3 2 x - 7) 。
+    $$
+
+    例4设 $f(x) = x^{4} - x^{3} + 4x^{2} + a_{1}x + a_{0}, g(x) = x^{2} + 2x - 3$ 。求 $g(x)$ 整除 $f(x)$ 的充分必要条件。
+
+    $$
+    \text {解} x ^ {2} + 2 x - 3 \quad \begin{array}{l l} x ^ {4} - x ^ {3} + 4 x ^ {2} + a _ {1} x + a _ {0} \\ x ^ {4} + 2 x ^ {3} - 3 x ^ {2} \\ \hline - 3 x ^ {3} + 7 x ^ {2} + a _ {1} x + a _ {0} \\ \hline - 3 x ^ {3} - 6 x ^ {2} + 9 x \\ \hline 1 3 x ^ {2} + (a _ {1} - 9) x + a _ {0} \\ \hline 1 3 x ^ {2} + 2 6 x - 3 9 \\ \hline (a _ {1} - 3 5) x + (a _ {0} + 3 9) \\ \hline \end{array} \quad x ^ {2} - 3 x + 1 3
+    $$
+
+    因此， $g(x)\mid f(x)\quad \Longleftrightarrow \quad (a_1 - 35)x + (a_0 + 39) = 0$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \left| \begin{array}{c c} x ^ {4} + 2 x ^ {3} & - 5 x + 7 \\ x ^ {4} - 3 x ^ {3} + x ^ {2} \\ \hline 5 x ^ {3} - x ^ {2} - 5 x + 7 \\ 5 x ^ {3} - 1 5 x ^ {2} + 5 x \\ \hline 1 4 x ^ {2} - 1 0 x + 7 \\ 1 4 x ^ {2} - 4 2 x + 1 4 \\ \hline 3 2 x - 7 \end{array} \right| x ^ {2} + 5 x + 1 4
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    [省略长除法计算过程]
+    [/FIX_RESULT]
+
+- user: |
+    例3设 $f(x) = x^4 +2x^3 -5x + 7,g(x) = x^2 -3x + 1$ 。用 $g(x)$ 去除 $f(x)$ ，求商式和余式。
+
+    解 $x^{2} - 3x + 1$
+
+    $$
+    \left| \begin{array}{c c} x ^ {4} + 2 x ^ {3} & - 5 x + 7 \\ x ^ {4} - 3 x ^ {3} + x ^ {2} \\ \hline 5 x ^ {3} - x ^ {2} - 5 x + 7 \\ 5 x ^ {3} - 1 5 x ^ {2} + 5 x \\ \hline 1 4 x ^ {2} - 1 0 x + 7 \\ 1 4 x ^ {2} - 4 2 x + 1 4 \\ \hline 3 2 x - 7 \end{array} \right| x ^ {2} + 5 x + 1 4
+    $$
+
+    因此，商式为 $x^{2} + 5x + 14$ ，余式为 $32x - 7$ ，即
+
+    $$
+    f (x) = \left(x ^ {2} + 5 x + 1 4\right) g (x) + (3 2 x - 7) 。
+    $$
+
+    例4设 $f(x) = x^{4} - x^{3} + 4x^{2} + a_{1}x + a_{0}, g(x) = x^{2} + 2x - 3$ 。求 $g(x)$ 整除 $f(x)$ 的充分必要条件。
+
+    [TARGET]
+    $$
+    \text {解} x ^ {2} + 2 x - 3 \quad \begin{array}{l l} x ^ {4} - x ^ {3} + 4 x ^ {2} + a _ {1} x + a _ {0} \\ x ^ {4} + 2 x ^ {3} - 3 x ^ {2} \\ \hline - 3 x ^ {3} + 7 x ^ {2} + a _ {1} x + a _ {0} \\ \hline - 3 x ^ {3} - 6 x ^ {2} + 9 x \\ \hline 1 3 x ^ {2} + (a _ {1} - 9) x + a _ {0} \\ \hline 1 3 x ^ {2} + 2 6 x - 3 9 \\ \hline (a _ {1} - 3 5) x + (a _ {0} + 3 9) \\ \hline \end{array} \quad x ^ {2} - 3 x + 1 3
+    $$
+    [/TARGET]
+
+    因此， $g(x)\mid f(x)\quad \Longleftrightarrow \quad (a_1 - 35)x + (a_0 + 39) = 0$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \text {解} x ^ {2} + 2 x - 3 \quad \begin{array}{l l} x ^ {4} - x ^ {3} + 4 x ^ {2} + a _ {1} x + a _ {0} \\ x ^ {4} + 2 x ^ {3} - 3 x ^ {2} \\ \hline - 3 x ^ {3} + 7 x ^ {2} + a _ {1} x + a _ {0} \\ \hline - 3 x ^ {3} - 6 x ^ {2} + 9 x \\ \hline 1 3 x ^ {2} + (a _ {1} - 9) x + a _ {0} \\ \hline 1 3 x ^ {2} + 2 6 x - 3 9 \\ \hline (a _ {1} - 3 5) x + (a _ {0} + 3 9) \\ \hline \end{array} \quad x ^ {2} - 3 x + 1 3
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    [省略长除法计算过程]
+    [/FIX_RESULT]
+
+- user: |
+    解 在例5中已求出 $h_1(x) = 2x^3 - 7x^2 + 21x - 58$ ，余式为 $171$ 。
+
+    [TARGET]
+    $$
+    \begin{array}{c c c c c} 2 & - 7 & 2 1 & - 5 8 \\ & - 6 & 3 9 & - 1 8 0 \\ \hline 2 & - 1 3 & 6 0 & - 2 3 8 \end{array} \quad - 3
+    $$
+    [/TARGET]
+
+    于是商式为 $h_2(x) = 2x^2 -13x + 60$ ，余式为-238。
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \begin{array}{c c c c c} 2 & - 7 & 2 1 & - 5 8 \\ & - 6 & 3 9 & - 1 8 0 \\ \hline 2 & - 1 3 & 6 0 & - 2 3 8 \end{array} \quad - 3
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    [省略竖式计算过程]
+    [/FIX_RESULT]
+
+- user: |
+    定理6相抵的 $\lambda$ -矩阵，它们的秩相等，并且各阶行列式因子也对应相等。
+
+    证明 只要证 $\lambda-$ 矩阵的初等行(列)变换不改变 $\lambda-$ 矩阵的秩，以及各阶行列式因子。
+
+    设
+
+    [TARGET]
+    $$
+    \boldsymbol {A} (\lambda) \xrightarrow {\textcircled {1} + \textcircled {1} h (\lambda)} \boldsymbol {B} (\lambda),
+    $$
+    [/TARGET]
+
+    $\pmb{B}(\lambda)$ 中包含第 $j$ 行但不包含第 $i$ 行的 $k$ 阶子式是 $\mathbf{A}(\lambda)$ 的一个 $k$ 阶子式与另一个 $k$ 阶子式的 $h(\lambda)$ 倍或者 $-h(\lambda)$ 倍的和， $\pmb{B}(\lambda)$ 的其余 $k$ 阶子式等于 $\mathbf{A}(\lambda)$ 中对应的 $k$ 阶子式，因此 $\mathbf{A}(\lambda)$ 的所有 $k$ 阶子式的公因式能整除 $\pmb{B}(\lambda)$ 的所有 $k$ 阶子式。由于
+
+    $$
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \boldsymbol {A} (\lambda) \xrightarrow {\textcircled {1} + \textcircled {1} h (\lambda)} \boldsymbol {B} (\lambda),
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \boldsymbol {A} (\lambda) \xrightarrow {\textcircled {j} + \textcircled {i} h (\lambda)} \boldsymbol {B} (\lambda),
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    定理6相抵的 $\lambda$ -矩阵，它们的秩相等，并且各阶行列式因子也对应相等。
+
+    证明 只要证 $\lambda-$ 矩阵的初等行(列)变换不改变 $\lambda-$ 矩阵的秩，以及各阶行列式因子。
+
+    设
+
+    $$
+    \boldsymbol {A} (\lambda) \xrightarrow {\textcircled {1} + \textcircled {1} h (\lambda)} \boldsymbol {B} (\lambda),
+    $$
+
+    $\pmb{B}(\lambda)$ 中包含第 $j$ 行但不包含第 $i$ 行的 $k$ 阶子式是 $\mathbf{A}(\lambda)$ 的一个 $k$ 阶子式与另一个 $k$ 阶子式的 $h(\lambda)$ 倍或者 $-h(\lambda)$ 倍的和， $\pmb{B}(\lambda)$ 的其余 $k$ 阶子式等于 $\mathbf{A}(\lambda)$ 中对应的 $k$ 阶子式，因此 $\mathbf{A}(\lambda)$ 的所有 $k$ 阶子式的公因式能整除 $\pmb{B}(\lambda)$ 的所有 $k$ 阶子式。由于
+
+    [TARGET]
+    $$
+    \boldsymbol {B} (\lambda) \xrightarrow {\textcircled {1} + \textcircled {1} (- h (\lambda))} \boldsymbol {A} (\lambda),
+    $$
+    [/TARGET]
+
+    因此根据刚证得的结论得， $\pmb{B}(\lambda)$ 的所有 $k$ 阶子式的公因式能整除 $\mathbf{A}(\lambda)$ 的所有 $k$ 阶子式。由此推出， $\mathbf{A}(\lambda)$ 的 $k$ 阶行列式因子等于 $\mathbf{B}(\lambda)$ 的 $k$ 阶行列式因子。
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \boldsymbol {B} (\lambda) \xrightarrow {\textcircled {1} + \textcircled {1} (- h (\lambda))} \boldsymbol {A} (\lambda),
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \boldsymbol {B} (\lambda) \xrightarrow {\textcircled {j} + \textcircled {i} (- h (\lambda))} \boldsymbol {A} (\lambda),
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    因此根据刚证得的结论得， $\pmb{B}(\lambda)$ 的所有 $k$ 阶子式的公因式能整除 $\mathbf{A}(\lambda)$ 的所有 $k$ 阶子式。由此推出， $\mathbf{A}(\lambda)$ 的 $k$ 阶行列式因子等于 $\mathbf{B}(\lambda)$ 的 $k$ 阶行列式因子。
+
+    设
+    [TARGET]
+    $$
+    A (\lambda) \xrightarrow {(\text {①} , \text {①})} C (\lambda),
+    $$
+    [/TARGET]
+
+    则 $C(\lambda)$ 的任一 $k$ 阶子式或者等于 $A(\lambda)$ 的某个 $k$ 阶子式，或者等于 $A(\lambda)$ 的某个 $k$ 阶子式反号，因此 $A(\lambda)$ 与 $C(\lambda)$ 的 $k$ 阶行列式因子相等。
+
+    设
+
+    $$
+    \boldsymbol {A} (\lambda) \xrightarrow {\text {①} \cdot c} \boldsymbol {G} (\lambda),
+    $$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    A (\lambda) \xrightarrow {(\text {①} , \text {①})} C (\lambda),
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    A (\lambda) \xrightarrow {(\text {ⓘ} , \text {ⓙ})} C (\lambda),
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    例1求 $f(x)$ 与 $g(x)$ 的首一最大公因式，并且把它表示成 $f(x)$ 与 $g(x)$ 的倍式和：
+
+    $$
+    f (x) = x ^ {4} + 3 x - 2, \quad g (x) = 3 x ^ {3} - x ^ {2} - 7 x + 4 。
+    $$
+
+    解
+
+    [TARGET]
+    $$
+    3 x - 4 \left| \begin{array}{l l} g (x) & 3 f (x) \\ 3 x ^ {3} - x ^ {2} - 7 x + 4 & 3 x ^ {4} + 9 x - 6 \\ 3 x ^ {3} + 3 x ^ {2} - 3 x & 3 x ^ {4} - x ^ {3} - 7 x ^ {2} + 4 x \\ \frac {- 4 x ^ {2} - 4 x + 4}{0} & x ^ {3} + 7 x ^ {2} + 5 x - 6 \\ & x ^ {3} - \frac {1}{3} x ^ {2} - \frac {7}{3} x + \frac {4}{3} \\ & r _ {1} (x) = \frac {2 2}{3} x ^ {2} + \frac {2 2}{3} x - \frac {2 2}{3} \\ & \frac {3}{2 2} r _ {1} (x) = x ^ {2} + x - 1 \end{array} \right| x + \frac {1}{3}
+    $$
+    [/TARGET]
+
+    因此 $(f(x),g(x)) = (3f(x),g(x)) = x^{2} + x - 1$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    3 x - 4 \left| \begin{array}{l l} g (x) & 3 f (x) \\ 3 x ^ {3} - x ^ {2} - 7 x + 4 & 3 x ^ {4} + 9 x - 6 \\ 3 x ^ {3} + 3 x ^ {2} - 3 x & 3 x ^ {4} - x ^ {3} - 7 x ^ {2} + 4 x \\ \frac {- 4 x ^ {2} - 4 x + 4}{0} & x ^ {3} + 7 x ^ {2} + 5 x - 6 \\ & x ^ {3} - \frac {1}{3} x ^ {2} - \frac {7}{3} x + \frac {4}{3} \\ & r _ {1} (x) = \frac {2 2}{3} x ^ {2} + \frac {2 2}{3} x - \frac {2 2}{3} \\ & \frac {3}{2 2} r _ {1} (x) = x ^ {2} + x - 1 \end{array} \right| x + \frac {1}{3}
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    [省略长除法计算过程]
+    [/FIX_RESULT]
+
+- user: |
+    例3设 $K$ 是数域，在 $K(x)$ 中， $f(x) = x^3 + ax + b$ ，求 $f(x)$ 有重因式的充分必要条件。
+
+    解 $f^{\prime}(x) = 3x^{2} + a$
+
+    设 $a \neq 0$ ，用辗转相除法求 $f(x)$ 与 $f'(x)$ 的最大公因式：
+
+    [TARGET]
+    $$
+    \begin{array}{l} h _ {2} (x) = 3 x - \frac {9 b}{2 a} \\ \left| \begin{array}{l l l} f ^ {\prime} (x) & 3 f (x) & h _ {1} (x) \\ 3 x ^ {2} + a & 3 x ^ {3} + 3 a x + 3 b & x \\ 3 x ^ {2} + \frac {9 b}{2 a} x & 3 x ^ {3} + a x & \\ \hline - \frac {9 b}{2 a} x + a & r _ {1} (x) = 2 a x + 3 b \\ - \frac {9 b}{2 a} x - \frac {2 7 b ^ {2}}{4 a ^ {2}} & \frac {1}{2 a} r _ {1} (x) = x + \frac {3 b}{2 a} \\ r _ {2} (x) = \frac {4 a ^ {3} + 2 7 b ^ {2}}{4 a ^ {2}} & \end{array} \right| \\ \end{array}
+    $$
+    [/TARGET]
+
+    $$
+    f (x) \text {有 重 因 式} \Longleftrightarrow (f (x), f ^ {\prime} (x)) \neq 1 \Longleftrightarrow 4 a ^ {3} + 2 7 b ^ {2} = 0 。
+    $$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \begin{array}{l} h _ {2} (x) = 3 x - \frac {9 b}{2 a} \\ \left| \begin{array}{l l l} f ^ {\prime} (x) & 3 f (x) & h _ {1} (x) \\ 3 x ^ {2} + a & 3 x ^ {3} + 3 a x + 3 b & x \\ 3 x ^ {2} + \frac {9 b}{2 a} x & 3 x ^ {3} + a x & \\ \hline - \frac {9 b}{2 a} x + a & r _ {1} (x) = 2 a x + 3 b \\ - \frac {9 b}{2 a} x - \frac {2 7 b ^ {2}}{4 a ^ {2}} & \frac {1}{2 a} r _ {1} (x) = x + \frac {3 b}{2 a} \\ r _ {2} (x) = \frac {4 a ^ {3} + 2 7 b ^ {2}}{4 a ^ {2}} & \end{array} \right| \\ \end{array}
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \begin{aligned}
+    & f(x)=x^3+ax+b,\quad f'(x)=3x^2+a. \\[2mm]
+    & 3f(x)=x\cdot f'(x)+(2ax+3b), \\[2mm]
+    & 4a^2 f'(x)=(6ax-9b)(2ax+3b)+(4a^3+27b^2). \\[2mm]
+    & \text{故 } (f(x),f'(x))\neq 1 \Longleftrightarrow 4a^3+27b^2=0.
+    \end{aligned}
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    例7 求 $f(x) = x^{3} - x + 1$ 的不同实根的个数。
+
+    解 在7.7节的推论3后面，我们已求出了 $f(x)$ 的实根都在区间 $(-2, 2)$ 内，因此只需求 $f(x)$ 在 $(-2, 2)$ 内有多少个不同的实根即可。
+
+    对 $f(x)$ 和 $f^{\prime}(x) = 3x^{2} - 1$ 做略微修改的辗转相除法，即把每次得到的余式反号以后去除除式
+
+    [TARGET]
+    <table><tr><td rowspan="7">9/2x+27/4</td><td>f&#x27;(x)</td><td>f(x)</td></tr><tr><td>3x2-1</td><td>x3-x+1</td></tr><tr><td>3x2-9/2x</td><td>x3-1/3x</td></tr><tr><td>9/2x-1</td><td>-2/3x+1</td></tr><tr><td>9/2x-27/4</td><td>f2(x)=2/3x-1</td></tr><tr><td>23/4</td><td></td></tr><tr><td>f3(x)=-23/4</td><td></td></tr></table>
+    [/TARGET]
+
+    于是 $f(x)$ 的标准序列为
+
+    $$
+    f _ {0} = x ^ {3} - x + 1, \quad f _ {1} = 3 x ^ {2} - 1, \quad f _ {2} = \frac {2}{3} x - 1, \quad f _ {3} = - \frac {2 3}{4},
+    $$
+
+    从 $f_{3} = -\frac{23}{4}$ 知道， $(f(x), f'(x)) = 1$ ，因此 $f(x)$ 没有重根。现在来计算 $f(x)$ 的标准序列在 -2 与 2 处的变号数
+
+  assistant: |
+    [FIX_ORIGIN]
+    <table><tr><td rowspan="7">9/2x+27/4</td><td>f&#x27;(x)</td><td>f(x)</td></tr><tr><td>3x2-1</td><td>x3-x+1</td></tr><tr><td>3x2-9/2x</td><td>x3-1/3x</td></tr><tr><td>9/2x-1</td><td>-2/3x+1</td></tr><tr><td>9/2x-27/4</td><td>f2(x)=2/3x-1</td></tr><tr><td>23/4</td><td></td></tr><tr><td>f3(x)=-23/4</td><td></td></tr></table>
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \begin{aligned}
+    & f_0 = x^3 - x + 1,\quad f_1 = 3x^2 - 1. \\[2mm]
+    & \text{用 } f_1 \text{ 除 } f_0: \quad f_0 = \frac{1}{3}x f_1 + \left(-\frac{2}{3}x + 1\right), \quad \text{取 } f_2 = -\left(-\frac{2}{3}x + 1\right) = \frac{2}{3}x - 1. \\[2mm]
+    & \text{用 } f_2 \text{ 除 } f_1: \quad f_1 = \left(\frac{9}{2}x + \frac{27}{4}\right) f_2 + \frac{23}{4}, \quad \text{取 } f_3 = -\frac{23}{4}. \\[2mm]
+    \end{aligned}
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    $$
+    \frac {f (1)}{p - q} = \frac {1 8}{3} = 6, \quad \frac {f (- 1)}{p + q} = \frac {- 4}{- 1} = 4,
+    $$
+
+    所以需要进一步用综合除法来判断 $-2$ 是不是 $f(x)$ 的根。
+
+    [TARGET]
+    $$
+    \begin{array}{c c c c c} 3 & 8 & 6 & 3 & - 2 \\ & - 6 & - 4 & - 4 & 2 \\ \hline 3 & 2 & 2 & - 1 & 0 \\ & - 6 & 8 & - 2 0 \\ \hline 3 & - 4 & 1 0 & - 2 1 \end{array}
+    $$
+    [/TARGET]
+
+    这表明一2是 $f(x)$ 的单根，于是
+
+    $$
+    f (x) = (x + 2) \left(3 x ^ {3} + 2 x ^ {2} + 2 x - 1\right) 。
+    $$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \begin{array}{c c c c c} 3 & 8 & 6 & 3 & - 2 \\ & - 6 & - 4 & - 4 & 2 \\ \hline 3 & 2 & 2 & - 1 & 0 \\ & - 6 & 8 & - 2 0 \\ \hline 3 & - 4 & 1 0 & - 2 1 \end{array}
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    [省略竖式计算]
+    [/FIX_RESULT]
+
+- user: |
+    于是(5)式表明相应的 $m + n$ 元齐次线性方程组有非零解：
+
+    $$
+    \left(v _ {0}, v _ {1}, \dots , v _ {m - 1}, - u _ {0}, - u _ {1}, \dots , - u _ {n - 1}\right) ^ {\prime} 。 \tag {6}
+    $$
+
+    因此它的系数矩阵 $\mathbf{A}$ 的行列式等于零，从而 $|\mathbf{A}'| = 0$ ，即
+
+    [TARGET]
+    $$
+    m \text {行} \left\{ \begin{array}{l} a _ {0} \quad a _ {1} \quad \dots \quad \dots \quad \dots \quad a _ {n} \\ a _ {0} \quad a _ {1} \quad \dots \quad \dots \quad \dots \quad a _ {n} \\ \dots \quad \dots \quad \dots \quad \dots \quad \dots \\ a _ {0} \quad a _ {1} \quad \dots \quad \dots \quad \dots \quad a _ {n} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ \dots \quad \dots \quad \dots \quad \dots \quad b _ {0} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \end{array} = 0 。 \right.
+    $$
+    [/TARGET]
+
+    由此受到启发，引进下述概念：
+
+    定义1 设
+
+    $$
+    f (x) = a _ {0} x ^ {n} + a _ {1} x ^ {n - 1} + \dots + a _ {n},
+    $$
+
+    $$
+    g (x) = b _ {0} x ^ {m} + b _ {1} x ^ {m - 1} + \dots + b _ {m}
+    $$
+
+    是数域 $K$ 上两个多项式，其中 $n > 0, m > 0$ ，(7)式左端的行列式称为 $f(x)$ 与 $g(x)$ 的结 式，记作 $\operatorname{Res}(f, g)$ 。
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    m \text {行} \left\{ \begin{array}{l} a _ {0} \quad a _ {1} \quad \dots \quad \dots \quad \dots \quad a _ {n} \\ a _ {0} \quad a _ {1} \quad \dots \quad \dots \quad \dots \quad a _ {n} \\ \dots \quad \dots \quad \dots \quad \dots \quad \dots \\ a _ {0} \quad a _ {1} \quad \dots \quad \dots \quad \dots \quad a _ {n} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ \dots \quad \dots \quad \dots \quad \dots \quad b _ {0} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \\ b _ {0} \quad b _ {1} \quad \dots \quad \dots \quad b _ {m} \end{array} = 0 。 \right.
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \begin{vmatrix}
+      a_0& a_1 & \cdots &\cdots  &\cdots  &\cdots  & a_n &  &  &  & \\
+      & a_0 & a_1 & \cdots & \cdots & \cdots & \cdots & a_n &  &  & \\
+      &  &  & \cdots & \cdots &\cdots  & \cdots & \cdots &  &  & \\
+      &  &  &  & a_0 & a_1 & \cdots & \cdots & \cdots &\cdots  &a_n \\
+      b_0& b_1 & \cdots & \cdots & \cdots & b_m &  &  &  &  & \\
+      & b_0 & b_1 & \cdots & \cdots & \cdots & b_m &  &  &  & \\
+      &  &  & \cdots & \cdots & \cdots & \cdots & \cdots & \cdots &  & \\
+      &  &  &  &  &  & b_0 & b_1 & \cdots & \cdots &b_m
+    \end{vmatrix}=0
+    $$
+    [这个矩阵前n行由$a_i$表示，后m行由$b_i$表示]
+    [/FIX_RESULT]
+
+- user: |
+    如果 $(x_0, y_0)$ 是 $f(x, y)$ 与 $g(x, y)$ 在 $\mathbf{C}^2$ 中的一个公共零点，那么 $f(x_0, y_0) = 0$ ， $g(x_0, y_0) = 0$ ，从而 $x_0$ 是 $x$ 的复系数多项式 $f(x, y_0)$ 与 $g(x, y_0)$ 的一个公共根，根据定理1得， $f(x, y_0)$ 与 $g(x, y_0)$ 的结式 $\operatorname{Res}(f(x, y_0), g(x, y_0)) = 0$ 。由此受到启发，我们考虑
+
+    下述 $m + n$ 阶行列式，并且把它记作 $R_{x}(f,g)$ ，即
+
+    [TARGET]
+    $$
+    R _ {x} (f, g) = \left| \begin{array}{c c c c c c c c c} a _ {0} (y) & a _ {1} (y) & \dots & \dots & \dots & \dots & a _ {n} (y) & & \\ & a _ {0} (y) & a _ {1} (y) & \dots & \dots & \dots & \dots & a _ {n} (y) & \\ & & & \dots & \dots & \dots & \dots & \dots & \dots \\ & & & & a _ {0} (y) & a _ {1} (y) & \dots & \dots & a _ {n} (y) \\ b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) & & \\ & b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) & \\ & & & \dots & \dots & \dots & \dots & \dots & \dots \\ & & & b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) \end{array} \right| \quad m \text {行} n \text {行} \tag {10}
+    $$
+    [/TARGET]
+
+    $R_{x}(f,g)$ 是 $y$ 的一个多项式，不定元 $y$ 用 $y_{0}$ 代入， $R_{x}(f,g)$ 的象就是 $\operatorname{Res}(f(x,y_0),g(x,y_0))$ 。因此如果 $(x_0,y_0)$ 是 $f(x,y)$ 与 $g(x,y)$ 在 $\mathbf{C}^2$ 中的一个公共零点，那么 $y_{0}$ 就是多项式 $R_{x}(f,g)$ 的一个复根，而 $x_{0}$ 是 $f(x,y_0)$ 与 $g(x,y_0)$ 的一个公共复根。
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    R _ {x} (f, g) = \left| \begin{array}{c c c c c c c c c} a _ {0} (y) & a _ {1} (y) & \dots & \dots & \dots & \dots & a _ {n} (y) & & \\ & a _ {0} (y) & a _ {1} (y) & \dots & \dots & \dots & \dots & a _ {n} (y) & \\ & & & \dots & \dots & \dots & \dots & \dots & \dots \\ & & & & a _ {0} (y) & a _ {1} (y) & \dots & \dots & a _ {n} (y) \\ b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) & & \\ & b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) & \\ & & & \dots & \dots & \dots & \dots & \dots & \dots \\ & & & b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) \end{array} \right| \quad m \text {行} n \text {行} \tag {10}
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    R _ {x} (f, g) = \left| \begin{array}{c c c c c c c c c} a _ {0} (y) & a _ {1} (y) & \dots & \dots & \dots & \dots & a _ {n} (y) & & \\ & a _ {0} (y) & a _ {1} (y) & \dots & \dots & \dots & \dots & a _ {n} (y) & \\ & & & \dots & \dots & \dots & \dots & \dots & \dots \\ & & & & a _ {0} (y) & a _ {1} (y) & \dots & \dots & a _ {n} (y) \\ b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) & & \\ & b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) & \\ & & & \dots & \dots & \dots & \dots & \dots & \dots \\ & & & b _ {0} (y) & b _ {1} (y) & \dots & \dots & \dots & b _ {m} (y) \end{array} \right|\tag {10}
+    $$
+    [这个矩阵前m行由$a_i(y)$构成，后n行由$b_i(y)$构成]
+    [/FIX_RESULT]
+
+- user: |
+    于是 $D(f) = (-1)^{\frac{n(n - 1)}{2}}\left[n^{n}a_{0}^{n - 1} + (-1)^{n - 1}(n - 1)^{n - 1}a_{1}^{n}\right]_{\circ}$ (46)
+
+    点评：例3通过先计算 $\operatorname{Res}(f, f')$ ，然后求 $D(f)$ ，这比起7.10节所讲的求 $D(f)$ 的方法要简便得多。例3求得的 $D(f)$ 的公式(46)对一切 $n \geq 2$ 都成立。例如：
+
+    [TARGET]
+    <table><tr><td>n</td><td>f(x)</td><td>D(f)</td></tr><tr><td>2</td><td>x2+a1x+a0</td><td>a12-4a0</td></tr><tr><td>3</td><td>x3+a1x+a0</td><td>-4a13-27a02</td></tr><tr><td>4</td><td>x4+a1x+a0</td><td>-27a14+256a03</td></tr><tr><td>5</td><td>x5+a1x+a0</td><td>256a15+3125a04</td></tr></table>
+    [/TARGET]
+
+
+    例4设 $f(x) = x^{n - 1} + x^{n - 2} + \dots +x + 1$ ，求 $D(f)$ 。
+
+  assistant: |
+    [FIX_ORIGIN]
+    <table><tr><td>n</td><td>f(x)</td><td>D(f)</td></tr><tr><td>2</td><td>x2+a1x+a0</td><td>a12-4a0</td></tr><tr><td>3</td><td>x3+a1x+a0</td><td>-4a13-27a02</td></tr><tr><td>4</td><td>x4+a1x+a0</td><td>-27a14+256a03</td></tr><tr><td>5</td><td>x5+a1x+a0</td><td>256a15+3125a04</td></tr></table>
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    | $n$ | $f(x)$ | $D(f)$ |
+    |-----|--------|--------|
+    | $2$ | $x^2 + a_1 x + a_0$ | $a_1^2 - 4a_0$ |
+    | $3$ | $x^3 + a_1 x + a_0$ | $-4a_1^3 - 27a_0^2$ |
+    | $4$ | $x^4 + a_1 x + a_0$ | $-27a_1^4 + 256a_0^3$ |
+    | $5$ | $x^5 + a_1 x + a_0$ | $256a_1^5 + 3125a_0^4$ |
+    [/FIX_RESULT]
+
+- user: |
+    由于 $\overline{1}^2 = \overline{1},\overline{2}^2 = \overline{1}$ ，因此 $\overline{1}^2 +\overline{1}^2 = \overline{2},\overline{1}^2 +\overline{2}^2 = \overline{2},\overline{0}^2 +\overline{1}^2 = \overline{1},\overline{0}^2 +\overline{2}^2 = \overline{1}$ 。这证明了 $a^2 +b^2 = 0\iff a = b = 0$ ，因此 $F$ 中每个非零矩阵都可逆，从而 $F$ 是一个域。
+
+    由于 $a$ 可取 $\overline{0},\overline{1},\overline{2};b$ 也可取 $\overline{0},\overline{1},\overline{2}$ ，因此 $F$ 有9个元素。由于
+
+    [TARGET]
+    $$
+    3 \left( \begin{array}{c c} \overline {{1}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 1 \end{array} \right) = \left( \begin{array}{c c} \overline {{0}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 0 \end{array} \right), 2 \left( \begin{array}{c c} \overline {{1}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 1 \end{array} \right) = \left( \begin{array}{c c} \overline {{2}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 2 \end{array} \right),
+    $$
+    [/TARGET]
+
+    因此域 $F$ 的特征为3。
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    3 \left( \begin{array}{c c} \overline {{1}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 1 \end{array} \right) = \left( \begin{array}{c c} \overline {{0}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 0 \end{array} \right), 2 \left( \begin{array}{c c} \overline {{1}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 1 \end{array} \right) = \left( \begin{array}{c c} \overline {{2}} & \overline {{0}} \\ \overline {{-}} & \overline {{-}} \\ 0 & 2 \end{array} \right),
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    3 \begin{pmatrix} \overline{1} & \overline{0} \\ \overline{0} & \overline{1} \end{pmatrix} = \begin{pmatrix} \overline{0} & \overline{0} \\ \overline{0} & \overline{0} \end{pmatrix}, \quad 2 \begin{pmatrix} \overline{1} & \overline{0} \\ \overline{0} & \overline{1} \end{pmatrix} = \begin{pmatrix} \overline{2} & \overline{0} \\ \overline{0} & \overline{2} \end{pmatrix}
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    [TARGET]
+    4. 令 $F = \left\{\left( \begin{array}{cc}a & b\\ -b & a \end{array} \right)\bigg{|}a,b\in \mathbf{R}\right\} ,$
+    [/TARGET]
+
+    证明： $F$ 对于矩阵的加法与乘法成为一个域，并且域 $F$ 与复数域同构。
+
+  assistant: |
+    [FIX_ORIGIN]
+    4. 令 $F = \left\{\left( \begin{array}{cc}a & b\\ -b & a \end{array} \right)\bigg{|}a,b\in \mathbf{R}\right\} ,$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    4. 令 $F = \left\{ \begin{pmatrix} a & b \\ -b & a \end{pmatrix} \bigg| a,b\in \mathbf{R} \right\} ,$
+    [/FIX_RESULT]
+
+- user: |
+    例10 在实数域上的线性空间 $\mathbf{R}^{\mathbb{R}}$ 中， $\sin x, \cos x, \sin^2 x, \cos^2 x$ 是否线性无关？
+
+    解 $\sin x, \cos x, \sin^2 x, \cos^2 x$ 的 Wronsky 行列式为
+    [TARGET]
+    $$
+    \boldsymbol {W} (x) = \left| \begin{array}{c c c c} \sin x & \cos x & \sin^ {2} x & \cos^ {2} x \\ \cos x & - \sin x & 2 \sin x \cos x & - 2 \cos x \sin x \\ - \sin x & - \cos x & 2 \cos 2 x & - 2 \cos 2 x \\ - \cos x & \sin x & - 4 \sin 2 x & 4 \sin 2 x \end{array} \right. 。
+    $$
+    [/TARGET]
+
+    让 $x$ 取值 $\frac{\pi}{6}$ ，得
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \boldsymbol {W} (x) = \left| \begin{array}{c c c c} \sin x & \cos x & \sin^ {2} x & \cos^ {2} x \\ \cos x & - \sin x & 2 \sin x \cos x & - 2 \cos x \sin x \\ - \sin x & - \cos x & 2 \cos 2 x & - 2 \cos 2 x \\ - \cos x & \sin x & - 4 \sin 2 x & 4 \sin 2 x \end{array} \right. 。
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \boldsymbol {W} (x) = \left| \begin{array}{c c c c} \sin x & \cos x & \sin^ {2} x & \cos^ {2} x \\ \cos x & - \sin x & 2 \sin x \cos x & - 2 \cos x \sin x \\ - \sin x & - \cos x & 2 \cos 2 x & - 2 \cos 2 x \\ - \cos x & \sin x & - 4 \sin 2 x & 4 \sin 2 x \end{array} \right| 。
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    让 $x$ 分别取值 $\frac{1}{n + 1}\frac{\pi}{2},\frac{2}{n + 1}\frac{\pi}{2},\dots ,\frac{n + 1}{n + 1}\frac{\pi}{2}$ ，从（43）式得
+
+    [TARGET]
+    $$
+    \left\{ \begin{array}{c c c c} k _ {0} 1 + k _ {1} \sin \frac {1}{n + 1} \frac {\pi}{2} + k _ {2} \sin^ {2} \frac {1}{n + 1} \frac {\pi}{2} + \dots + k _ {n} \sin^ {n} \frac {1}{n + 1} \frac {\pi}{2} = 0, \\ k _ {0} 1 + k _ {1} \sin \frac {2}{n + 1} \frac {\pi}{2} + k _ {2} \sin^ {2} \frac {2}{n + 1} \frac {\pi}{2} + \dots + k _ {n} \sin^ {n} \frac {2}{n + 1} \frac {\pi}{2} = 0, \\ \vdots & \vdots & \vdots & \vdots \\ k _ {0} 1 + k _ {1} \sin \frac {n + 1}{n + 1} \frac {\pi}{2} + k _ {2} \sin^ {2} \frac {n + 1}{n + 1} \frac {\pi}{2} + \dots + k _ {n} \sin^ {n} \frac {n + 1}{n + 1} \frac {\pi}{2} = 0. \end{array} \right. \tag {44}
+    $$
+    [/TARGET]
+
+    $n + 1$ 元齐次线性方程组（44）的系数行列式为
+
+    $$
+    \left| \begin{array}{c c c c c c} 1 & \sin \frac {1}{n + 1} \frac {\pi}{2} & \sin^ {2} \frac {1}{n + 1} \frac {\pi}{2} & \dots & \sin^ {n} \frac {1}{n + 1} \frac {\pi}{2} \\ 1 & \sin \frac {2}{n + 1} \frac {\pi}{2} & \sin^ {2} \frac {2}{n + 1} \frac {\pi}{2} & \dots & \sin^ {n} \frac {2}{n + 1} \frac {\pi}{2} \\ \vdots & \vdots & \vdots & & \vdots \\ 1 & \sin \frac {n + 1}{n + 1} \frac {\pi}{2} & \sin^ {2} \frac {n + 1}{n + 1} \frac {\pi}{2} & \dots & \sin^ {n} \frac {n + 1}{n + 1} \frac {\pi}{2} \end{array} \right| 。 \tag {45}
+    $$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \left\{ \begin{array}{c c c c} k _ {0} 1 + k _ {1} \sin \frac {1}{n + 1} \frac {\pi}{2} + k _ {2} \sin^ {2} \frac {1}{n + 1} \frac {\pi}{2} + \dots + k _ {n} \sin^ {n} \frac {1}{n + 1} \frac {\pi}{2} = 0, \\ k _ {0} 1 + k _ {1} \sin \frac {2}{n + 1} \frac {\pi}{2} + k _ {2} \sin^ {2} \frac {2}{n + 1} \frac {\pi}{2} + \dots + k _ {n} \sin^ {n} \frac {2}{n + 1} \frac {\pi}{2} = 0, \\ \vdots & \vdots & \vdots & \vdots \\ k _ {0} 1 + k _ {1} \sin \frac {n + 1}{n + 1} \frac {\pi}{2} + k _ {2} \sin^ {2} \frac {n + 1}{n + 1} \frac {\pi}{2} + \dots + k _ {n} \sin^ {n} \frac {n + 1}{n + 1} \frac {\pi}{2} = 0. \end{array} \right. \tag {44}
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \left\{ \begin{array}{c}
+    k_{0}1 + k_{1}\sin\frac{1}{n+1}\frac{\pi}{2} + k_{2}\sin^{2}\frac{1}{n+1}\frac{\pi}{2} + \dots + k_{n}\sin^{n}\frac{1}{n+1}\frac{\pi}{2} = 0, \\
+    k_{0}1 + k_{1}\sin\frac{2}{n+1}\frac{\pi}{2} + k_{2}\sin^{2}\frac{2}{n+1}\frac{\pi}{2} + \dots + k_{n}\sin^{n}\frac{2}{n+1}\frac{\pi}{2} = 0, \\
+    \vdots \\
+    k_{0}1 + k_{1}\sin\frac{n+1}{n+1}\frac{\pi}{2} + k_{2}\sin^{2}\frac{n+1}{n+1}\frac{\pi}{2} + \dots + k_{n}\sin^{n}\frac{n+1}{n+1}\frac{\pi}{2} = 0.
+    \end{array} \right. \tag{44}
+    $$
+    [/FIX_RESULT]
+
+- user: |
+    为了计算(58)式给出的集合中元素的个数，把这个集合的每一个元素对应于由 $m$ 个小球和 $n$ 根小棍排成的一行：
+
+    [TARGET]
+    $$
+    \underline {{\bigcirc \cdots \bigcirc}} | \underline {{\bigcirc \cdots \bigcirc}} | \dots | \underline {{\bigcirc \cdots \bigcirc}} |, \tag {59}
+    $$
+
+    $$
+    i _ {1} \quad x _ {1} \quad i _ {2} \quad x _ {2} \quad x _ {n - 1} \quad i _ {n} \quad x _ {n}
+    $$
+    [/TARGET]
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \underline {{\bigcirc \cdots \bigcirc}} | \underline {{\bigcirc \cdots \bigcirc}} | \dots | \underline {{\bigcirc \cdots \bigcirc}} |, \tag {59}
+    $$
+
+    $$
+    i _ {1} \quad x _ {1} \quad i _ {2} \quad x _ {2} \quad x _ {n - 1} \quad i _ {n} \quad x _ {n}
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \underbrace{\bigcirc\cdots\bigcirc}_{i_1}\; \underset{x_1}{|}\; \underbrace{\bigcirc\cdots\bigcirc}_{i_2}\; \underset{x_2}{|}\; \cdots\;\underset{x_{n-1}}{|} \underbrace{\bigcirc\cdots\bigcirc}_{i_n}\; \underset{x_n}{|} \tag{59}
+    $$
+    [/FIX_RESULT]
+    
+- user: |
+    例10 设数域 $K$ 上的 $n$ 级矩阵 $\mathbf{A}$ 为
+    [TARGET]
+    $$
+    \mathbf {A} = \left( \begin{array}{c c c c c c c} k & c & 0 & 0 & \dots & 0 & 0 \\ 0 & k & c & 0 & \dots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & & \vdots & \vdots \\ 0 & 0 & 0 & 0 & \dots & k & c \\ 0 & 0 & 0 & 0 & \dots & 0 & k \end{array} \right),
+    $$
+    [/TARGET]
+
+    其中 $k, c \in K^{*}$ , 说明 $\mathbf{A}$ 可逆, 并且求 $\mathbf{A}^{-1}$ 。
+
+    解 令
+
+    $$
+    \boldsymbol {H} = \left( \begin{array}{c c c c c c c} 0 & 1 & 0 & \dots & 0 & 0 & 0 \\ 0 & 0 & 1 & \dots & 0 & 0 & 0 \\ \vdots & \vdots & \vdots & & \vdots & \vdots & \vdots \\ 0 & 0 & 0 & \dots & 0 & 1 & 0 \\ 0 & 0 & 0 & \dots & 0 & 0 & 1 \\ 0 & 0 & 0 & \dots & 0 & 0 & 0 \end{array} \right),
+    $$
+
+  assistant: |
+    [FIX_ORIGIN]
+    $$
+    \mathbf {A} = \left( \begin{array}{c c c c c c c} k & c & 0 & 0 & \dots & 0 & 0 \\ 0 & k & c & 0 & \dots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & & \vdots & \vdots \\ 0 & 0 & 0 & 0 & \dots & k & c \\ 0 & 0 & 0 & 0 & \dots & 0 & k \end{array} \right),
+    $$
+    [/FIX_ORIGIN]
+    
+    [FIX_RESULT]
+    $$
+    \mathbf {A} = \left( \begin{array}{c c c c c c c} k & c & 0 & 0 & \dots & 0 & 0 \\ 0 & k & c & 0 & \dots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & & \vdots & \vdots \\ 0 & 0 & 0 & 0 & \dots & k & c \\ 0 & 0 & 0 & 0 & \dots & 0 & k \end{array} \right),
+    $$
+    [/FIX_RESULT]

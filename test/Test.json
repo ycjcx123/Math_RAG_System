@@ -1,0 +1,436 @@
+[
+    {
+        "query": "数域 $K$ 上一元多项式的定义",
+        "baseline_chunks": ["3"],
+        "expected_block_id": "group_0",
+        "expected_chunks": ["4"], 
+        "answer_text": "定义1 数域 $\\pmb{K}$ 上的一元多项式是指形如下述的表达式：\n$$\na _ {n} x ^ {n} + a _ {n - 1} x ^ {n - 1} + \\dots + a _ {1} x + a _ {0}, \\tag {1}\n$$\n其中 $x$ 是一个符号（它不属于 $K$ ）；\n$n$ 是非负整数；\n$a_{i} \\in K (i = 0,1,\\dots,n)$ ，称为系数；\n$a_{i} x^{i}$ 称为 $i$ 次项 $(i = 1,2,\\dots,n)$ ；\n规定 $x^{0} = 1$ ， $a_{0}$ 称为零次项或常数项。"
+    },
+    {
+        "query": "请帮我证明下述命题：设 $f(x), g(x) \\in K[x]$ ，则\n$$\n\\deg (f (x) \\pm g (x)) \\leqslant \\max  \\left\\{\\deg f (x), \\deg g (x) \\right\\}, \\tag {5}\n$$\n$$\n\\deg (f (x) g (x)) = \\deg f (x) + \\deg g (x) 。 \\tag {6}\n$$",
+        "baseline_chunks": ["6","7"],
+        "expected_block_id": null,
+        "expected_chunks": ["7"], 
+        "answer_text": "证明 不妨设 $\\deg f(x) \\geqslant \\deg g(x)$ 。\n情形1 $g(x)\\neq 0$ ，则 $f(x)\\neq 0$\n设 $f(x)$ 的首项为 $a_{n}x^{n}$ , $g(x)$ 的首项为 $b_{m}x^{m}$ , 则 $f(x)$ , $g(x)$ 的次数分别为 $n, m$ 。\n当 $n > m$ 时， $f(x) \\pm g(x)$ 的首项为 $a_{n}x^{n}$ ，从而 $f(x) \\pm g(x)$ 的次数为 $n$ ；当 $n = m$ 时， $f(x) \\pm g(x)$ 的首项为 $(a_{n} \\pm b_{n})x^{n}$ ，从而 $\\deg [f(x) \\pm g(x)] \\leqslant n$ 。因此\n$$\n\\deg [ f (x) \\pm g (x) ] \\leqslant \\max  \\left\\{\\deg f (x), \\deg g (x) \\right\\} 。\n$$\n$f(x)g(x)$ 的首项为 $a_{n}b_{m}x^{n + m}$ ，因此\n$$\n\\deg [ f (x) g (x) ] = n + m = \\deg f (x) + \\deg g (x) 。\n$$\n情形2 $g(x) = 0$ ，则 $\\deg g(x) = -\\infty$ ，从而\n$$\n\\begin{array}{l} \\deg [ f (x) \\pm g (x) ] = \\deg f (x) = \\max  \\left\\{\\deg f (x), \\deg g (x) \\right\\}, \\\\ \\deg [ f (x) g (x) ] = \\deg 0 = - \\infty = (- \\infty) + \\deg f (x) = \\deg g (x) + \\deg f (x) 。 \\\\ \\end{array}\n$$"
+    },
+    {
+        "query": "环的定义是什么",
+        "baseline_chunks": ["8","9"],
+        "expected_block_id": null,
+        "expected_chunks": ["12"], 
+        "answer_text": "定义2 设 $R$ 是一个非空集合，如果它有两个代数运算，一个叫作加法，记作 $a + b$ ，另\n一个叫作乘法，记作 $ab$ ；\n并且这两个运算满足下列6条运算法则 $(\\forall a, b, c \\in R)$ ：\n$1^{\\circ}$ 加法结合律，即 $(a + b) + c = a + (b + c)$\n$2^{\\circ}$ 加法交换律，即 $a + b = b + a$\n$3^{\\circ}$ 在 $R$ 中有元素0，使得 $a + 0 = a$ ，称0是 $R$ 的零元；\n$4^{\\circ}$ 对于 $a$ ，在 $R$ 中有元素 $d$ ，使得 $a + d = 0$ ，称 $d$ 是 $a$ 的负元，记作 $-a$\n$5^{\\circ}$ 乘法结合律，即 $(ab)c = a(bc)$\n$6^{\\circ}$ 乘法对于加法的左、右分配律，即\n$$\na (b + c) = a b + a c,\n$$\n$$\n(b + c) a = b a + c a,\n$$\n那么称 $R$ 是一个环。"
+    },
+    {
+        "query": "全体偶数组成的集合 $2\\mathbf{Z}$ ，对于整数的加法和乘法也构成一个环吗？",
+        "baseline_chunks": ["10"],
+        "expected_block_id": null,
+        "expected_chunks": ["13"], 
+        "answer_text": "在整数环 $\\mathbf{Z}$ 中，全体偶数组成的集合 $2\\mathbf{Z}$ ，对于整数的加法和乘法也成为一个环。"
+    },
+    {
+        "query": "请帮我证明下述命题：环 $R$ 的一个非空子集 $R_{1}$ 为一个子环的充分必要条件是 $R_{1}$ 对于 $R$ 的减法与乘法都封闭，即\n$$\na, b \\in R _ {1} \\quad \\Longrightarrow \\quad a - b \\in R _ {1}, a b \\in R _ {1} 。\n$$",
+        "baseline_chunks": ["11","12","13"],
+        "expected_block_id": "group_2",
+        "expected_chunks": ["16", "17"], 
+        "answer_text": "证明：必要性。\n由于 $R_{1}$ 是环 $R$ 的子环，因此 $R_{1}$ 对于 $R$ 的加法和乘法都封闭，且 $R_{1}$ 有零元 $0_{1}$ 。\n于是 $0_{1} + 0_{1} = 0_{1}$ 。\n两边加上 $0_{1}$ 在 $R$ 中的负元 $-0_{1}$ 得， $(0_{1} + 0_{1}) + (-0_{1}) = 0_{1} + (-0_{1})$ ，从而 $0_{1} + 0 = 0$ 。\n又有 $0_{1} + 0 = 0_{1}$ ，因此 $0_{1} = 0$ ，即环 $R$ 的零元 $0$ 是子环 $R_{1}$ 的零元。\n任给 $a, b \\in R_{1}$ ，设 $b$ 在 $R_{1}$ 中的负元为 $b_{1}$ ，则 $b + b_{1} = 0$ 。\n又有 $b + (-b) = 0$ ，因此 $b_{1} = -b$ ，即 $b$ 在 $R_{1}$ 中的负元是 $b$ 在 $R$ 中的负元 $-b$ ，从而 $-b \\in R_{1}$ 。\n于是\n$$\na - b = a + (- b) \\in R _ {1},\n$$\n即 $R_{1}$ 对于 $R$ 的减法封闭。\n充分性。由于 $R_{1}$ 非空集，因此存在 $c \\in R_{1}$ 。由已知条件得， $c - c \\in R_{1}$ ，于是 $0 \\in R_{1}$ 。\n任给 $b \\in R_1$ ，由已知条件得， $0 - b \\in R_1$ ，于是 $-b \\in R_1$ 。\n任给 $a, b \\in R_1$ ，则 $-b \\in R_1$ ，由已知条件得\n$$\na + b = a - (- b) \\in R _ {1}, a b \\in R _ {1} 。\n$$\n因此 $R$ 的加法和乘法限制到 $R_{1}$ 上是 $R_{1}$ 的加法和乘法，于是 $R_{1}$ 的加法满足交换律、结合律，上面已证 $0 \\in R_{1}$ ；\n对于任意 $b \\in R_{1}$ ，有 $-b \\in R_{1}$ ，因此 $b$ 在 $R_{1}$ 中有负元 $-b$ 。\n显然 $R_{1}$ 的乘法满足结合律，以及对于加法的左、右分配律，所以 $R_{1}$ 成为一个环，从而 $R_{1}$ 是 $R$ 的一个子环。"
+    },
+    {
+        "query": "扩环的定义是什么？书本中是怎么引出来的？",
+        "baseline_chunks": ["13","14","15"],
+        "expected_block_id": "group_2",
+        "expected_chunks": ["17","18"], 
+        "answer_text": "$K[x]$ 中所有零次多项式添上零多项式组成的集合 $S$ ，对于一元多项式的减法与乘法封闭，因此 $S$ 是 $K[x]$ 的一个子环。\n显然 $K[x]$ 中的单位元 $1 \\in S$ 。\n数域 $K$ 到 $S$ 有一个对应法则 $\\tau$ ：非零数 $a$ 对应到零次多项式 $a$ ，数0对应到零多项式0。\n显然 $\\tau$ 是双射，且 $\\tau$ 保持加法与乘法运算，即\n$$\n\\tau (a + b) = \\tau (a) + \\tau (b), \\quad \\forall a, b \\in K;\n$$\n$$\n\\tau (a b) = \\tau (a) \\tau (b), \\quad \\forall a, b \\in K _ {\\circ}\n$$\n给定 $A \\in M_n(K)$ , 形如下述的表达式称为数域 $K$ 上矩阵 $\\mathbf{A}$ 的多项式:\n$$\na _ {m} \\boldsymbol {A} ^ {m} + a _ {m - 1} \\boldsymbol {A} ^ {m - 1} + \\dots + a _ {1} \\boldsymbol {A} + a _ {0} \\boldsymbol {I},\n$$\n其中 $m \\in \\mathbf{N}, a_i \\in K, i = 0,1,\\dots,m$ 。\n把数域 $K$ 上矩阵 $\\mathbf{A}$ 的所有多项式组成的集合记作 $K[A]$ 。\n易证 $K[A]$ 对于矩阵的减法和乘法封闭，因此 $K[A]$ 是 $M_{n}(K)$ 的一个子环，显然 $I \\in K[A]$ ，易看出 $K[A]$ 是交换环。\n$K[A]$ 中所有数量矩阵组成的集合 $W$ ，对于矩阵的减法和乘法封闭，因此 $W$ 是 $K[A]$ 的一个子环。\n显然 $I \\in W$ 。\n数域 $K$ 到 $W$ 有一个对应法则 $\\tau: a \\longmapsto aI$ ，显然 $\\tau$ 是双射，且 $\\tau$ 保持加法与乘法运算。\n由上面的例子抽象出下述概念：\n设 $R$ 是有单位元 $1^{\\prime}$ 的交换环，如果 $R$ 有一个子环 $R_{1}$ 满足下列条件：\n$$\n1 ^ {\\circ} 1 ^ {\\prime} \\in R _ {1};\n$$\n$2^{\\circ}$ 数域 $K$ 到 $R_{1}$ 有一个双射 $\\tau$ ，且 $\\tau$ 保持加法与乘法运算；\n那么 $R$ 可看成是 $\\pmb{K}$ 的一个扩环。"
+    },
+    {
+        "query": "下述题目怎么做。证明：在 $K[x]$ 中，如果 $f(x) = c g(x), c \\in K^{*}$ ，那么\n$$\n\\deg f (x) = \\deg g (x) 。\n$$",
+        "baseline_chunks": ["21"],
+        "expected_block_id": "group_42",
+        "expected_chunks": ["26"], 
+        "answer_text": "证明 若 $g(x) = 0$ ，则 $f(x) = c\\cdot 0 = 0$ ，从而\n$$\n\\deg f (x) = \\deg g (x),\n$$\n下设 $g(x)\\neq 0$ ，由于 $f(x) = c g(x),c\\in K^{*}$ ，因此 $f(x)\\neq 0$ ，并且\n$$\n\\deg f (x) = \\deg c + \\deg g (x) = \\deg g (x) 。\n$$"
+    },
+    {
+        "query": "帮我做一下下述习题，我想要详细步骤：设数域 $K$ 上的 $n$ 级矩阵 $\\mathbf{A}$ 为\n$$\n\\mathbf {A} = \\left( \\begin{array}{c c c c c c c} k & c & 0 & 0 & \\dots & 0 & 0 \\\\ 0 & k & c & 0 & \\dots & 0 & 0 \\\\ \\vdots & \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots \\\\ 0 & 0 & 0 & 0 & \\dots & k & c \\\\ 0 & 0 & 0 & 0 & \\dots & 0 & k \\end{array} \\right),\n$$\n其中 $k, c \\in K^{*}$ , 说明 $\\mathbf{A}$ 可逆, 并且求 $\\mathbf{A}^{-1}$ 。",
+        "baseline_chunks": ["26","27","28"],
+        "expected_block_id": "group_4",
+        "expected_chunks": ["44","45"], 
+        "answer_text": "解 令\n$$\n\\boldsymbol {H} = \\left( \\begin{array}{c c c c c c c} 0 & 1 & 0 & \\dots & 0 & 0 & 0 \\\\ 0 & 0 & 1 & \\dots & 0 & 0 & 0 \\\\ \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots & \\vdots \\\\ 0 & 0 & 0 & \\dots & 0 & 1 & 0 \\\\ 0 & 0 & 0 & \\dots & 0 & 0 & 1 \\\\ 0 & 0 & 0 & \\dots & 0 & 0 & 0 \\end{array} \\right),\n$$\n则 $\\mathbf{A} = k\\mathbf{I} + c\\mathbf{H}$ 。我们知道 $\\pmb{H}^{n} = \\pmb{0}$\n在 $K[x]$ 中直接计算可得\n$$\n(1 - x) (1 + x + \\dots + x ^ {n - 1}) = 1 - x ^ {n} 。 \\tag {9}\n$$\n$K[\\pmb{H}]$ 可看成是 $K$ 的一个扩环。于是 $x$ 用 $-\\frac{c}{k}\\pmb{H}$ 代入，从(9)式得\n$$\n\\left[ \\boldsymbol {I} - \\left(- \\frac {c}{k} \\boldsymbol {H}\\right) \\right] \\left[ \\boldsymbol {I} + \\left(- \\frac {c}{k} \\boldsymbol {H}\\right) + \\left(- \\frac {c}{k} \\boldsymbol {H}\\right) ^ {2} + \\dots + \\left(- \\frac {c}{k} \\boldsymbol {H}\\right) ^ {n - 1} \\right] = \\boldsymbol {I} - \\left(- \\frac {c}{k} \\boldsymbol {H}\\right) ^ {n}. \\tag {10}\n$$\n由于 $H^n = 0$ ，因此（10）式成为\n$$\n\\left(\\boldsymbol {I} + \\frac {c}{k} \\boldsymbol {H}\\right) \\left(\\boldsymbol {I} - \\frac {c}{k} \\boldsymbol {H} + \\frac {c ^ {2}}{k ^ {2}} \\boldsymbol {H} ^ {2} + \\dots + (- 1) ^ {n - 1} \\frac {c ^ {n - 1}}{k ^ {n - 1}} \\boldsymbol {H} ^ {n - 1}\\right) = \\boldsymbol {I},\n从而\n$$\n(k \\boldsymbol {I} + c \\boldsymbol {H}) \\left(\\frac {1}{k} \\boldsymbol {I} - \\frac {c}{k ^ {2}} \\boldsymbol {H} + \\frac {c ^ {2}}{k ^ {3}} \\boldsymbol {H} ^ {2} + \\dots + (- 1) ^ {n - 1} \\frac {c ^ {n - 1}}{k ^ {n}} \\boldsymbol {H} ^ {n - 1}\\right) = \\boldsymbol {I},\n$$\n这表明 $\\mathbf{A} = k\\mathbf{I} + c\\mathbf{H}$ 是可逆矩阵，并且\n$$\n\\boldsymbol {A} ^ {- 1} = \\frac {1}{k} \\boldsymbol {I} - \\frac {c}{k ^ {2}} \\boldsymbol {H} + \\frac {c ^ {2}}{k ^ {3}} \\boldsymbol {H} ^ {2} + \\dots + (- 1) ^ {n - 1} \\frac {c ^ {n - 1}}{k ^ {n}} \\boldsymbol {H} ^ {n - 1} 。\n$$"
+    },
+    {
+        "query": "习题10.1的第10题问的是判断两个斜对称矩阵是否合同，具体是哪两个矩阵？",
+        "baseline_chunks": ["1702"],
+        "expected_block_id": null,
+        "expected_chunks": ["2435"], 
+        "answer_text": "$$\n\\mathbf {A} = \\left( \\begin{array}{r r r r} 0 & 2 & 1 & - 3 \\\\ - 2 & 0 & 4 & 5 \\\\ - 1 & - 4 & 0 & - 1 \\\\ 3 & - 5 & 1 & 0 \\end{array} \\right),\n$$\n$$\n\\boldsymbol {B} = \\left( \\begin{array}{c c c c} 0 & 1 & - 4 & - 1 \\\\ - 1 & 0 & 3 & - 2 \\\\ 4 & - 3 & 0 & 1 1 \\\\ 1 & 2 & - 1 1 & 0 \\end{array} \\right) 。\n$$"
+    },
+    {
+        "query": "第11题要求判断两个4级实对称矩阵能否正交相似于主对角元全为0的矩阵，矩阵A和B分别是什么？",
+        "baseline_chunks": ["1702","1703"],
+        "expected_block_id": null,
+        "expected_chunks": ["2436"], 
+        "answer_text": "$$\n\\mathbf {A} = \\left( \\begin{array}{c c c c} 1 & 0 & 4 & 5 \\\\ 0 & - 2 & 6 & - 3 \\\\ 4 & 6 & 3 & - 7 \\\\ 5 & - 3 & - 7 & - 1 \\end{array} \\right),\n$$\n$$\n\\boldsymbol {B} = \\left( \\begin{array}{c c c c} 3 & 1 & 0 & 2 \\\\ 1 & - 5 & 3 & 6 \\\\ 0 & 3 & 4 & 8 \\\\ 2 & 6 & 8 & - 2 \\end{array} \\right) 。"
+    },
+    {
+        "query": "第13题要证明秩为1的两个2级实对称矩阵一定可以一齐合同对角化，这是哪个习题的内容？",
+        "baseline_chunks": [["1698","1703"]],
+        "expected_block_id": null,
+        "expected_chunks": ["2437"], 
+        "answer_text": "[第10章 具有度量的线性空间 > 习题 10.1]"
+    },
+    {
+        "query": "如果线性变换有不变子空间，那么它的特征多项式与限制在不变子空间上的变换以及商空间上的诱导变换的特征多项式之间有什么关系？",
+        "baseline_chunks": ["1008","1009"],
+        "expected_block_id": null,
+        "expected_chunks": ["1553"], 
+        "answer_text": "线性变换的特征多项式等于它在不变子空间上的限制的特征多项式与在商空间上的诱导变换的特征多项式的乘积。"
+    },
+    {
+        "query": "如果k\\alpha等于零向量，那么k和\\alpha之间有什么关系？",
+        "baseline_chunks": ["512"],
+        "expected_block_id": null,
+        "expected_chunks": ["821"], 
+        "answer_text": "性质5 如果 $k\\alpha = 0$ ，那么 $k = 0$ 或 $\\alpha = 0$ 。"
+    },
+    {
+        "query": "性质5 如果 $k\\alpha = 0$ ，那么 $k = 0$ 或 $\\alpha = 0$ 。性质5的证明过程是怎样的？能详细说明一下吗？",
+        "baseline_chunks": ["512"],
+        "expected_block_id": null,
+        "expected_chunks": ["822"], 
+        "answer_text": "证明 假设 $k \\neq 0$ ，则\n$$\n\\alpha = 1 \\alpha = (k ^ {- 1} k) \\alpha = k ^ {- 1} (k \\alpha) = k ^ {- 1} 0 = 0 。\n$$"
+    },
+    {
+        "query": "如果P是可逆矩阵，那么e^(P^{-1}AP)等于什么？",
+        "baseline_chunks": ["1554"],
+        "expected_block_id": null,
+        "expected_chunks": ["2254"], 
+        "answer_text": "5. 设 $A, P$ 都是 $n$ 级复矩阵，且 $P$ 可逆，证明：\n$$\n\\mathrm {e} ^ {\\boldsymbol {P} ^ {- 1} \\boldsymbol {A} \\boldsymbol {P}} = \\boldsymbol {P} ^ {- 1} \\mathrm {e} ^ {\\boldsymbol {A}} \\boldsymbol {P} 。 \\tag {16}\n$$"
+    },
+    {
+        "query": "矩阵A的特征值和e^A的特征值之间有什么关系？",
+        "baseline_chunks": ["1554"],
+        "expected_block_id": null,
+        "expected_chunks": ["2256"], 
+        "answer_text": "7. 设 $\\mathbf{A}$ 是 $n$ 级复矩阵，其全部特征值是 $\\lambda_1, \\lambda_2, \\dots, \\lambda_n$ 。证明： $\\mathrm{e}^{\\mathbf{A}}$ 的全部特征是 $\\mathrm{e}^{\\lambda_1}$ ， $\\mathrm{e}^{\\lambda_2}, \\dots, \\mathrm{e}^{\\lambda_n}$ 。"
+    },
+    {
+        "query": "如何证明所有n级上三角幂零矩阵组成的集合U是M_n(K)的子空间？",
+        "baseline_chunks": ["647","648"],
+        "expected_block_id": "group_112",
+        "expected_chunks": ["1034"], 
+        "answer_text": "（1）证明： $U$ 是 $M_{n}(K)$ 的一个子空间；\n（2）求 $U$ 的一个基和维数。\n（1）证明 显然， $0 \\in U$ ，任取 $A, B \\in U$ ，根据本套教材上册4.2节例9的结论，上三角矩阵是幂零矩阵当且仅当它的主对角元全为0，于是 $A, B$ 是主对角元全为0的上三角矩阵，从而 $A + B$ 也是主对角元全为0的上三角矩阵，因此 $A + B$ 是幂零矩阵。\n由此得出， $A + B \\in U$ 。\n设 $A$ 的幂零指数为 $l$ ，则对任意 $k \\in K$ 有 $(kA)^{l} = k^{l}A^{l} = 0$ 。\n因此 $kA$ 也是幂零矩阵，且显然 $kA$ 是上三角矩阵，由此得出， $kA \\in U$ 。\n所以 $U$ 是 $M_{n}(K)$ 的一个子空间。\n（2）解 根据上面指出的结论知道， $U$ 中任一矩阵 $\\mathbf{A}$ 可以写成\n$$\n\\begin{array}{l} \\mathbf {A} = \\left( \\begin{array}{c c c c c c} 0 & a _ {1 2} & a _ {1 3} & \\dots & a _ {1, n - 1} & a _ {1 n} \\\\ 0 & 0 & a _ {2 3} & \\dots & a _ {2, n - 1} & a _ {2 n} \\\\ \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots \\\\ 0 & 0 & 0 & \\dots & 0 & a _ {n - 1, n} \\\\ 0 & 0 & 0 & \\dots & 0 & 0 \\end{array} \\right) \\\\ = a _ {1 2} \\mathbf {E} _ {1 2} + a _ {1 3} \\mathbf {E} _ {1 3} + \\dots + a _ {1 n} \\mathbf {E} _ {1 n} + a _ {2 3} \\mathbf {E} _ {2 3} + \\dots + a _ {2 n} \\mathbf {E} _ {2 n} + \\dots + a _ {n - 1, n} \\mathbf {E} _ {n - 1, n} 。 \\\\ \\end{array}\n$$\n显然， $E_{12},E_{13},\\dots ,E_{1n},E_{23},\\dots ,E_{2n},\\dots ,E_{n - 1,n}$ 线性无关，因此它们就是 $U$ 的一个基，从而$$\n\\dim U = (n - 1) + (n - 2) + \\dots + 1 = \\frac {n (n - 1)}{2} 。\n$$"
+    },
+    {
+        "query": "两个真子空间的并集为什么不可能等于整个线性空间？",
+        "baseline_chunks": ["649","650"],
+        "expected_block_id": null,
+        "expected_chunks": ["1036","1037"], 
+        "answer_text": "例9设 $V_{1}, V_{2}$ 是域 $F$ 上线性空间 $V$ 的两个真子空间（即 $V_{i} \\neq V, i = 1, 2$ ），证明： $V_{1} \\cup V_{2} \\neq V$ 。证明 由于 $V_{1} \\neq V$ ，因此存在 $\\alpha \\notin V_{1}$ 。若 $\\alpha \\notin V_{2}$ ，则 $\\alpha \\notin V_{1} \\cup V_{2}$ 。接下来设 $\\alpha \\in V_{2}$ 。由于 $V_{2} \\neq V$ ，因此存在 $\\beta \\notin V_{2}$ 。若 $\\beta \\notin V_{1}$ ，则 $\\beta \\notin V_{1} \\cup V_{2}$ 。接下来设 $\\beta \\in V_{1}$ ，则我们断言 $\\alpha + \\beta \\notin V_{1} \\cup V_{2}$ 。这是因为假如 $\\alpha + \\beta \\in V_{1} \\cup V_{2}$ ，当 $\\alpha + \\beta \\in V_{1}$ 时，有 $(\\alpha + \\beta) - \\beta \\in V_{1}$ ，即 $\\alpha \\in V_{1}$ ，矛盾；当 $\\alpha + \\beta \\in V_{2}$ 时，有 $(\\alpha + \\beta) - \\alpha \\in V_{2}$ ，即 $\\beta \\in V_{2}$ ，矛盾。所以 $\\alpha + \\beta \\notin V_{1} \\cup V_{2}$ ，于是 $V_{1} \\cup V_{2} \\neq V$ 。"
+    },
+    {
+        "query": "如果域的特征为0，有限个真子空间的并集能等于整个空间吗？如果域的特征为0，有限个真子空间的并集能等于整个空间吗？",
+        "baseline_chunks": ["650","651","652","653"],
+        "expected_block_id": "group_113",
+        "expected_chunks": ["1038","1039"], 
+        "answer_text": "根据 例10 设 $V_{1}, V_{2}, \\dots, V_{s}$ 都是域 $F$ 上线性空间 $V$ 的真子空间，证明：如果域 $F$ 的特征为0，那么\n$$\nV _ {1} \\cup V _ {2} \\cup \\dots \\cup V _ {s} \\neq V _ {\\circ}\n$$"
+    },
+    {
+        "query": "Sylvester秩不等式在线性映射的核与象的维数公式中是如何证明的？",
+        "baseline_chunks": ["853","854"],
+        "expected_block_id": null,
+        "expected_chunks": ["1339"], 
+        "answer_text": "证明 根据线性映射的核与象的维数公式以及例2的公式(14)得\n$$\n\\begin{array}{l} \\operatorname {r a n k} (\\mathcal {B A}) = \\dim (\\operatorname {I m} (\\mathcal {B A})) \\\\ = \\dim V - \\dim (\\operatorname {K e r} (\\mathcal {B A})) \\\\ \\geqslant n - \\left[ \\dim (\\operatorname {K e r} \\mathcal {A}) + \\dim (\\operatorname {K e r} \\mathcal {B}) \\right] \\\\ = n - \\dim (\\operatorname {K e r} \\mathcal {A}) + m - \\dim (\\operatorname {K e r} \\mathcal {B}) - m \\\\ = \\dim (\\operatorname {I m} \\mathcal {A}) + \\dim (\\operatorname {I m} \\mathcal {B}) - m \\\\ = \\operatorname {r a n k} (\\mathcal {A}) + \\operatorname {r a n k} (\\mathcal {B}) - m 。 \\\\ \\end{array}\n$$\n点评：根据9.3节关于线性映射的矩阵表示可知，例3实际上是本套教材上册4.5节例2的Sylvester秩不等式。现在利用线性映射的核与象的维数公式给出了另一种证法，这一证法既直观又简洁。"
+    },
+    {
+        "query": "在酉空间中，由两两正交的非零向量组成的集合有什么性质？",
+        "baseline_chunks": ["1899"],
+        "expected_block_id": null,
+        "expected_chunks": ["2773"], 
+        "answer_text": "命题1 酉空间 $V$ 中，由两两正交的非零向量组成的集合是线性无关的。"
+    },
+    {
+        "query": "正交规范集是怎么定义的？",
+        "baseline_chunks": ["1899"],
+        "expected_block_id": null,
+        "expected_chunks": ["2774"], 
+        "answer_text": "酒空间 $V$ 中，两两正交的单位向量组成的子集称为正交规范集。"
+    },
+    {
+        "query": "n维酉空间中，两两正交的非零向量最多能有多少个？",
+        "baseline_chunks": ["1899"],
+        "expected_block_id": null,
+        "expected_chunks": ["2775"], 
+        "answer_text": "推论4 在 $n$ 维酉空间 $V$ 中，两两正交的非零向量的个数不超过 $n$ 。"
+    },
+    {
+        "query": "正交基和标准正交基有什么区别？",
+        "baseline_chunks": ["1899"],
+        "expected_block_id": null,
+        "expected_chunks": ["2777"], 
+        "answer_text": "定义6 在 $n$ 维酉空间 $V$ 中，由 $n$ 个两两正交的非零向量组成的基称为 $V$ 的一个正交基；由 $n$ 个两两正交的单位向量组成的基称为 $V$ 的一个标准正交基。"
+    },
+    {
+        "query": "数域K上的两个n级矩阵A和B相似，当且仅当把它们看成什么矩阵后相似？",
+        "baseline_chunks": ["1275"],
+        "expected_block_id": null,
+        "expected_chunks": ["1918"], 
+        "answer_text": "推论9 数域 $K$ 上 $n$ 级矩阵 $\\mathbf{A}$ 与 $\\mathbf{B}$ 相似当且仅当把它们看成复矩阵后相似。"
+    },
+    {
+        "query": "如果线性变换A在某个基下的矩阵是Jordan形矩阵，那么这个基叫什么？",
+        "baseline_chunks": ["1276"],
+        "expected_block_id": "group_236",
+        "expected_chunks": ["1920"], 
+        "answer_text": "定义6 设 $\\mathcal{A}$ 是域 $F$ 上 $n$ 维线性空间 $V$ 上的线性变换，如果 $\\mathcal{A}$ 在 $V$ 的一个基下的矩阵是Jordan形矩阵，那么这个基称为 $\\mathcal{A}$ 的一个Jordan基。"
+    },
+    {
+        "query": "域F上两个n级矩阵A和B相似，与它们的特征矩阵\\lambda I-A和\\lambda I-B之间有什么关系？",
+        "baseline_chunks": ["1268","1269"],
+        "expected_block_id": null,
+        "expected_chunks": ["1908"], 
+        "answer_text": "定理8 数域 $K$ 上两个 $n$ 级矩阵 $\\mathbf{A}$ 与 $\\mathbf{B}$ 相似的充分必要条件是它们的特征矩阵 $\\lambda I - A$ 与 $\\lambda I - B$ 相抵。"
+    },
+    {
+        "query": "可逆的\\lambda-矩阵A(\\lambda)为什么可以表示成一些初等λ-矩阵的乘积？",
+        "baseline_chunks": ["1278"],
+        "expected_block_id": "group_236",
+        "expected_chunks": ["1921"], 
+        "answer_text": "可逆的 $\\lambda-$ 矩阵 $A(\\lambda)$ 可以表示成一些初等 $\\lambda-$ 矩阵的乘积。"
+    },
+    {
+        "query": "不可逆的矩阵在什么条件下可能有平方根？",
+        "baseline_chunks": ["1337"],
+        "expected_block_id": "group_247",
+        "expected_chunks": ["2002"], 
+        "answer_text": "由此看出，不可逆的 $n$ 级矩阵有可能没有平方根。\n不可逆的 $n$ 级复矩阵 $\\mathbf{A}$ 需要满足什么条件才能有平方根呢？从例21看出，如果 $\\mathbf{A}$ 的Jordan标准形 $\\mathbf{J}$ 中主对角元为0的Jordan块按照 $\\{\\mathbf{J}_r(0),\\mathbf{J}_r(0)\\}$ 或 $\\{\\mathbf{J}_{r + 1}(0),\\mathbf{J}_r(0)\\}$ 成对出现，那么由于 $\\mathbf{J}_{2r}(0)^2\\sim$ diag $\\{\\mathbf{J}_r(0),\\mathbf{J}_r(0)\\} ,\\mathbf{J}_{2r + 1}(0)^2\\sim \\mathrm{diag}\\{\\mathbf{J}_{r + 1}(0),\\mathbf{J}_r(0)\\}$ ，因此 $\\mathbf{A}$ 有平方根。"
+    },
+    {
+        "query": "向量集线性相关的定义是什么？什么时候一个向量集是线性无关的？",
+        "baseline_chunks": ["515","516"],
+        "expected_block_id": null,
+        "expected_chunks": ["829"], 
+        "answer_text": "在域 $F$ 上的线性空间 $V$ 中，元素个数大于1的向量集 $W$ 线性相关当且仅当 $W$ 中至少有一个向量可以由其余向量中的有限多个线性表出，从而 $W$ 线性无关当且仅当 $W$ 中每一个向量都不能由其余向量中的有限多个线性表出。"
+    },
+    {
+        "query": "如果一个向量可以由一个向量集线性表出，那么表法唯一的充分必要条件是什么？",
+        "baseline_chunks": ["516"],
+        "expected_block_id": null,
+        "expected_chunks": ["830"], 
+        "answer_text": "命题4在域 $F$ 上的线性空间 $V$ 中，设向量 $\\beta$ 可以由向量集 $W$ 线性表出，则表法唯一的充分必要条件是向量集 $W$ 线性无关。"
+    },
+    {
+        "query": "假设向量\\beta可以由线性无关的向量集W线性表出，如何证明这种表出方式是唯一的？",
+        "baseline_chunks": ["516","517"],
+        "expected_block_id": "group_84",
+        "expected_chunks": ["831"], 
+        "answer_text": "命题4在域 $F$ 上的线性空间 $V$ 中，设向量 $\\beta$ 可以由向量集 $W$ 线性表出，则表法唯一的充分必要条件是向量集 $W$ 线性无关。\n证明充分性。设向量集 $W$ 线性无关，由已知条件， $\\beta$ 可以由向量集 $W$ 线性表出。假如有两种表出方式：\n$$\n\\beta = k _ {1} \\alpha_ {1} + \\dots + k _ {r} \\alpha_ {r} + k _ {r + 1} u _ {1} + \\dots + k _ {r + s} u _ {s}, \\tag {1}\n$$\n$$\n\\beta = l _ {1} \\alpha_ {1} + \\dots + l _ {r} \\alpha_ {r} + l _ {r + 1} v _ {1} + \\dots + l _ {r + t} v _ {t}, \\tag {2}\n$$\n其中 $\\alpha_{1},\\dots ,\\alpha_{r},u_{1},\\dots ,u_{s},v_{1},\\dots ,v_{t}\\in W,r\\geqslant 0,s\\geqslant 0,t\\geqslant 0$ 。把(1)式减去(2)式，得\n$$\n0 = \\left(k _ {1} - l _ {1}\\right) \\alpha_ {1} + \\dots + \\left(k _ {r} - l _ {r}\\right) \\alpha_ {r} + k _ {r + 1} u _ {1} + \\dots + k _ {r + s} u _ {s} - l _ {r + 1} v _ {1} - \\dots - l _ {r + t} v _ {t} 。\n$$\n由于向量集 $W$ 线性无关，因此向量组 $\\alpha_{1},\\dots ,\\alpha_{r},u_{1},\\dots ,u_{s},v_{1},\\dots ,v_{t}$ 线性无关，从而由上式得\n$$\nk _ {1} - l _ {1} = 0, \\dots , \\quad k _ {r} - l _ {r} = 0, \\quad k _ {r + 1} = \\dots = k _ {r + s} = l _ {r + 1} = \\dots = l _ {r + t} = 0,\n$$\n于是 $\\beta = k_{1}\\alpha_{1} + \\dots +k_{r}\\alpha_{r}$ 是 $\\beta$ 由向量集 $W$ 线性表出的唯一方式。"
+    },
+    {
+        "query": "在多项式环K[x]中，如果f(x)和h(x)互素，g(x)和h(x)也互素，那么f(x)g(x)和h(x)有什么关系？",
+        "baseline_chunks": ["79"],
+        "expected_block_id": null,
+        "expected_chunks": ["143"], 
+        "answer_text": "性质3 在 $K[x]$ 中，如果\n$$\n(f (x), h (x)) = 1, \\quad (g (x), h (x)) = 1,\n$$\n那么 $(f(x)g(x),h(x)) = 1$"
+    },
+    {
+        "query": "多个多项式互素是什么意思？",
+        "baseline_chunks": ["82"],
+        "expected_block_id": null,
+        "expected_chunks": ["148"], 
+        "answer_text": "定义3 $K[x]$ 中， $s$ 个多项式 $f_{1}(x), f_{2}(x), \\dots, f_{s}(x)$ 如果满足 $(f_{1}(x), f_{2}(x), \\dots, f_{s}(x)) = 1$ ，那么称 $f_{1}(x), f_{2}(x), \\dots, f_{s}(x)$ 互素。"
+    },
+    {
+        "query": "在酉空间中，什么时候可以说两个向量\\alpha和\\beta是正交的？",
+        "baseline_chunks": ["1897"],
+        "expected_block_id": null,
+        "expected_chunks": ["2766"], 
+        "answer_text": "定义5 酉空间 $V$ 中，如果 $(\\alpha, \\beta) = 0$ ，那么称 $\\alpha$ 与 $\\beta$ 正交，记作 $\\alpha \\perp \\beta$ 。\n由内积的正定性得， $\\alpha$ 与自己正交当且仅当 $\\alpha = 0$ 。"
+    },
+    {
+        "query": "酉空间中的三角形不等式具体是怎么表述的？",
+        "baseline_chunks": ["1898"],
+        "expected_block_id": null,
+        "expected_chunks": ["2768"], 
+        "answer_text": "推论1（三角形不等式） 在酉空间 $V$ 中，有\n$$\n\\mid \\alpha + \\beta \\mid \\leqslant \\mid \\alpha \\mid + \\mid \\beta \\mid , \\quad \\forall \\alpha , \\beta \\in V 。 \\tag {11}\n$$"
+    },
+    {
+        "query": "勾股定理在酉空间中能推广到多个两两正交的向量吗？如果能，推广后的公式是什么？",
+        "baseline_chunks": ["1898","1899"],
+        "expected_block_id": null,
+        "expected_chunks": ["2770"], 
+        "answer_text": "用数学归纳法可以把勾股定理推广为：如果 $\\alpha_{1},\\alpha_{2},\\dots ,\\alpha_{s}$ 两两正交，那么\n$$\n\\left| \\alpha_ {1} + \\alpha_ {2} + \\dots + \\alpha_ {s} \\right| ^ {2} = \\left| \\alpha_ {1} \\right| ^ {2} + \\left| \\alpha_ {2} \\right| ^ {2} + \\dots + \\left| \\alpha_ {s} \\right| ^ {2} 。 \\tag {13}\n$$"
+    },
+    {
+        "query": "设 $f$ 是域 $F$ 上 $n$ 维线性空间 $V$ 上的一个双线性函数。映射L_f和R_f的核与双线性函数的左右根空间有什么关系？",
+        "baseline_chunks": ["1664"],
+        "expected_block_id": null,
+        "expected_chunks": ["2361"], 
+        "answer_text": "映射 $L_{f}:\\alpha \\longmapsto \\alpha_{L}$ 是 $V$ 到 $V^{*}$ 的一个线性映射；映射 $R_{f}:\\beta \\longmapsto \\beta_{R}$ 是 $V$ 到 $V^{*}$ 的一个线性映射；\n(2) $\\operatorname{Ker} L_f = \\operatorname{rad}_L V, \\operatorname{Ker} R_f = \\operatorname{rad}_R V$"
+    },
+    {
+        "query": "子空间的并集是不是子空间？为什么？",
+        "baseline_chunks": ["608","609"],
+        "expected_block_id": "group_104",
+        "expected_chunks": ["979"], 
+        "answer_text": "不是。\n例如，设 $V$ 是几何空间（即以原点为起点的所有向量组成的三维实线性空间）， $V_{1}, V_{2}$ 是过原点的两个不同的平面，从而它们都是 $V$ 的子空间。\n在 $V_{1} \\cup V_{2}$ 中取两个向量 $\\alpha_{1}, \\alpha_{2}$ ，其中 $\\alpha_{1} \\in V_{1}, \\alpha_{1} \\notin V_{2}, \\alpha_{2} \\in V_{2}, \\alpha_{2} \\notin V_{1}$ ，则 $\\alpha_{1} + \\alpha_{2} \\notin V_{1} \\cup V_{2}$ ，如图8-1所示。\n因此 $V_{1} \\cup V_{2}$ 不是 $V$ 的一个子空间。"
+    },
+    {
+        "query": "为什么用掷硬币产生的密钥序列虽然难破译却不实用？",
+        "baseline_chunks": ["479"],
+        "expected_block_id": "group_77",
+        "expected_chunks": ["781"], 
+        "answer_text": "设明文序列的长度为 $v$ ，我们用掷硬币来产生一个长度为 $v$ 的序列。\n第1次掷一枚硬币，着地时若正面向上，则写1；\n若反面向上，则写0。\n这样依次下去，掷一枚硬币 $v$ 次，便产生出一个长度为 $v$ 的序列 $\\alpha$ 。\n把 $\\alpha$ 作为密钥序列，就很难破译出它。\n因为掷一枚硬币，着地时出现正面向上的概率和出现反面向上的概率都等于 $\\frac{1}{2}$ ，所以猜中这个序列 $\\alpha$ 的概率为 $\\left(\\frac{1}{2}\\right)^{v} = \\frac{1}{2^{v}}$ 。\n当 $v$ 很大时，这个概率很小。\n用掷硬币产生的序列作为密钥序列虽然\n很难被破译，但是每一次通信，发送者都要把掷硬币产生的与明文序列一样长的密钥序列通过秘密渠道传送给接收者，既费力又费钱。\n如果这个秘密渠道真的是安全的，那为何不直接把明文序列通过该渠道传递给接收者呢？"
+    },
+
+
+
+
+    
+    {
+        "query": "请说明一元多项式和n元多项式在定义上的核心区别。",
+        "baseline_chunks": [["3","276"]],
+        "expected_block_id": null,
+        "expected_chunks": [["4","490"]], 
+        "answer_text": "### 原文依据：一元多项式定义:[定义1 数域 $\\pmb{K}$ 上的一元多项式是指形如下述的表达式：\n$$\na _ {n} x ^ {n} + a _ {n - 1} x ^ {n - 1} + \\dots + a _ {1} x + a _ {0}, \\tag {1}\n$$\n其中 $x$ 是一个符号（它不属于 $K$ ）；\n$n$ 是非负整数；\n$a_{i} \\in K (i = 0,1,\\dots,n)$ ，称为系数；\n$a_{i} x^{i}$ 称为 $i$ 次项 $(i = 1,2,\\dots,n)$ ；]\nn元多项式定义:[定义1 设 $K$ 是一个数域，用不属于 $K$ 的 $n$ 个符号 $x_{1}, x_{2}, \\dots, x_{n}$ 作表达式\n$$\n\\sum_ {i _ {1}, i _ {2}, \\dots , i _ {n}} a _ {i _ {1} i _ {2} \\dots i _ {n}} x _ {1} ^ {i _ {1}} x _ {2} ^ {i _ {2}} \\dots x _ {n} ^ {i _ {n}}, \\tag {3}\n$$\n其中 $a_{i_1i_2\\dots i_n}\\in K,i_1,i_2,\\dots ,i_n$ 是非负整数，(3)式中的每一项称为一个单项式， $a_{i_1i_2\\dots i_n}$ 称为系数。]"
+    },
+    {
+        "query": "请说明整除和相伴这两个概念在定义上的核心区别。",
+        "baseline_chunks": [["37","38"]],
+        "expected_block_id": null,
+        "expected_chunks": [["61","62"]], 
+        "answer_text": "### 原文依据：整除的定义:[定义1设 $f(x),g(x)\\in K[x]$ ，如果存在 $h(x)\\in K[x]$ ，使得 $f(x) = h(x)g(x)$ ，那么称 $g(x)$ 整除 $f(x)$ ，记作 $g(x)|f(x)$ ；否则，称 $g(x)$ 不能整除 $f(x)$ ，记作 $g(x)\\nmid f(x)$ 。]\n相伴的定义：[定义2 在 $K[x]$ 中，如果 $g(x)\\mid f(x)$ 且 $f(x)\\mid g(x)$ ，那么称 $f(x)$ 与 $g(x)$ 相伴，记作 $f(x)\\sim g(x)$ 。]"
+    },
+    {
+        "query": "请说明不可约多项式和素数在定义上的核心区别。",
+        "baseline_chunks": [["112","120"]],
+        "expected_block_id": null,
+        "expected_chunks": [["199","208"]], 
+        "answer_text": "### 原文依据：不可约多项式的定义: [设 $f(x)$ 是 $K[x]$ 中一个次数大于0的多项式，如果 $f(x)$ 在 $K[x]$ 中的因式只有零次多项式（即 $K$ 中的非零数）和 $f(x)$ 的相伴元，那么称 $f(x)$ 是数域 $K$ 上的一个不可约多项式；否则称 $f(x)$ 在 $K$ 上是可约的。]\n素数的定义:[一个大于1的整数 $m$ ，如果其正因数只有1和它自身，那么称 $m$ 是一个素数；否则称 $m$ 是合数。]"
+    },
+    {
+        "query": "请说明一元多项式环中的整除与n元多项式环中的整除在定义上的核心区别。",
+        "baseline_chunks": [["37","296"]],
+        "expected_block_id": null,
+        "expected_chunks": [["61","513"]], 
+        "answer_text": "### 原文依据：一元多项式的整除定义:[定义1设 $f(x),g(x)\\in K[x]$ ，如果存在 $h(x)\\in K[x]$ ，使得 $f(x) = h(x)g(x)$ ，那么称 $g(x)$ 整除 $f(x)$ ，记作 $g(x)|f(x)$ ；否则，称 $g(x)$ 不能整除 $f(x)$ ，记作 $g(x)\\nmid f(x)$ 。]\n n元多项式整除定义:[定义3 在 $K[x_1, x_2, \\dots, x_n]$ 中，对于 $f, g$ ，如果有 $h$ 使得 $f = hg$ ，那么称 $g$ 整除 $f$ ，记作 $g \\mid f$ ；否则称 $g$ 不能整除 $f$ ，记作 $g \\nmid f$ 。]"
+    },
+    {
+        "query": "请说明向量组的极大线性无关组与线性空间的基在定义上的核心区别。",
+        "baseline_chunks": [["520","526"],["521","526"],["520","527"],["521","527"]],
+        "expected_block_id": null,
+        "expected_chunks": [["835","851"]], 
+        "answer_text": "### 原文依据：向量组的极大线性无关组定义:[定义3 在域 $F$ 上的线性空间 $V$ 中，向量组 $\\alpha_{1},\\dots ,\\alpha_{s}$ 的一个部分组称为一个极大线性无关组，如果这个部分组本身是线性无关的，但是从这个向量组的其余向量（如果还存在）中任取一个添加进去，得到的新的部分组都线性相关。]\n线性空间的基的定义:[定义6 设 $V$ 是域 $F$ 上的线性空间， $V$ 中的向量集 $S$ 如果满足下述两个条件：\n$1^{\\circ}$ 向量集 $S$ 是线性无关的；\n$2^{\\circ}V$ 中每一个向量可以由向量集 $S$ 中有限多个向量线性表出，\n那么称 $S$ 是 $V$ 的一个基。]"
+    },
+    {
+        "query": "请说明Hamming距离与Hamming重量在定义上的核心区别。",
+        "baseline_chunks": [["779","780"]],
+        "expected_block_id": null,
+        "expected_chunks": [["1227","1228"]], 
+        "answer_text": "### 原文依据：Hamming距离定义:[定义1设 $\\alpha ,\\beta \\in \\mathbf{Z}_2^n,\\alpha$ 与 $\\pmb{\\beta}$ 对应分量不同位置的个数称为 $\\pmb{\\alpha}$ 与 $\\pmb{\\beta}$ 的Hamming距离，记作 $d(\\pmb {\\alpha},\\pmb {\\beta})$ 。]\n Hamming重量的定义:[定义2设 $\\pmb {\\alpha}\\in \\mathbf{Z}_{2^n}$ ， $\\pmb{\\alpha}$ 的非零分量的个数称为 $\\pmb{\\alpha}$ 的Hamming重量，记作 $W(\\pmb {\\alpha})$ 。]"
+    },
+    {
+        "query": "请说明线性映射与线性函数在定义上的核心区别。",
+        "baseline_chunks": [["787","1492"],["788","1492"]],
+        "expected_block_id": null,
+        "expected_chunks": [["1235","2169"]], 
+        "answer_text": "### 原文依据：线性映射定义:[定义1 设 $V$ 与 $V'$ 是域 $F$ 上两个线性空间， $V$ 到 $V'$ 的一个映射 $\\mathcal{A}$ 如果保持加法运算和纯量乘法运算，即\n$$\n\\mathcal {A} (\\alpha + \\beta) = \\mathcal {A} (\\alpha) + \\mathcal {A} (\\beta) \\quad \\forall \\alpha , \\beta \\in V; \\tag {1}\n$$\n$$\n\\mathcal {A} (k \\alpha) = k \\mathcal {A} (\\alpha) \\quad \\forall \\alpha \\in V, k \\in F _ {\\circ} \\tag {2}\n$$\n那么称 $\\mathcal{A}$ 是 $V$ 到 $V^{\\prime}$ 的一个线性映射。]\n线性函数的定义:[定义1 设 $V$ 是域 $F$ 上的线性空间， $V$ 到 $F$ 的一个映射 $f$ 如果满足\n$$\nf (\\alpha + \\beta) = f (\\alpha) + f (\\beta), \\quad \\forall \\alpha , \\beta \\in V, \\tag {1}\n$$\n$$\nf (k \\alpha) = k f (\\alpha), \\forall \\alpha \\in V, k \\in F, \\tag {2}\n$$\n那么称 $f$ 是 $V$ 上的一个线性函数。]"
+    },
+    {
+        "query": "请说明幂等变换与对合变换在定义上的核心区别。",
+        "baseline_chunks": [["797","809"]],
+        "expected_block_id": null,
+        "expected_chunks": [["1251","1263"]], 
+        "answer_text": "### 原文依据：幂等变换的定义:[定义2 线性空间 $V$ 上的线性变换 $\\mathcal{A}$ 如果满足 $\\mathcal{A}^2 = \\mathcal{A}$ ，那么称 $\\mathcal{A}$ 是幂等变换。\n（10）式表明：投影 $\\mathcal{P}_U, \\mathcal{P}_W$ 都是幂等变换。]\n对合变换的定义:[定义5 域 $F$ 上线性空间 $V$ 上的线性变换 $\\mathcal{A}$ 若满足 $\\mathcal{A}^2 = I$ , 则称 $\\mathcal{A}$ 是对合变换。\n图9-2\n几何空间中的镜面反射 $\\mathcal{R}_U$ 是一个对合变换。]"
+    },
+    {
+        "query": "请说明线性变换的零化多项式与最小多项式在定义上的核心区别。",
+        "baseline_chunks": [["1021","1087"]],
+        "expected_block_id": null,
+        "expected_chunks": [["1566","1660"]], 
+        "answer_text": "### 原文依据：零化多项式的定义:[定义2 设 $V$ 是域 $F$ 上的线性空间（可以是无限维的）， $\\mathcal{A}$ 是 $V$ 上的一个线性变换。如果 $F$ 上的一元多项式 $f(x)$ 使得 $f(\\mathcal{A}) = O$ ，那么称 $f(x)$ 是 $\\mathcal{A}$ 的一个零化多项式。]\n最小多项式的定义:[定义1 设 $\\mathcal{A}$ 是域 $F$ 上线性空间 $V$ 的一个线性变换，在 $\\mathcal{A}$ 的所有非零的零化多项式中，次数最低的首项系数为1的多项式称为 $\\mathcal{A}$ 的最小多项式。]"
+    },
+    {
+        "query": "请说明幂零变换与由向量生成的C-循环子空间在定义上的核心区别。",
+        "baseline_chunks": [["811","1364"]],
+        "expected_block_id": null,
+        "expected_chunks": [["1265","2043"]], 
+        "answer_text": "### 原文依据：幂零变换的定义:[定义6 设 $\\mathcal{B}$ 是域 $F$ 上线性空间 $V$ 上的一个线性变换，如果存在正整数 $l$ 使得 $\\mathcal{B}^l = O$ ，那么称 $\\mathcal{B}$ 是幂零变换；]\n由向量生成的C-循环子空间的定义:[定义2设 $C$ 是域 $F$ 上有限维线性空间 $W$ 上的线性变换，对于 $\\alpha \\in W$ 且 $\\alpha \\neq 0$ ，如果 $\\alpha ,C_{\\alpha},\\dots ,C^{t - 1}\\alpha$ 线性无关，且 $C^t\\alpha$ 可以由 $\\alpha ,C_{\\alpha},\\dots ,C^{t - 1}\\alpha$ 线性表出，那么称子空间 $\\langle \\alpha ,$ $C_{\\alpha},\\dots ,C^{t - 1}\\alpha \\rangle$ 是由 $\\alpha$ 生成的 $C-$ 循环子空间。]"
+    },
+    {
+        "query": "请说明不变因子与初等因子在定义上的核心区别。",
+        "baseline_chunks": [["1262","1265"]],
+        "expected_block_id": null,
+        "expected_chunks": [["1896","1902"]], 
+        "answer_text": "### 原文依据：不变因子的定义:[定义2 $A(\\lambda)$ 的相抵标准形中主对角线上的非零元 $d_{1}(\\lambda), d_{2}(\\lambda), \\dots, d_{r}(\\lambda)$ 称为 $A(\\lambda)$ 的不变因子。]\n初等因子的定义:[定义5 设 $A(\\lambda)$ 是 $\\mathbf{C}[\\lambda]$ 上的 $n$ 级非零矩阵，把 $A(\\lambda)$ 的每个次数大于0的不变因子分解成互不相同的一次因式方幂的乘积，所有这些一次因式的方幂（相同的必须按出现的次数计算）称为 $A(\\lambda)$ 的初等因子。]"
+    },
+    {
+        "query": "请说明 欧几里得空间中的正交基与标准正交基 和 酉空间中的正交基与标准正交基 在定义上的核心区别。",
+        "baseline_chunks": [["1716","1899"]],
+        "expected_block_id": null,
+        "expected_chunks": [["2471","2777"]], 
+        "answer_text": "### 原文依据：欧几里得空间中的正交基与标准正交基的定义:[定义8 在 $n$ 维欧几里得空间 $V$ 中，由 $n$ 个两两正交的非零向量组成的基称为 $V$ 的一个正交基；由 $n$ 个两两正交的单位向量组成的基称为 $V$ 的一个标准正交基。]\n酉空间中的正交基与标准正交基的定义:[定义6 在 $n$ 维酉空间 $V$ 中，由 $n$ 个两两正交的非零向量组成的基称为 $V$ 的一个正交基；由 $n$ 个两两正交的单位向量组成的基称为 $V$ 的一个标准正交基。]"
+    },
+    {
+        "query": "双线性函数的左根与右根 和 非退化双线性函数 与 正交补 有什么联系与区别？请从定义出发解释。",
+        "baseline_chunks": [["1577","1577","1758"],["1577","1578","1758"]],
+        "expected_block_id": null,
+        "expected_chunks": [["2280","2281","2542"]], 
+        "answer_text": "### 原文依据：双线性函数的左根与右根的定义:[定义2 设 $f$ 是域 $F$ 上线性空间 $V$ 上的一个双线性函数， $V$ 的下述子集\n$$\n\\{\\alpha \\in V \\mid f (\\alpha , \\beta) = 0, \\quad \\forall \\beta \\in V \\} \\tag {9}\n$$\n称为 $f$ 在 $V$ 中的左根，记作 $\\mathrm{rad}_LV;V$ 的另一个子集\n$$\n\\{\\beta \\in V \\mid f (\\alpha , \\beta) = 0, \\quad \\forall \\alpha \\in V \\} \\tag {10}\n$$\n称为 $f$ 在 $V$ 中的右根，记作 $\\mathrm{rad}_R V$ 。]\n非退化双线性函数的定义:[定义3 如果 $V$ 上双线性函数 $f$ 的左根和右根都是零子空间，那么称 $f$ 是非退化的。]\n正交补的定义[定义1设 $V$ 是一个实内积空间， $S$ 是 $V$ 的一个非空子集。我们把 $V$ 中与 $S$ 的每一个向量都正交的所有向量组成的集合叫作 $S$ 的正交补，记作 $S^{\\perp}$ ，即\n$$\nS ^ {\\perp} := \\{\\alpha \\in V \\mid (\\alpha , \\beta) = 0, \\forall \\beta \\in S \\}. \\tag {1}\n$$]"
+    },
+    {
+        "query": "对称与斜对称双线性函数 和 辛空间 在定义上有何核心区别？",
+        "baseline_chunks": [["1579","2085"]],
+        "expected_block_id": null,
+        "expected_chunks": [["2285","3078"]], 
+        "answer_text": "### 原文依据：对称与斜对称双线性函数的定义:[定义4 设 $f$ 是域 $F$ 上线性空间 $V$ 上的一个双线性函数，如果\n$$\nf (\\alpha , \\beta) = f (\\beta , \\alpha), \\quad \\forall \\alpha , \\beta \\in V, \\tag {11}\n$$\n那么称 $f$ 是对称的；如果\n$$\nf (\\alpha , \\beta) = - f (\\beta , \\alpha), \\quad \\forall \\alpha , \\beta \\in V, \\tag {12}\n$$\n那么称 $f$ 是斜对称的（或反对称的）。]\n辛空间的定义:[定义10 域 $F$ 上的线性空间 $V$ 如果指定了一个斜对称双线性函数 $f$ ，那么称 $f$ 是 $V$ 上的一个内积（或辛内积）。称 $V$ 是一个辛空间，记作 $(V, f)$ 。如果 $f$ 是非退化的，那么 $(V, f)$ 称为正则的；否则称为非正则的。]"
+    },
+
+
+
+
+
+
+
+
+
+    {
+        "query": "实内积空间的同构映射 和 酉空间的同构映射 与 线性空间的同构映射 有什么不同？请从定义出发解释。",
+        "baseline_chunks": [["1721","1904","699"]],
+        "expected_block_id": null,
+        "expected_chunks": [["2479","2784","1110"]], 
+        "answer_text": "### 原文依据：实内积空间的同构映射:[定义9 设 $V$ 和 $V'$ 都是实内积空间，如果存在 $V$ 到 $V'$ 的一个双射 $\\sigma$ ，使得对于任意 $\\alpha, \\beta \\in V, k \\in \\mathbf{R}$ ，有\n$$\n\\sigma (\\alpha + \\beta) = \\sigma (\\alpha) + \\sigma (\\beta),\n$$\n$$\n\\sigma (k \\alpha) = k \\sigma (\\alpha),\n$$\n$$\n(\\alpha , \\beta) = (\\sigma (\\alpha), \\sigma (\\beta)),\n$$\n那么称 $\\sigma$ 是实内积空间 $V$ 到 $V^{\\prime}$ 的一个同构映射，此时称 $V$ 与 $V^{\\prime}$ 是同构的，记作 $V\\cong V^{\\prime}$ 。]\n酉空间的同构映射的定义:[定义8 设 $V$ 和 $V'$ 都是酉空间，如果存在 $V$ 到 $V'$ 的一个双射 $\\sigma$ ，使得 $\\sigma$ 保持加法和数量乘法运算，且 $\\sigma$ 保持向量的内积不变（即 $(\\sigma(\\alpha), \\sigma(\\beta)) = (\\alpha, \\beta), \\forall \\alpha, \\beta \\in V)$ ，那么称 $\\sigma$ 是酉空间 $V$ 到 $V'$ 的一个同构映射（保距同构）。此时称酉空间 $V$ 与 $V'$ 是同构的，记作 $V \\cong V'$ 。]\n线性空间的同构映射:[定义1 设 $V$ 与 $V'$ 都是域 $F$ 上的线性空间，如果存在 $V$ 到 $V'$ 的一个双射 $\\sigma$ ，并且 $\\sigma$ 保持加法与纯量乘法两种运算，即使得对于任意 $\\alpha, \\beta \\in V, k \\in F$ ，有\n$$\n\\sigma (\\alpha + \\beta) = \\sigma (\\alpha) + \\sigma (\\beta),\n$$\n$$\n\\sigma (k \\alpha) = k \\sigma (\\alpha),\n$$\n那么称 $\\sigma$ 是 $V$ 到 $V^{\\prime}$ 的一个同构映射(简称为同构)；此时称 $V$ 与 $V^{\\prime}$ 是同构的，记作 $V\\cong V^{\\prime}$ 。]"
+    },
+    {
+        "query": "环、域和代数在定义上的核心区别和联系是什么？",
+        "baseline_chunks": [["8","418","801"]],
+        "expected_block_id": null,
+        "expected_chunks": [["12","671","1255"]], 
+        "answer_text": "### 原文依据：环的定义:[定义2 设 $R$ 是一个非空集合，如果它有两个代数运算，一个叫作加法，记作 $a + b$ ，另\n一个叫作乘法，记作 $ab$ ；\n并且这两个运算满足下列6条运算法则 $(\\forall a, b, c \\in R)$ ：\n$1^{\\circ}$ 加法结合律，即 $(a + b) + c = a + (b + c)$\n$2^{\\circ}$ 加法交换律，即 $a + b = b + a$\n$3^{\\circ}$ 在 $R$ 中有元素0，使得 $a + 0 = a$ ，称0是 $R$ 的零元；\n$4^{\\circ}$ 对于 $a$ ，在 $R$ 中有元素 $d$ ，使得 $a + d = 0$ ，称 $d$ 是 $a$ 的负元，记作 $-a$\n$5^{\\circ}$ 乘法结合律，即 $(ab)c = a(bc)$\n$6^{\\circ}$ 乘法对于加法的左、右分配律，即\n$$\na (b + c) = a b + a c,\n$$\n$$\n(b + c) a = b a + c a,\n$$\n那么称 $R$ 是一个环。]\n域的定义:[定义1 一个有单位元 $1(\\neq 0)$ 的交换环 $F$ ，如果它的每个非零元都可逆，那么称 $F$ 是一个域。]\n代数的定义:[定义4 一个非空集合 $/A$ 如果有加法、乘法运算，以及域 $F$ 与 $/A$ 的纯量乘法运算，并且 $/A$ 对于加法和纯量乘法成为域 $F$ 上的一个线性空间， $/A$ 对于加法和乘法成为一个有单位元的环， $/A$ 的乘法与纯量乘法满足：\n$$\nk (\\alpha \\beta) = (k \\alpha) \\beta = \\alpha (k \\beta), \\forall k \\in F, \\alpha , \\beta \\in / A, \\tag {14}\n$$\n那么称 $/A$ 是域 $F$ 上的一个代数，把线性空间 $/A$ 的维数称为代数 $/A$ 的维数。]"
+    },
+    {
+        "query": "如何区分线性空间、欧几里得空间和酉空间？它们的定义关键点是什么？",
+        "baseline_chunks": [["506","1706","1895"],["507","1706","1895"],["508","1706","1895"]],
+        "expected_block_id": null,
+        "expected_chunks": [["810","2446","2760"]], 
+        "answer_text": "### 原文依据：线性空间的定义:[定义1 设 $V$ 是一个非空集合, $F$ 是一个域。\n如果 $V$ 上有一个运算（即 $V \\times V$ 到 $V$ 的一个映射), 称为加法, 即 $(\\alpha, \\beta) \\longmapsto \\gamma$ , 把 $\\gamma$ 称为 $\\alpha$ 与 $\\beta$ 的和, 记作 $\\alpha + \\beta = \\gamma$ ; $F$ 与 $V$ 有一个运算（即, $F \\times V$ 到 $V$ 的一个映射), 称为纯量乘法, 即 $(k, \\alpha) \\longmapsto \\delta$ , 把 $\\delta$ 称为 $k$ 与 $\\alpha$ 的纯量乘积, 记作 $k\\alpha = \\delta$ , 并且满足下述8条运算法则: $\\forall \\alpha, \\beta, \\gamma \\in V, \\forall k, l \\in F$ , 有:\n$1^{\\circ}\\alpha +\\beta = \\beta +\\alpha$ （加法交换律）；\n$2^{\\circ}(\\alpha +\\beta) + \\gamma = \\alpha +(\\beta +\\gamma)$ （加法结合律）；\n$3^{\\circ} V$ 中有一个元素，记作 0，它使得\n$$\n\\alpha + 0 = \\alpha , \\quad \\forall \\alpha \\in V,\n$$\n具有该性质的元素0称为 $V$ 的零元；\n$4^{\\circ}$ 对于 $\\alpha \\in V$ ，存在 $\\beta \\in V$ ，使得\n$$\n\\alpha + \\beta = 0,\n$$\n具有该性质的元素 $\\beta$ 称为 $\\alpha$ 的负元；\n$5^{\\circ}1\\alpha = \\alpha$ ，其中1是 $F$ 的单位元；\n$$\n6 ^ {\\circ} (k l) \\alpha = k (l \\alpha);\n$$\n$$\n7 ^ {\\circ} (k + l) \\alpha = k \\alpha + l \\alpha ;\n$$\n$$\n8 ^ {\\circ} k (\\alpha + \\beta) = k \\alpha + k \\beta ,\n$$\n那么称 $V$ 是域 $F$ 上的一个线性空间。]\n欧几里得空间的定义:[定义3 设 $V$ 是实数域上的一个线性空间，如果给定了 $V$ 上的一个内积，那么称 $V$ 是一个实内积空间。有限维的实内积空间 $V$ 称为欧几里得空间，并且把线性空间 $V$ 的维数称为欧几里得空间 $V$ 的维数。]\n酉空间的定义:[定义2 复线性空间 $V$ 上如果指定了一个内积，那么称 $V$ 是复内积空间或酉空间。]"
+    },
+    {
+        "query": "请说明线性映射、线性变换、正交变换 和 酉变换 在定义上的核心区别。",
+        "baseline_chunks": [["787","788","1796","1912"],["788","1796","1912"]],
+        "expected_block_id": null,
+        "expected_chunks": [["1235","1235","2609","2803"]], 
+        "answer_text": "### 原文依据：线性映射的定义:[定义1 设 $V$ 与 $V'$ 是域 $F$ 上两个线性空间， $V$ 到 $V'$ 的一个映射 $\\mathcal{A}$ 如果保持加法运算和纯量乘法运算，即\n$$\n\\mathcal {A} (\\alpha + \\beta) = \\mathcal {A} (\\alpha) + \\mathcal {A} (\\beta) \\quad \\forall \\alpha , \\beta \\in V; \\tag {1}\n$$\n$$\n\\mathcal {A} (k \\alpha) = k \\mathcal {A} (\\alpha) \\quad \\forall \\alpha \\in V, k \\in F _ {\\circ} \\tag {2}\n$$\n那么称 $\\mathcal{A}$ 是 $V$ 到 $V^{\\prime}$ 的一个线性映射。]\n线性变换的定义:[线性空间 $V$ 到自身的线性映射通常称为 $V$ 上的线性变换。]\n正交变换的定义:[定义1 实内积空间 $V$ 到自身的满射 $\\mathcal{A}$ ，如果保持向量的内积不变，即\n$$\n\\left(\\mathcal {A} _ {\\alpha}, \\mathcal {A} _ {\\beta}\\right) = (\\alpha , \\beta), \\quad \\forall \\alpha , \\beta \\in V, \\tag {1}\n$$\n那么称 $\\mathcal{A}$ 是 $V$ 上的一个正交变换。]\n酉变换的定义:[定义9 酉空间 $V$ 到自身的满射 $\\mathcal{A}$ 如果保持向量的内积不变，即\n$$\n\\left(\\mathcal {A} \\alpha , \\mathcal {A} \\beta\\right) = (\\alpha , \\beta), \\quad \\forall \\alpha , \\beta \\in V, \\tag {25}\n$$\n那么称 $\\mathcal{A}$ 是 $V$ 上的一个酉变换。]"
+    },
+    {
+        "query": "向量组的线性相关与线性无关、极大线性无关组 和 向量组的秩 在定义上有何联系与区别？",
+        "baseline_chunks": [["514","520","525"],["515","520","525"]],
+        "expected_block_id": null,
+        "expected_chunks": [["826","835","844"]], 
+        "answer_text": "### 原文依据：向量组的线性相关与线性无关的定义:[定义2 设 $V$ 是域 $F$ 上的线性空间，则\n| 研究的对象 | 线性相关 | 线性无关 |\n| :--- | :--- | :--- |\n| 向量组 $\\alpha_1, \\dots, \\alpha_s$ ($s \\ge 1$) | $F$ 中有不全为 $0$ 的元素 $k_1, \\dots, k_s$，使得 $k_1\\alpha_1 + \\dots + k_s\\alpha_s = 0$ | 从 $k_1\\alpha_1 + \\dots + k_s\\alpha_s = 0$ 可以推出 $k_1 = \\dots = k_s = 0$ |\n| $V$ 的非空有限子集 | 给这个子集的元素一种编号所得的向量组线性相关 | 给这个子集的元素一种编号所得的向量组线性无关 |\n| $V$ 的无限子集 $W$ | $W$ 有一个有限子集线性相关 | $W$ 的任一有限子集都线性无关 |\n空集（作为 $V$ 的子集）定义成是线性无关的。]\n极大线性无关组的定义:[定义3 在域 $F$ 上的线性空间 $V$ 中，向量组 $\\alpha_{1},\\dots ,\\alpha_{s}$ 的一个部分组称为一个极大线性无关组，如果这个部分组本身是线性无关的，但是从这个向量组的其余向量（如果还存在）中任取一个添加进去，得到的新的部分组都线性相关。]\n向量组的秩的定义:[定义5 向量组的极大线性无关组所含向量的个数称为这个向量组的秩。把向量组 $\\alpha_{1},\\dots ,\\alpha_{s}$ 的秩记作 $\\mathrm{rank}\\{\\alpha_1,\\dots ,\\alpha_s\\}$ 。]"
+    },
+    {
+        "query": "请给出群、子群和群的同构映射三者的定义？",
+        "baseline_chunks": [["2121","2126","2128"]],
+        "expected_block_id": null,
+        "expected_chunks": [["3126","3129","3131"]], 
+        "answer_text": "### 原文依据：群的定义:[定义1 设 $G$ 是一个非空集合，如果在 $G$ 上定义了一种代数运算，叫作乘法，并且满足下列法则：\n$1^{\\circ}$ $a(bc) = (ab)c$ ， $\\forall a,b,c\\in G$ （结合律）， (1)\n$2^{\\circ}$ $G$ 中有一个元素 $e$ ，使得\n$$\ne a = a e = a, \\quad \\forall a \\in G, \\tag {2}\n$$\n$3^{\\circ}$ 对于 $G$ 中每一个元素 $a$ ，都有 $G$ 中一个元素 $b$ ，使得\n$$\na b = b a = e, \\tag {3}\n$$\n那么 $G$ 称为一个群。\n容易证明，群 $G$ 中满足(2)式的元素 $e$ 是唯一的，称 $e$ 是 $G$ 的单位元；\n对于 $a \\in G, G$ 中满足(3)式的元素 $b$ 是唯一的，称 $b$ 是 $a$ 的逆元，记作 $a^{-1}$ 。\n如果群 $G$ 的运算还满足交换律，即\n$$\na b = b a, \\quad \\forall a, b \\in G,\n$$\n那么称 $G$ 是交换群，或Abel群。]\n子群的定义:[定义2 如果群 $G$ 的非空子集 $H$ 对于 $G$ 的运算也成为一个群, 那么 $H$ 称为 $G$ 的子群, 记作 $H < G$ 。]\n群的同构映射的定义:[定义3 设 $G$ 和 $G'$ 是两个群，如果存在 $G$ 到 $G'$ 的一个双射 $\\sigma$ ，使得\n$$\n\\sigma (a b) = \\sigma (a) \\sigma (b), \\quad \\forall a, b \\in G, \\tag {4}\n$$\n那么称 $\\sigma$ 是 $G$ 到 $G^{\\prime}$ 的一个同构映射(简称为同构)；此时称 $G$ 同构于 $G^{\\prime}$ ，记作 $G\\cong G^{\\prime}$ 。]"
+    }
+]

@@ -1,0 +1,209 @@
+# 这是针对Math_RAG_System项目的配置文件
+
+# 这是针对fix流程的配置部分
+fix:
+  # 是否启用fix流程
+  enable: true
+
+  # fix文件输入输出地址
+  input_path: "./Data/raw/full.md"
+  output_path: "./Data/processed/fixed.md"
+  output_report_path: "./Data/processed/fix_report.csv"
+ 
+  # few-shot的地址  
+  few_shot_path: "./configs/fewShot.yaml"
+
+  context_lines: 5  # 提取问题片段前，后x行
+  gap_threshold: 5  # 公式之间间隔
+  max_retries: 3 # 最大重试次数
+  max_workers: 5 # 并行修复的线程数
+
+  DeepSeek:
+    url: https://api.deepseek.com/v1
+    DEEPSEEK_API_KEY: "your_deepseek_api_key"  # 这里可以直接替换，也可以在.env文件中配置
+
+# 针对分块的配置
+chunked:
+  input_path: "./Data/processed/fixed.md"
+  output_path: "./Data/processed/math_chunks.json"
+  embedding_model:
+    model_name: "BGE-M3"
+    model_path: "./model/bge/BAAI/bge-m3"
+    device: "cuda"
+    LONG_THRESHOLD: 800
+    SHORT_THRESHOLD: 50
+
+# 入库编写，影响src/utils/insertQdrant.py，从而影响src/pipeline/ingest_pipeline.py，main.py
+insert:
+  # math_rag_system配置项，默认使用hybrid
+  math_rag_system:
+    math_chunk_path: "./Data/processed/math_chunks.json"
+    collection_name: "math_rag_hybrid"
+    # 暂时只支持本地Qdrant
+    Database:
+      host: "localhost"
+      port: 6333
+
+    embedding_model:
+      model_name: "BGE-M3"
+      model_path: "./model/bge/BAAI/bge-m3"
+      device: "cuda"
+      embed_batch_size: 1
+      use_fp16: True
+
+  # baseline和no_fix配置项，是用来做对照实验的；修改hybrid时不用修改collection_name，代码会根据hybrid自动添加后缀
+  baseline:
+    markdown_path: "./Data/processed/fixed.md"
+    output_json_path: "./Data/processed/baseline_chunks.json"
+    collection_name: "baseline"
+    hybrid: True
+    chunk_size: 512
+    overlap: 50
+    # 暂时只支持本地Qdrant
+    Database:
+      host: "localhost"
+      port: 6333
+
+    embedding_model:
+      model_name: "BGE-M3"
+      model_path: "./model/bge/BAAI/bge-m3"
+      device: "cuda"
+      embed_batch_size: 1
+      use_fp16: True
+  
+  no_fix:
+    markdown_path: "./Data/raw/full.md"
+    output_json_path: "./Data/processed/no_fix_chunks.json"
+    collection_name: "no_fix"
+    hybrid: True
+    chunk_size: 512
+    overlap: 50
+    # 暂时只支持本地Qdrant
+    Database:
+      host: "localhost"
+      port: 6333
+
+    embedding_model:
+      model_name: "BGE-M3"
+      model_path: "./model/bge/BAAI/bge-m3"
+      device: "cuda"
+      embed_batch_size: 1
+      use_fp16: True
+
+# 召回,重排的配置，影响src/retriever
+retriever:
+  MAX_RETRIES: 3 # 最大重试次数
+  collection_name: "math_rag_hybrid"
+  top_k: 20
+  block_aggregate: False
+  rerank_pool_size: 10 # 这里是为了聚合block预留的大小
+
+  # 暂时只支持本地Qdrant
+  Database:
+    host: "localhost"
+    port: 6333
+
+  embedding_model:
+    model_name: "BGE-M3"
+    model_path: "./model/bge/BAAI/bge-m3"
+    device: "cuda"
+    embed_batch_size: 1
+
+  rerank_model:
+    model_name: "BAAI/bge-reranker-v2-m3"
+    url: "https://api.siliconflow.cn/v1/rerank"
+    SILICONFLOW_API_KEY: "your_siliconflow_api_key"
+    top_n: 3
+    return_documents: False
+
+# 生成的配置，影响src/generator
+generator:
+  model_name: "my-qwen3"
+  base_url: "http://localhost:11434/v1"
+  api_key: "ollama"
+  temperature: 0.1
+  max_tokens: 4096
+
+# 测试，影响src/evaluation
+test:
+  test_file_path: "./test/Test.json"
+  output_path: "./test/result/Test.json"
+  max_retries: 3
+
+  # 任务列表
+  task:
+    no_fix: 
+      collection_name: "...."
+      block_aggregate: False
+      hybrid: True
+    baseline_dense: 
+      collection_name: "baseline_dense"
+      block_aggregate: False
+      hybrid: False
+    baseline_hybrid:
+      collection_name: "baseline_hybrid"
+      block_aggregate: False
+      hybrid: True
+    math_rag_hybrid: 
+      collection_name: "math_rag_hybrid"
+      block_aggregate: False
+      hybrid: True
+    
+  # 裁判模型
+  judgement_model:
+    DeepSeek:
+      url: "https://api.deepseek.com/v1"
+      DEEPSEEK_API_KEY: "your_deepseek_api_key"
+    
+    GLM:
+      url: "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+      GLM_Authorization: "your_glm_authorization"
+      model: "glm-4.7"
+
+    JUDGE_SYSTEM_PROMPT: |
+      你是一个数学问答系统的专业评估专家。
+
+      你将收到：
+      - 问题
+      - 参考答案（标准答案）
+      - 参考资料（检索到的上下文）
+      - 模型回答（待评估的系统输出）
+
+      请从以下四个维度对模型回答和检索质量进行评分（每个维度 0-2 分）：
+
+      ### 1. 正确性 (Correctness) 0-2
+      检查模型回答在数学上是否正确、完整。与参考答案或标准数学知识对比。
+      - 0：完全错误，或缺少关键步骤/答案导致回答无用。
+      - 1：部分正确（例如中间步骤正确但最终答案错误；或多个子问题中只有部分正确）。
+      - 2：完全正确且完整（所有步骤、最终答案均正确，无错误）。
+
+      ### 2. 忠诚性 (Faithfulness) 0-2
+      评估模型回答是否「严格受限于」提供的参考资料。模型回答中的所有事实陈述必须能在参考资料中找到直接支持。
+      - 2：所有陈述均能在参考资料中找到直接出处。
+      - 1：大部分陈述有据可查，但包含少量参考资料未提及的外部常识或轻微推论。
+      - 0：出现以下任一情况：
+        1. 存在与资料矛盾的内容。
+        2. 存在参考资料中完全未提及的重大事实（即使该事实在现实中是正确的）。
+        3. 参考资料为空列表 [] 或为“暂无参考资料”时，模型输出了任何具体知识（此时应视为“无依据”，无论回答是否正确，均判定为 0 分）。
+
+      ### 3. 答案相关性 (Answer Relevance) 0-2
+      检查模型回答是否直接回应了问题，有无偏离主题或多余内容。
+      - 0：完全不回答问题（答非所问）。
+      - 1：部分相关（例如回答了另一个相似的问题，或包含无关的冗余信息）。
+      - 2：完全相关 – 直接回答了所问问题，无额外无关内容。
+
+      ### 4. 上下文相关性 (Context Relevance) 0-2
+      评估提供的参考资料与问题的相关程度。该指标用于衡量检索（retrieve/rerank）阶段的质量，独立于模型回答。
+      - 0：参考资料与问题完全无关，没有任何有用信息。
+      - 1：参考资料部分相关（例如包含一些相关片段，但大部分内容无关；或只能回答问题的子集）。
+      - 2：参考资料高度相关，能够充分回答所问问题（包含所有必要信息）。
+
+      重要说明：
+      - 正确性不依赖于参考资料的正确性：即使参考资料错误，如果模型忠实反映了它，正确性可能低，但忠诚性可以高。
+      - 正确性应该基于标准数学知识和参考答案进行判断，而不限于提供的上下文。
+      - 答案相关性不依赖正确性：即使答案错误，只要它在尝试回答问题，仍可得到较高的答案相关性分数。
+      - 上下文相关性是独立维度，仅评估检索到的资料质量，不影响忠诚性或答案相关性（但忠诚性要求模型不超出资料）。
+
+      输出格式：严格输出一个 JSON 对象，不要包含任何 Markdown 格式符号（如 ```json）或额外的解释文本。包含以下字段：
+      - "reasoning": 一个字符串，包含对每个指标评分理由的简短说明。
+      - "scores": 一个对象，包含 "correctness", "faithfulness", "answer_relevance", "context_relevance" 四个字段，值均为 0、1 或 2。
