@@ -28,6 +28,7 @@
 - **混合检索**：结合 BGE-M3 的稠密 (Dense) 与稀疏 (Sparse) 向量，通过 RRF 算法融合。
 - **精细重排**：使用 BGE-Reranker-V2-M3 进行 Top-K 过滤，严格控制上下文窗口。
 
+```mermaid
 graph TD
     subgraph "Stage 1: 文档预处理 (Parser & Fixer)"
         A[原始 PDF/MD] --> B[MinerU OCR 解析]
@@ -56,7 +57,7 @@ graph TD
         O --> P[Qwen LLM 推理]
         P --> Q[输出最终答案]
     end
-
+```
 ---
 
 ## 📊 实验表现
@@ -163,3 +164,14 @@ Math_RAG_System
    ├─ config.yaml
    ├─ config_example.yaml
    └─ fewShot.yaml              # LLM局部重写所使用的
+```
+---
+## ⚖️ 免责声明 / Disclaimer
+
+**版权说明**：本项目为个人学习及实习作品。涉及的部分原始教材资料来源于公开网络，仅做算法验证使用。若相关版权方认为本项目内容存在侵权，请通过 GitHub 联系作者删除。
+
+**数据用途**：本项目提供的代码及实验数据仅供学术交流，严禁用于任何商业用途。
+
+**准确性声明**：受限于 OCR 技术、大模型幻觉及 RAG 逻辑，答案可能存在错误。作者不承担因使用本项目内容产生的任何直接或间接损失。
+
+**开源协议**：本项目代码遵循 MIT 协议开源。
