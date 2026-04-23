@@ -2,7 +2,7 @@ import json
 import logging
 from typing import List, Tuple, Union
 
-from src.retriever import QdrantRetriever, Reranker, BlockAggregator
+from src.rag.retriever import QdrantRetriever, Reranker, BlockAggregator
 
 class Score:
     def __init__(self,config):

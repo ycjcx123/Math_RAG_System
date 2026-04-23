@@ -95,7 +95,7 @@ retriever:
   MAX_RETRIES: 3 # 最大重试次数
   collection_name: "math_rag_hybrid"
   top_k: 20
-  block_aggregate: False
+  block_aggregate: True
   rerank_pool_size: 10 # 这里是为了聚合block预留的大小
 
   # 暂时只支持本地Qdrant
@@ -118,11 +118,30 @@ retriever:
 
 # 生成的配置，影响src/generator
 generator:
-  model_name: "my-qwen3"
-  base_url: "http://localhost:11434/v1"
-  api_key: "ollama"
+  model_name: "Qwen3-1.7B-Q8_0.gguf"
+  base_url: "http://localhost:8080/v1"
+  api_key: "llama-cpp"
   temperature: 0.1
   max_tokens: 4096
+
+# Agentic RAG 配置，影响src/agent
+agent:
+  # 最大循环次数
+  max_loop_count: 2
+  # Fallback 消息
+  fallback_message: "在教材中未找到准确定义，建议换个问法"
+  # 路由节点配置
+  router:
+    # 默认路径（当模型输出模糊时）
+    default_path: "RAG"
+  # 查询重写配置
+  rewriter:
+    # JSON 解析失败时的回退策略
+    fallback_to_original: true
+  # 评分节点配置
+  grader:
+    # 相关性的阈值
+    relevance_threshold: 0.5
 
 # 测试，影响src/evaluation
 test:

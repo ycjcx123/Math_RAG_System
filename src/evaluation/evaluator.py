@@ -8,7 +8,8 @@ from typing import List, Dict, Any, Optional
 from openai import OpenAI
 
 # 导入组件
-from src import ChatPipeline, load_config
+from src.pipeline.chat_pipeline import ChatPipeline
+from src.utils.config_loader import load_config
 
 class MathEvaluator:
     def __init__(self, config):

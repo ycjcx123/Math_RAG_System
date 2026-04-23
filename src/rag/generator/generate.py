@@ -6,17 +6,17 @@ from openai import OpenAI
 # 配置日志，方便调试
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-class OllamaGenerator:
+class Generator:
     def __init__(self, config: dict):
         """
         初始化生成器
         :param config: 通过 load_config.get("generator") 获得的配置字典
         """
-        self.model_name = config.get("model_name", "my-qwen3")
+        self.model_name = config.get("model_name", "Qwen3-1.7B-Q8_0.gguf")
         self.base_url = config.get("base_url", "http://localhost:11434/v1")
-        self.api_key = config.get("api_key", "ollama")
+        self.api_key = config.get("api_key", "llama-cpp")
         self.temperature = config.get("temperature", 0.1)
-        self.max_tokens = config.get("max_tokens", 4096)
+        self.max_tokens = config.get("max_tokens", 2048)
         
         # 初始化 OpenAI 兼容客户端
         self.client = OpenAI(

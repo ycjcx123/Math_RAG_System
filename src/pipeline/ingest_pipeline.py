@@ -1,6 +1,6 @@
 import logging
-from src.parser import FormulaFixer
-from src.chunked import ChunkProcessor
+from src.rag.parser import FormulaFixer
+from src.rag.chunked import ChunkProcessor
 from src.utils import InsertQdrant
 
 from src.utils.config_loader import load_config

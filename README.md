@@ -175,3 +175,109 @@ Math_RAG_System
 **准确性声明**：受限于 OCR 技术、大模型幻觉及 RAG 逻辑，答案可能存在错误。作者不承担因使用本项目内容产生的任何直接或间接损失。
 
 **开源协议**：本项目代码遵循 MIT 协议开源。
+
+
+
+
+
+
+
+
+
+
+
+
+问题记录：
+1、现在主流微调的方法
+2、lora的原理
+3、你sft时，调整过哪些参数
+4、为什么会出现模型幻觉
+5、我看你写擅长prompt e，请问prompt e的应用场景
+6、prompt e和harness的区别
+7、sys_prompt和user_prompt的区别，用法
+8、编写prompt有什么心得
+9、模型自反思有没有了解过
+
+你是数学专业的，你认为你在这方面有什么优势：
+模型的底层逻辑有了解过吗？
+举个你针对loss分析的例子
+
+
+
+
+这份升级方案非常务实。在 8GB 显存的限制下，通过 **LangGraph 的确定性逻辑** 来弥补 **1.4B 模型的随机性** 是最科学的路径。
+
+以下我为你整理的 **“Agentic Math-RAG 升级行动路线图”**。你可以审阅逻辑，稍后直接将其作为任务指令输入给 Claude Code。
+
+---
+
+## Agentic Math-RAG 升级行动路线图
+
+### 第一阶段：基础设施与状态定义 (The Foundation)
+这一步是确定“图”的基础数据结构和通信方式。
+
+1.  **State 定义：** 在 LangGraph 中定义 `AgentState` 字典，包含：
+    * `question`: 用户原始问题。
+    * `generation`: 模型最终生成的答案。
+    * `documents`: 检索到的文档列表（Chunk）。
+    * `loop_count`: 当前循环次数（用于触发 Fallback）。
+    * `search_query`: 经过 1.4B 转换后的检索关键词。
+2.  **本地模型适配：** 使用 `llama-cpp-python` 启动 OpenAI 兼容服务器，配置 **GBNF (Grammar)** 限制模型输出。
+    * *重点：* 编写 `.gbnf` 文件强制模型在 Router 阶段只能输出 `RAG` 或 `Chat`。
+
+### 第二阶段：节点逻辑实现 (Nodes Development)
+将你的四个核心步骤转化为 Python 函数。
+
+* **Node 1: Router (语义路由)**
+    * 输入：`question`。
+    * Prompt：Few-shot 示例 + 强制单词输出。
+    * 逻辑：判断跳转至 `Retriever` 或 `General_Chat`。
+* **Node 2: Query_Rewriter (检索关键词提取)**
+    * 输入：`question`。
+    * 任务：将自然语言转为适合数学教材检索的关键词。
+    * 输出：结构化 JSON `{"tool": "RAG", "context": "..."}`。
+* **Node 3: Retriever (检索器)**
+    * 逻辑：调用原有 RAG 代码，自行组装，将结果存入 `documents` 状态。
+* **Node 4: Grader (质量评估)**
+    * 输入：`documents` + `question`。
+    * 任务：判断 Context 是否足以回答 Question。
+    * 逻辑：如果 `No` 且 `loop_count < 2`，回到 `Query_Rewriter` 重新生成关键词；否则进入 `Generator`。
+* **Node 5: Generator (生成器)**
+    * 任务：标准的 RAG 生成。
+
+### 第三阶段：图逻辑编排 (Graph Orchestration)
+这是 Agent 的“大脑”连线。
+
+1.  **添加边 (Edges)：**
+    * `START` -> `Router`
+    * `Router` -> `Query_Rewriter` (If RAG)
+    * `Router` -> `Generator` (If Chat)
+2.  **添加条件边 (Conditional Edges)：**
+    * 从 `Grader` 出发：
+        * If `Yes` -> `Generator`
+        * If `No` and `loop_count < 2` -> `Query_Rewriter`
+        * If `No` and `loop_count >= 2` -> `Fallback_Node` (友好提示未找到)
+
+### 第四阶段：防崩溃安全锁 (Anti-Insanity Safeguards)
+专门针对 1.4B 小模型的鲁棒性设计。
+
+1.  **Max Iteration Hard-Limit：** 在 LangGraph 的 `Graph.compile()` 时设置 `recursion_limit`，防止代码层面的死循环。
+2.  **Output Parser 兜底：** 为所有 LLM 节点编写解析器，如果模型输出了无法解析的内容，默认返回“降级路径”。
+
+关于 loop_count：将初始值设为 0，每经过一次 Grader(No) 增加 1。
+
+如果你觉得这份路线图没问题，我可以为你生成一份直接喂给 Claude Code 的 Prompt 模板。
+
+首先，我现在更新了src的文件框架，请仔细查阅。
+其次，我更新的config中generate字段，我们使用llama.cpp来调用本地模型
+最后，我更新了src/pipeline/retriever.py，现在该文件可以直接执行针对query调用
+
+现在使用下述命令启动了llama的docker，qdrant的docker，现在已经启动了
+docker run -d --name llama-server --gpus all `
+  -v E:/Project/Math_RAG_System/model/Qwen/Qwen/Qwen3-1___7B-GGUF:/models `
+  -p 8080:8080 `
+  ghcr.io/ggml-org/llama.cpp:server-cuda `
+  -m /models/Qwen3-1.7B-Q8_0.gguf `
+  --port 8080 --host 0.0.0.0 -n 2048 -ngl 99 -c 4096
+
+docker run -d -p 6333:6333 -p 6334:6334 -v "${PWD}/qdrant_storage:/qdrant/storage:z" --name MathRAG qdrant/qdrant
