@@ -8,18 +8,17 @@ from src.utils.config_loader import load_config
 
 
 class QueryRewriterNode:
-    """查询重写节点：提取关键词，优化查询用于检索"""
+    """查询重写节点 (v2.0)：阶梯式重写策略
+
+    - loop_count=0 (Precise): 精确提取定理名/编号/术语
+    - loop_count=1 (Concept Expansion): 扩展为上位/相关概念
+    - 如果提供 critique: 基于纠错意见提取检索关键词
+    """
 
     def __init__(self, config: dict = None):
-        """初始化查询重写节点
-
-        Args:
-            config: 配置字典，如果为 None 则自动加载
-        """
         if config is None:
             config = load_config()
 
-        # 获取 generator 配置
         generator_config = config.get("generator", {})
         agent_config = config.get("agent", {})
 
@@ -29,78 +28,91 @@ class QueryRewriterNode:
         self.temperature = generator_config.get("temperature", 0.1)
         self.max_tokens = generator_config.get("max_tokens", 100)
 
-        # 重写配置
         rewriter_config = agent_config.get("rewriter", {})
         self.fallback_to_original = rewriter_config.get("fallback_to_original", True)
 
-        # 初始化客户端
         self.client = OpenAI(
             api_key=self.api_key,
             base_url=self.base_url
         )
 
-        self.system_prompt = """你是一个数学查询优化助手。你的任务是将用户的问题重写为更适合检索的关键词或查询语句。
+        # ---- 第一轮：精确提取 ----
+        self.system_prompt_precise = """你是一个数学检索关键词提取助手。从用户问题中提取适合检索教材的关键词。
 
-输出要求：
-1. 必须输出严格的 JSON 格式：{"tool": "RAG", "context": "关键词"}
-2. "tool" 字段固定为 "RAG"
-3. "context" 字段包含提取的关键词或优化后的查询语句
-4. 关键词应该简洁、准确，包含数学概念、定理名称、公式等核心信息
+输出格式：严格 JSON --- {"tool": "RAG", "context": "关键词"}
+
+规则（第一轮-精确提取）：
+1. 提取数学定理的准确名称、编号（如"定理10"、"柯西-施瓦茨不等式"）
+2. 提取标准数学术语（如"初等因子"、"史密斯标准型"）
+3. 如果提供[纠错意见]，优先从中提取缺失的定理/概念名
+4. 关键词简洁准确，3-6个词为宜
 
 示例：
-用户问题: "求解方程 $x^2 + 2x + 1 = 0$"
-输出: {"tool": "RAG", "context": "一元二次方程 求解 公式法"}
+问题: "证明定理10中λ-矩阵的相抵标准型唯一"
+输出: {"tool": "RAG", "context": "定理10 λ-矩阵 相抵 标准型 唯一性"}
 
-用户问题: "什么是线性无关？"
-输出: {"tool": "RAG", "context": "线性无关 定义 向量组"}
+问题: "什么是线性空间？"
+输出: {"tool": "RAG", "context": "线性空间 定义 向量空间"}
 
-用户问题: "证明勾股定理"
-输出: {"tool": "RAG", "context": "勾股定理 证明 直角三角形"}
+[纠错意见]: "缺少对拉格朗日中值定理的引用"
+问题: "证明ln(1+x) < x"
+输出: {"tool": "RAG", "context": "拉格朗日中值定理 不等式 证明 ln(1+x)"}"""
 
-现在请处理以下问题："""
+        # ---- 第二轮：概念扩展 ----
+        self.system_prompt_expand = """你是一个数学检索关键词扩展助手。第一轮检索未找到相关内容，请将关键词扩展。
 
-        logging.info(f"QueryRewriterNode 初始化完成，使用模型: {self.model_name}")
+输出格式：严格 JSON --- {"tool": "RAG", "context": "扩展后的关键词"}
 
-    def _call_llm(self, question: str) -> str:
-        """调用 LLM 进行查询重写"""
+规则（第二轮-概念扩展）：
+1. 将原关键词扩展为上位概念或相关概念
+2. 添加同义词或相近术语
+3. 覆盖更广的范围，增加命中概率
+4. 5-8个关键词/短语，用空格分隔
+
+示例：
+原词: "初等因子"
+扩展: "初等因子 不变因子 行列式因子 λ-矩阵 史密斯标准型 矩阵对角化 多项式分解"
+
+原词: "定理10"
+扩展: "定理10 λ-矩阵 相抵 初等变换 标准型"
+
+原词: "特征值"
+扩展: "特征值 特征向量 特征多项式 相似对角化 谱分解"
+
+原词: "线性无关"
+扩展: "线性无关 线性相关 向量组的秩 极大线性无关组 线性组合"""
+
+        logging.info(f"QueryRewriterNode (v2.0) 初始化完成，模型: {self.model_name}")
+
+    def _call_llm(self, system_prompt: str, user_content: str) -> str:
         try:
             response = self.client.chat.completions.create(
                 model=self.model_name,
                 messages=[
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": question}
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_content}
                 ],
                 temperature=self.temperature,
                 max_tokens=self.max_tokens
             )
-
             return response.choices[0].message.content.strip()
 
         except Exception as e:
-            logging.error(f"查询重写节点 LLM 调用失败: {e}")
+            logging.error(f"查询重写 LLM 调用失败: {e}")
             return ""
 
     def _extract_json(self, text: str) -> Dict[str, Any]:
-        """从文本中提取 JSON 对象
-
-        Args:
-            text: 可能包含 JSON 的文本
-
-        Returns:
-            解析后的 JSON 字典，如果解析失败返回空字典
-        """
-        # 尝试直接解析
+        """鲁棒的 JSON 解析"""
         try:
             return json.loads(text)
         except json.JSONDecodeError:
             pass
 
-        # 尝试提取 JSON 块（处理可能包含其他文本的情况）
         json_patterns = [
-            r'\{[^{}]*"tool"[^{}]*"RAG"[^{}]*"context"[^{}]*[^{}]*\}',  # 简单匹配
-            r'```json\s*(.*?)\s*```',  # 匹配 ```json ``` 块
-            r'```\s*(.*?)\s*```',  # 匹配 ``` ``` 块
-            r'\{(.*)\}',  # 匹配最外层大括号
+            r'\{[^{}]*"tool"[^{}]*"RAG"[^{}]*"context"[^{}]*[^{}]*\}',
+            r'```json\s*(.*?)\s*```',
+            r'```\s*(.*?)\s*```',
+            r'\{(.*)\}',
         ]
 
         for pattern in json_patterns:
@@ -108,105 +120,116 @@ class QueryRewriterNode:
             for match in matches:
                 try:
                     if pattern.startswith(r'```'):
-                        # 如果是代码块，直接解析匹配的内容
                         return json.loads(match.strip())
                     else:
-                        # 如果是大括号匹配，需要添加大括号
-                        json_str = "{" + match + "}"
-                        return json.loads(json_str)
+                        return json.loads("{" + match + "}")
                 except (json.JSONDecodeError, AttributeError):
                     continue
 
-        # 所有尝试都失败
         logging.warning(f"无法从文本中提取 JSON: {text[:100]}...")
         return {}
 
-    def rewrite(self, question: str) -> Dict[str, Any]:
-        """执行查询重写
+    def rewrite(self, question: str, loop_count: int = 0, critique: str = "") -> Dict[str, Any]:
+        """
+        阶梯式重写
 
         Args:
-            question: 原始用户问题
+            question: 原始问题
+            loop_count: 当前轮次 (0=精确, 1=扩展)
+            critique: 反思评分节点的纠错意见
 
         Returns:
-            包含重写结果的字典，格式: {"tool": "RAG", "context": "关键词", "success": bool}
+            {"tool": "RAG", "context": "关键词", "success": bool, "tier": int}
         """
-        logging.info(f"查询重写节点处理问题: {question}")
+        tier = loop_count  # 0=精确, 1=扩展, 2+=fallback
 
-        # 调用 LLM 获取原始输出
-        llm_output = self._call_llm(question)
-        logging.info(f"查询重写节点 LLM 输出: {llm_output}")
+        logging.info(f"查询重写 (第{tier+1}轮): {question[:50]}...")
+
+        if critique:
+            logging.info(f"基于纠错意见重写: {critique[:80]}...")
+
+        # 构造 prompt
+        if tier == 0:
+            # 第一轮：精确提取
+            user_content = f"问题: {question}"
+            if critique:
+                user_content += f"\n[纠错意见]: {critique}"
+            llm_output = self._call_llm(self.system_prompt_precise, user_content)
+        elif tier == 1:
+            # 第二轮：概念扩展，将原问题作为输入
+            user_content = f"原词: {question}"
+            if critique:
+                user_content = f"原词: {question}\n上一轮不足: {critique}"
+            llm_output = self._call_llm(self.system_prompt_expand, user_content)
+        else:
+            # Fallback: 直接使用原始问题
+            logging.info(f"达到最大重写轮次 ({tier})，使用原始问题作为关键词")
+            return {
+                "tool": "RAG",
+                "context": question,
+                "success": True,
+                "tier": tier,
+                "note": "fallback_to_original"
+            }
+
+        logging.info(f"重写 LLM 输出: {llm_output[:100]}...")
 
         if not llm_output:
-            # LLM 调用失败，使用回退策略
             if self.fallback_to_original:
-                logging.info("LLM 调用失败，回退到原始问题")
                 return {
                     "tool": "RAG",
                     "context": question,
                     "success": False,
+                    "tier": tier,
                     "error": "LLM调用失败，使用原始问题"
                 }
-            else:
-                return {
-                    "tool": "RAG",
-                    "context": "",
-                    "success": False,
-                    "error": "LLM调用失败且未启用回退"
-                }
+            return {
+                "tool": "RAG",
+                "context": "",
+                "success": False,
+                "tier": tier,
+                "error": "LLM调用失败"
+            }
 
-        # 尝试提取 JSON
         json_result = self._extract_json(llm_output)
 
         if json_result and "tool" in json_result and "context" in json_result:
-            # JSON 解析成功
             json_result["success"] = True
-            logging.info(f"查询重写成功: {json_result}")
+            json_result["tier"] = tier
+            logging.info(f"重写成功 (第{tier+1}轮): {json_result['context']}")
             return json_result
-        else:
-            # JSON 解析失败，使用回退策略
-            if self.fallback_to_original:
-                logging.warning(f"JSON 解析失败，回退到原始问题。LLM输出: {llm_output}")
-                return {
-                    "tool": "RAG",
-                    "context": question,
-                    "success": False,
-                    "error": "JSON解析失败，使用原始问题"
-                }
-            else:
-                logging.error(f"JSON 解析失败且未启用回退。LLM输出: {llm_output}")
-                return {
-                    "tool": "RAG",
-                    "context": "",
-                    "success": False,
-                    "error": "JSON解析失败且未启用回退"
-                }
 
-    def __call__(self, state: dict) -> dict:
-        """LangGraph 节点接口
-
-        Args:
-            state: 当前状态字典
-
-        Returns:
-            更新后的状态字典
-        """
-        question = state.get("question", "")
-        route = state.get("route", "RAG")
-
-        if not question:
-            logging.error("查询重写节点: 状态中缺少 question 字段")
-            return {"error": "缺少问题输入"}
-
-        if route != "RAG":
-            # 如果不是 RAG 路径，跳过重写
-            logging.info(f"路由为 {route}，跳过查询重写")
+        if self.fallback_to_original:
             return {
-                "rewritten_query": question,
-                "extracted_keywords": question
+                "tool": "RAG",
+                "context": question,
+                "success": False,
+                "tier": tier,
+                "error": "JSON解析失败，使用原始问题"
             }
 
-        # 执行查询重写
-        rewrite_result = self.rewrite(question)
+        return {
+            "tool": "RAG",
+            "context": "",
+            "success": False,
+            "tier": tier,
+            "error": "JSON解析失败"
+        }
+
+    def __call__(self, state: dict) -> dict:
+        question = state.get("question", "")
+        route = state.get("route", "Math_RAG")
+        loop_count = state.get("loop_count", 0)
+        critique = state.get("critique", "")
+
+        if not question:
+            return {"error": "缺少问题输入"}
+
+        if route not in ("Math_RAG", "Math"):
+            logging.info(f"路由为 {route}，跳过查询重写")
+            return {"rewritten_query": question, "extracted_keywords": question}
+
+        rewrite_result = self.rewrite(question, loop_count, critique)
 
         return {
             "rewritten_query": rewrite_result.get("context", question),

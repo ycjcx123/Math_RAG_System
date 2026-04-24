@@ -1,24 +1,25 @@
 import re
+import json
 import logging
-from typing import List
+from typing import Tuple, List
 from openai import OpenAI
 
 from src.utils.config_loader import load_config
 
 
-class GraderNode:
-    """评分节点：判断检索到的文档是否相关"""
+class ReflectiveGraderNode:
+    """反思评分节点 (v2.0)：对 Math_Solver 的草稿进行严格评分
+
+    输出:
+      - score (int): 0-100，>=80 表示通过
+      - critique (str): 当 score<80 时，指出缺少什么定理/依据
+      - passed (bool): True=直接输出，False=进入 Math_RAG 流程
+    """
 
     def __init__(self, config: dict = None):
-        """初始化评分节点
-
-        Args:
-            config: 配置字典，如果为 None 则自动加载
-        """
         if config is None:
             config = load_config()
 
-        # 获取 generator 配置
         generator_config = config.get("generator", {})
         agent_config = config.get("agent", {})
 
@@ -26,50 +27,71 @@ class GraderNode:
         self.base_url = generator_config.get("base_url", "http://localhost:8080/v1")
         self.api_key = generator_config.get("api_key", "llama-cpp")
         self.temperature = generator_config.get("temperature", 0.1)
-        self.max_tokens = generator_config.get("max_tokens", 50)
+        self.max_tokens = generator_config.get("max_tokens", 256)
 
-        # 评分配置
-        grader_config = agent_config.get("grader", {})
-        self.relevance_threshold = grader_config.get("relevance_threshold", 0.5)
+        grader_config = agent_config.get("reflective_grader", {})
+        self.pass_threshold = grader_config.get("pass_threshold", 80)
 
-        # 初始化客户端
         self.client = OpenAI(
             api_key=self.api_key,
             base_url=self.base_url
         )
 
-        self.system_prompt = """你是一个数学文档相关性评估助手。你的任务是判断提供的文档是否包含回答用户问题所需的数学定理、定义或关键信息。
+        self.few_shot_examples = """
+        示例1:
+        问题: "求解方程 $x^2 - 4 = 0$"
+        回答: "解：由平方差公式，$x^2-4=(x+2)(x-2)=0$，因此 $x=2$ 或 $x=-2$。"
+        评分: {"score": 95, "critique": "", "reasoning": "步骤完整，推导正确，依据清晰。"}
 
-输出要求：
-1. 只输出 "Yes" 或 "No"，不要输出其他任何内容
-2. "Yes" 表示文档包含回答问题所需的关键数学信息
-3. "No" 表示文档不包含回答问题所需的关键数学信息
+        示例2:
+        问题: "证明柯西-施瓦茨不等式"
+        回答: "由内积定义直接可得。"
+        评分: {"score": 30, "critique": "缺少具体推导步骤；未说明内积空间假设；需引用定理的完整表述", "reasoning": "回答过于简略，没有展示证明过程。"}
 
-判断标准：
-- 如果文档包含问题中提到的数学概念、定理、公式的定义或解释，输出 "Yes"
-- 如果文档包含解决问题所需的步骤、方法或示例，输出 "Yes"
-- 如果文档与问题完全无关，或只包含边缘信息，输出 "No"
-- 如果文档为空或没有实质内容，输出 "No"
+        示例3:
+        问题: "求矩阵 $\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$ 的特征值"
+        回答: "特征多项式为 $\\det(A-\\lambda I) = \\lambda^2 - 5\\lambda - 2$，解得 $\\lambda = \\frac{5 \\pm \\sqrt{33}}{2}$"
+        评分: {"score": 70, "critique": "特征多项式计算结果正确，但应检查行列式计算是否正确（应为 $\\lambda^2 - 5\\lambda - 2$ 或 $\\lambda^2 - 5\\lambda - 2$？）；建议查阅教材中特征值的定义章节确认", "reasoning": "结果正确但缺少中间展开步骤，不便于验证。"}
 
-现在请评估以下文档是否相关："""
+        示例4:
+        问题: "什么是向量空间？"
+        回答: "向量空间是满足八条公理的集合，包含加法与数乘运算。"
+        评分: {"score": 60, "critique": "回答方向正确但过于简略；需要列出八条公理的具体内容（加法交换律、结合律、零元、负元、数乘分配律等）。", "reasoning": "回答只有一句话，未展开公理细节。"}
 
-        logging.info(f"GraderNode 初始化完成，使用模型: {self.model_name}")
+        示例5:
+        问题: "用拉格朗日中值定理证明不等式 $\\ln(1+x) < x$"
+        回答: "设 $f(x)=\\ln(1+x)$，取区间 $[0,x]$，由拉格朗日中值定理存在 $\\xi\\in(0,x)$ 使 $\\frac{\\ln(1+x)-\\ln(1+0)}{x-0}=f'(\\xi)=\\frac{1}{1+\\xi}<1$，所以 $\\ln(1+x)<x$"
+        评分: {"score": 85, "critique": "", "reasoning": "定理引用正确，推导完整，不等式方向正确。"}
+        """
 
-    def _prepare_context(self, documents: List[str]) -> str:
-        """准备文档上下文"""
-        if not documents:
-            return "【文档为空】"
+        self.system_prompt = f"""你是一个严格的数学评分助手。你的任务是对数学解答进行评估和纠错。
 
-        context_str = ""
-        for i, doc in enumerate(documents[:3]):  # 只取前3个文档进行评估
-            context_str += f"文档 {i+1}:\n{doc[:500]}\n\n"  # 限制长度
+{self.few_shot_examples}
 
-        return context_str.strip()
+评分规则（0-100分）：
+- **0-39**：严重错误或完全缺失关键步骤
+- **40-59**：方向正确但重要步骤缺失
+- **60-79**：基本正确但有可改进之处（缺少引用、步骤不够清晰）
+- **80-100**：正确且完整，可直接作为最终答案
 
-    def _call_llm(self, question: str, context: str) -> str:
-        """调用 LLM 进行相关性评估"""
+如果得分 >= {self.pass_threshold}，critique 设为空字符串。
+如果得分 < {self.pass_threshold}，critique 必须具体说明：
+  1. 缺少哪个定理/定义的引用
+  2. 哪个步骤有逻辑断层
+  3. 建议查阅教材的哪些内容
+
+输出要求：严格输出 JSON 对象，包含三个字段：
+- "score": 整数 0-100
+- "critique": 字符串（通过时为空）
+- "reasoning": 评分理由
+
+不要输出 Markdown 代码块或额外解释。"""
+
+        logging.info(f"ReflectiveGraderNode 初始化完成，通过阈值: {self.pass_threshold}")
+
+    def _call_llm(self, question: str, draft: str) -> str:
         try:
-            user_content = f"问题: {question}\n\n文档:\n{context}"
+            user_content = f"问题: {question}\n\n回答:\n{draft}"
 
             response = self.client.chat.completions.create(
                 model=self.model_name,
@@ -84,87 +106,79 @@ class GraderNode:
             return response.choices[0].message.content.strip()
 
         except Exception as e:
-            logging.error(f"评分节点 LLM 调用失败: {e}")
-            return "No"  # 默认不相关
+            logging.error(f"ReflectiveGrader LLM 调用失败: {e}")
+            return '{"score": 0, "critique": "评分节点异常，转入RAG流程", "reasoning": "LLM调用失败"}'
 
-    def _parse_output(self, llm_output: str) -> bool:
-        """解析 LLM 输出，判断是否相关"""
-        cleaned = llm_output.strip().upper()
+    def _parse_json(self, text: str) -> dict:
+        """鲁棒的 JSON 解析"""
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            pass
 
-        # 使用正则匹配 Yes/No
-        if re.search(r'\bYES\b', cleaned):
-            return True
-        elif re.search(r'\bNO\b', cleaned):
-            return False
-        else:
-            # 输出模糊，默认不相关
-            logging.warning(f"评分节点输出模糊: '{llm_output}'，默认不相关")
-            return False
+        json_patterns = [
+            r'```json\s*(.*?)\s*```',
+            r'```\s*(.*?)\s*```',
+            r'\{(.*)\}',
+        ]
 
-    def grade(self, question: str, documents: List[str]) -> bool:
-        """评估文档相关性
+        for pattern in json_patterns:
+            matches = re.findall(pattern, text, re.DOTALL)
+            for match in matches:
+                try:
+                    if pattern.startswith(r'```'):
+                        return json.loads(match.strip())
+                    else:
+                        return json.loads("{" + match + "}")
+                except (json.JSONDecodeError, AttributeError):
+                    continue
 
-        Args:
-            question: 用户问题
-            documents: 检索到的文档列表
+        logging.warning(f"无法解析评分 JSON: {text[:100]}...")
+        return {"score": 0, "critique": "JSON解析失败", "reasoning": ""}
 
-        Returns:
-            True 表示相关，False 表示不相关
+    def grade(self, question: str, draft: str) -> Tuple[int, str, bool]:
         """
-        logging.info(f"评分节点评估问题: {question}")
-        logging.info(f"文档数量: {len(documents)}")
+        评分并返回 (score, critique, passed)
+        """
+        logging.info(f"ReflectiveGrader 评估: {question[:40]}...")
 
-        if not documents:
-            logging.info("文档为空，直接判定为不相关")
-            return False
+        if not draft:
+            return 0, "草稿为空，需要查阅教材", False
 
-        # 准备上下文
-        context = self._prepare_context(documents)
+        llm_output = self._call_llm(question, draft)
+        logging.info(f"评分 LLM 输出: {llm_output[:120]}...")
 
-        # 调用 LLM 获取原始输出
-        llm_output = self._call_llm(question, context)
-        logging.info(f"评分节点 LLM 输出: {llm_output}")
+        result = self._parse_json(llm_output)
 
-        # 解析输出
-        is_relevant = self._parse_output(llm_output)
-        logging.info(f"相关性判断: {'相关' if is_relevant else '不相关'}")
+        score = result.get("score", 0)
+        critique = result.get("critique", "")
 
-        return is_relevant
+        # 确保 score 在 0-100
+        score = max(0, min(100, int(score)))
+
+        passed = score >= self.pass_threshold
+
+        logging.info(f"评分结果: {score}/100 {'✅通过' if passed else '❌不通过'}")
+        if critique:
+            logging.info(f"纠错意见: {critique[:120]}")
+
+        return score, critique, passed
 
     def __call__(self, state: dict) -> dict:
-        """LangGraph 节点接口
-
-        Args:
-            state: 当前状态字典
-
-        Returns:
-            更新后的状态字典
-        """
         question = state.get("question", "")
-        documents = state.get("documents", [])
+        draft = state.get("internal_draft", "")
         loop_count = state.get("loop_count", 0)
 
         if not question:
-            logging.error("评分节点: 状态中缺少 question 字段")
-            return {"is_relevant": False, "error": "缺少问题输入"}
+            return {"score": 0, "is_relevant": False, "error": "缺少问题输入"}
 
-        if not documents:
-            logging.warning("评分节点: 文档为空")
-            return {
-                "is_relevant": False,
-                "loop_count": loop_count + 1
-            }
+        score, critique, passed = self.grade(question, draft)
 
-        # 执行评分
-        is_relevant = self.grade(question, documents)
-
-        # 仅当不相关时才递增 loop_count（表示一次检索尝试失败）
-        if not is_relevant:
-            return {
-                "is_relevant": is_relevant,
-                "loop_count": loop_count + 1
-            }
-
-        return {
-            "is_relevant": is_relevant
+        result = {
+            "score": score,
+            "critique": critique if not passed else "",
+            "loop_count": loop_count + 1 if not passed else loop_count,
+            "logic_path": f"{state.get('logic_path', '')} > ReflectiveGrader({score}/100)"
         }
+
+        return result

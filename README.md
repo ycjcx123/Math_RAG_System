@@ -204,75 +204,50 @@ Math_RAG_System
 
 
 
-
-这份升级方案非常务实。在 8GB 显存的限制下，通过 **LangGraph 的确定性逻辑** 来弥补 **1.4B 模型的随机性** 是最科学的路径。
-
-以下我为你整理的 **“Agentic Math-RAG 升级行动路线图”**。你可以审阅逻辑，稍后直接将其作为任务指令输入给 Claude Code。
-
 ---
 
-## Agentic Math-RAG 升级行动路线图
+### 🚀 Claude Code 任务指令：Math-RAG 向 Agentic-RAG 升级计划
 
-### 第一阶段：基础设施与状态定义 (The Foundation)
-这一步是确定“图”的基础数据结构和通信方式。
+**Context:**
+我正在将一个基于华南理工大学数学教材的 RAG 系统升级为 **Agentic RAG** 系统。目前基础设施已经就绪：
+1.  **Llama.cpp Server:** 运行在 `http://localhost:8080`，模型为 Qwen3-1.7B-GGUF。
+2.  **Qdrant:** 运行在 `http://6333`。
+3.  **核心代码更新：** `src/pipeline/retriever.py` 已封装好，可直接接受 query 并返回聚合后的 context。
 
-1.  **State 定义：** 在 LangGraph 中定义 `AgentState` 字典，包含：
-    * `question`: 用户原始问题。
-    * `generation`: 模型最终生成的答案。
-    * `documents`: 检索到的文档列表（Chunk）。
-    * `loop_count`: 当前循环次数（用于触发 Fallback）。
-    * `search_query`: 经过 1.4B 转换后的检索关键词。
-2.  **本地模型适配：** 使用 `llama-cpp-python` 启动 OpenAI 兼容服务器，配置 **GBNF (Grammar)** 限制模型输出。
-    * *重点：* 编写 `.gbnf` 文件强制模型在 Router 阶段只能输出 `RAG` 或 `Chat`。
+**Task Objective:**
+请基于 **LangGraph** 构建 Agent 框架，将 RAG 降级为 Agent 的一个 Tool，并实现具有意图识别、自我评估和循环纠错能力的数学助手。
 
-### 第二阶段：节点逻辑实现 (Nodes Development)
-将你的四个核心步骤转化为 Python 函数。
+**1. 目录重构要求：**
+请首先查阅最新的文件更改（git log），并按照以下结构重组 `src/`：
+- `src/rag/`: 存放原有的检索、解析、分块逻辑。将原有的 `retriever`, `generator`, `parser` 移入此处。
+- `src/agent/`: **【新建】** 存放 Agent 相关逻辑。
+    - `nodes/`: 存放 router.py, rewriter.py, grader.py 等。
+    - `state.py`: 定义 `AgentState` (包含 question, documents, loop_count, is_relevant 等)。
+    - `graph.py`: 编排 LangGraph。
+- `configs/`: 确保读取 `generate` 字段以适配 `http://localhost:8080`。
 
-* **Node 1: Router (语义路由)**
-    * 输入：`question`。
-    * Prompt：Few-shot 示例 + 强制单词输出。
-    * 逻辑：判断跳转至 `Retriever` 或 `General_Chat`。
-* **Node 2: Query_Rewriter (检索关键词提取)**
-    * 输入：`question`。
-    * 任务：将自然语言转为适合数学教材检索的关键词。
-    * 输出：结构化 JSON `{"tool": "RAG", "context": "..."}`。
-* **Node 3: Retriever (检索器)**
-    * 逻辑：调用原有 RAG 代码，自行组装，将结果存入 `documents` 状态。
-* **Node 4: Grader (质量评估)**
-    * 输入：`documents` + `question`。
-    * 任务：判断 Context 是否足以回答 Question。
-    * 逻辑：如果 `No` 且 `loop_count < 2`，回到 `Query_Rewriter` 重新生成关键词；否则进入 `Generator`。
-* **Node 5: Generator (生成器)**
-    * 任务：标准的 RAG 生成。
+**2. Agent 节点逻辑设计（针对小模型优化）：**
+由于 1.7B 模型逻辑推理较弱，请严格执行以下策略：
+- **Router (路由节点):** 使用 Few-shot Prompt 引导模型仅输出 "RAG" 或 "Chat"。若输出模糊，默认走 RAG 路径。
+- **Query_Rewriter (关键词提取):** 强制模型输出 JSON 格式 `{"tool": "RAG", "context": "关键词"}`。请编写解析器，若 JSON 解析失败，则回退使用原始问题。
+- **Grader (自我评分节点):** 判断检索到的 context 是否包含回答问题所需的数学定理。仅需回答 "Yes" 或 "No"。
+- **循环控制:** 严格限制最大循环次数。若 `loop_count >= 2` 且仍未获得相关文档，强制跳转至 `Fallback` 节点，告知用户“在教材中未找到准确定义，建议换个问法”。
 
-### 第三阶段：图逻辑编排 (Graph Orchestration)
-这是 Agent 的“大脑”连线。
+**3. 技术约束：**
+- **模型调用:** 统一使用 `llama-cpp-python` 的 OpenAI 兼容接口连接 `localhost:8080`。
+- **结构化输出:** 请在调用模型时，尝试在 Prompt 中使用分隔符，并编写 Robust 的正则解析代码。
+- **状态管理:** 每次迭代必须更新 `AgentState` 中的 `loop_count`。
 
-1.  **添加边 (Edges)：**
-    * `START` -> `Router`
-    * `Router` -> `Query_Rewriter` (If RAG)
-    * `Router` -> `Generator` (If Chat)
-2.  **添加条件边 (Conditional Edges)：**
-    * 从 `Grader` 出发：
-        * If `Yes` -> `Generator`
-        * If `No` and `loop_count < 2` -> `Query_Rewriter`
-        * If `No` and `loop_count >= 2` -> `Fallback_Node` (友好提示未找到)
+**4. 立即执行的行动：**
+1. 扫描当前 `src` 目录和 `git` 记录。
+2. 按照上述建议完成目录重组。
+3. 创建 `src/agent/` 文件夹并编写基础的 `state.py` 和 `graph.py`。
+4. 修改 `src/rag/` 接口，确保 `retriever.py` 暴露出的方法能被 Agent 节点轻松调用。
 
-### 第四阶段：防崩溃安全锁 (Anti-Insanity Safeguards)
-专门针对 1.4B 小模型的鲁棒性设计。
+**请在开始前，先列出你计划修改和创建的文件列表供我确认。**
 
-1.  **Max Iteration Hard-Limit：** 在 LangGraph 的 `Graph.compile()` 时设置 `recursion_limit`，防止代码层面的死循环。
-2.  **Output Parser 兜底：** 为所有 LLM 节点编写解析器，如果模型输出了无法解析的内容，默认返回“降级路径”。
 
-关于 loop_count：将初始值设为 0，每经过一次 Grader(No) 增加 1。
 
-如果你觉得这份路线图没问题，我可以为你生成一份直接喂给 Claude Code 的 Prompt 模板。
-
-首先，我现在更新了src的文件框架，请仔细查阅。
-其次，我更新的config中generate字段，我们使用llama.cpp来调用本地模型
-最后，我更新了src/pipeline/retriever.py，现在该文件可以直接执行针对query调用
-
-现在使用下述命令启动了llama的docker，qdrant的docker，现在已经启动了
 docker run -d --name llama-server --gpus all `
   -v E:/Project/Math_RAG_System/model/Qwen/Qwen/Qwen3-1___7B-GGUF:/models `
   -p 8080:8080 `

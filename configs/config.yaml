@@ -124,24 +124,24 @@ generator:
   temperature: 0.1
   max_tokens: 4096
 
-# Agentic RAG 配置，影响src/agent
+# Agentic RAG 配置 v2.0，影响src/agent
 agent:
   # 最大循环次数
   max_loop_count: 2
   # Fallback 消息
   fallback_message: "在教材中未找到准确定义，建议换个问法"
-  # 路由节点配置
+  # 路由节点配置（三元路由: Chat / Math / Math_RAG）
   router:
     # 默认路径（当模型输出模糊时）
-    default_path: "RAG"
-  # 查询重写配置
+    default_path: "Math_RAG"
+  # 查询重写配置（阶梯式重写）
   rewriter:
     # JSON 解析失败时的回退策略
     fallback_to_original: true
-  # 评分节点配置
-  grader:
-    # 相关性的阈值
-    relevance_threshold: 0.5
+  # 反思评分节点配置
+  reflective_grader:
+    # 通过阈值（>=80 直接输出）
+    pass_threshold: 80
 
 # 测试，影响src/evaluation
 test:

@@ -2,7 +2,8 @@ from .state import AgentState
 from .graph import AgentGraph, create_agent
 from .nodes.router import RouterNode
 from .nodes.rewriter import QueryRewriterNode
-from .nodes.grader import GraderNode
+from .nodes.grader import ReflectiveGraderNode
+from .nodes.math_solver import MathSolverNode
 
 __all__ = [
     "AgentState",
@@ -10,5 +11,6 @@ __all__ = [
     "create_agent",
     "RouterNode",
     "QueryRewriterNode",
-    "GraderNode"
+    "ReflectiveGraderNode",
+    "MathSolverNode"
 ]

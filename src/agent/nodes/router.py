@@ -7,18 +7,17 @@ from src.utils.config_loader import load_config
 
 
 class RouterNode:
-    """路由节点：判断用户问题是否需要检索（RAG）还是直接聊天（Chat）"""
+    """路由节点 (v2.0)：将入口流量分为 Chat / Math / Math_RAG 三类
+
+    - Chat: 纯社交闲聊 → 直接 Chat_Node
+    - Math: 简单计算/基础定义 → Math_Solver 直接生成
+    - Math_RAG: 复杂定理证明/深奥概念 → 完整 RAG 流程
+    """
 
     def __init__(self, config: dict = None):
-        """初始化路由节点
-
-        Args:
-            config: 配置字典，如果为 None 则自动加载
-        """
         if config is None:
             config = load_config()
 
-        # 获取 generator 配置（用于连接 Llama.cpp）
         generator_config = config.get("generator", {})
         agent_config = config.get("agent", {})
 
@@ -28,53 +27,83 @@ class RouterNode:
         self.temperature = generator_config.get("temperature", 0.1)
         self.max_tokens = generator_config.get("max_tokens", 50)
 
-        # 路由配置
-        self.default_path = agent_config.get("router", {}).get("default_path", "RAG")
+        self.default_path = agent_config.get("router", {}).get("default_path", "Math_RAG")
 
-        # 初始化客户端
         self.client = OpenAI(
             api_key=self.api_key,
             base_url=self.base_url
         )
 
-        # Few-shot 示例
         self.few_shot_examples = """
         示例1:
         用户问题: "求解方程 $x^2 + 2x + 1 = 0$"
-        思考: 这是一个具体的数学问题，需要用到代数知识，应该检索教材中的相关内容。
-        输出: RAG
+        思考: 这是一元二次方程求根，属于标准计算，可以直接求解。
+        输出: Math
 
         示例2:
         用户问题: "你好，今天天气怎么样？"
-        思考: 这是一个日常聊天问题，与数学教材无关。
+        思考: 日常问候，与数学无关。
         输出: Chat
 
         示例3:
-        用户问题: "什么是线性代数？"
-        思考: 这是一个数学概念的定义问题，需要检索教材中的定义部分。
-        输出: RAG
+        用户问题: "什么是线性无关？"
+        思考: 这是一个基本数学概念的定义，可以直接解答。
+        输出: Math
 
         示例4:
-        用户问题: "帮我写一首诗"
-        思考: 这是一个创作请求，与数学无关。
+        用户问题: "证明史密斯标准型的唯一性"
+        思考: 这是一个复杂定理的证明，需要查阅教材以确保正确性。
+        输出: Math_RAG
+
+        示例5:
+        用户问题: "最近老师脾气好差，作业又这么多"
+        思考: 纯情绪表达/抱怨，与数学无关。
         输出: Chat
+
+        示例6:
+        用户问题: "计算行列式 $\\begin{vmatrix}1&2\\\\3&4\\end{vmatrix}$"
+        思考: 行列式计算，有固定公式，可以直接算。
+        输出: Math
+
+        示例7:
+        用户问题: "定理10说矩阵相似于若尔当标准型，为什么？"
+        思考: 询问定理背后的原因，需要教材中的详细论证。
+        输出: Math_RAG
+
+        示例8:
+        用户问题: "$\\sin^2 x + \\cos^2 x = 1$ 怎么证明？"
+        思考: 三角恒等式，有标准推导。
+        输出: Math
+
+        示例9:
+        用户问题: "帮我写一首诗"
+        思考: 创作请求，与数学无关。
+        输出: Chat
+
+        示例10:
+        用户问题: "证明 $\\lambda$-矩阵的初等因子唯一性"
+        思考: 高阶抽象代数定理，需检索教材中的严格证明。
+        输出: Math_RAG
         """
 
-        self.system_prompt = f"""你是一个路由判断助手。你的任务是根据用户问题判断应该使用检索增强生成（RAG）还是直接聊天（Chat）。
+        self.system_prompt = f"""你是一个数学路由判断助手。将用户问题分为三类：Chat、Math、Math_RAG。
 
 {self.few_shot_examples}
 
-判断规则：
-1. 如果问题是关于数学概念、定理、证明、计算、公式等数学相关内容，输出 "RAG"
-2. 如果问题是日常聊天、问候、与数学无关的内容，输出 "Chat"
-3. 只输出 "RAG" 或 "Chat"，不要输出其他任何内容
+分类规则：
+1. **Chat**：日常聊天、问候、情绪表达、非数学内容
+2. **Math**：简单数学计算、标准公式求解、基础概念定义（可直接推理得出）
+3. **Math_RAG**：复杂定理证明、深奥概念辨析、需要教材参考文献的进阶内容
+
+重要：过滤掉问题中的情绪化语言（如"太难了"、"老师好凶"），只根据数学核心内容判断。
+
+只输出 "Chat" 或 "Math" 或 "Math_RAG"，不要输出其他任何内容。
 
 现在请判断以下问题："""
 
-        logging.info(f"RouterNode 初始化完成，使用模型: {self.model_name}")
+        logging.info(f"RouterNode (v2.0) 初始化完成，模型: {self.model_name}")
 
     def _call_llm(self, question: str) -> str:
-        """调用 LLM 进行路由判断"""
         try:
             response = self.client.chat.completions.create(
                 model=self.model_name,
@@ -85,66 +114,43 @@ class RouterNode:
                 temperature=self.temperature,
                 max_tokens=self.max_tokens
             )
-
             return response.choices[0].message.content.strip()
 
         except Exception as e:
             logging.error(f"路由节点 LLM 调用失败: {e}")
             return self.default_path
 
-    def _parse_output(self, llm_output: str) -> Literal["RAG", "Chat"]:
-        """解析 LLM 输出，提取路由决策"""
-        # 清理输出，提取 RAG 或 Chat
+    def _parse_output(self, llm_output: str) -> Literal["Chat", "Math", "Math_RAG"]:
+        """解析 LLM 输出，提取三类路由决策"""
         cleaned = llm_output.strip().upper()
 
-        # 使用正则匹配 RAG 或 Chat
-        if re.search(r'\bRAG\b', cleaned, re.IGNORECASE):
-            return "RAG"
-        elif re.search(r'\bCHAT\b', cleaned, re.IGNORECASE):
+        if re.search(r'\bCHAT\b', cleaned):
             return "Chat"
+        elif re.search(r'\bMATH_RAG\b', cleaned):
+            return "Math_RAG"
+        elif re.search(r'\bMATH\b', cleaned):
+            return "Math"
         else:
-            # 输出模糊，使用默认路径
-            logging.warning(f"路由节点输出模糊: '{llm_output}'，使用默认路径: {self.default_path}")
+            logging.warning(f"路由节点输出模糊: '{llm_output}'，使用默认: {self.default_path}")
             return self.default_path
 
-    def route(self, question: str) -> Literal["RAG", "Chat"]:
-        """执行路由判断
-
-        Args:
-            question: 用户问题
-
-        Returns:
-            "RAG" 或 "Chat"
-        """
-        logging.info(f"路由节点处理问题: {question}")
-
-        # 调用 LLM 获取原始输出
+    def route(self, question: str) -> Literal["Chat", "Math", "Math_RAG"]:
+        logging.info(f"路由节点处理问题: {question[:60]}...")
         llm_output = self._call_llm(question)
         logging.info(f"路由节点 LLM 输出: {llm_output}")
-
-        # 解析输出
         route_decision = self._parse_output(llm_output)
         logging.info(f"路由决策: {route_decision}")
-
         return route_decision
 
     def __call__(self, state: dict) -> dict:
-        """LangGraph 节点接口
-
-        Args:
-            state: 当前状态字典
-
-        Returns:
-            更新后的状态字典
-        """
         question = state.get("question", "")
 
         if not question:
-            logging.error("路由节点: 状态中缺少 question 字段")
             return {"route": self.default_path, "error": "缺少问题输入"}
 
         route_decision = self.route(question)
 
         return {
-            "route": route_decision
+            "route": route_decision,
+            "logic_path": f"{state.get('logic_path', 'start')} > Router({route_decision})"
         }
