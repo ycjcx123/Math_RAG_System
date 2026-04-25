@@ -52,3 +52,36 @@ class Reranker:
         except Exception as e:
             logging.error(f"Rerank API 错误: {e}，降级使用前 {self.top_n} 个原始结果")
             return doc_ids[:self.top_n], doc_texts[:self.top_n]
+
+    def rerank_texts(self, query: str, texts: List[str], top_n: int = 3) -> List[str]:
+        """
+        对纯文本列表进行重排（不依赖 NodeWithScore 对象）
+        :param query: 查询文本
+        :param texts: 待重排的文本列表
+        :param top_n: 返回 top-n 条
+        :return: 按分数降序排列的文本列表
+        """
+        if not texts:
+            return []
+
+        payload = {
+            "model": self.model_name,
+            "query": query,
+            "documents": texts,
+            "top_n": top_n,
+            "return_documents": False
+        }
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+
+        try:
+            response = requests.post(self.url, json=payload, headers=headers, timeout=10)
+            response.raise_for_status()
+            results = response.json().get("results", [])
+            top_indices = [res["index"] for res in results]
+            return [texts[idx] for idx in top_indices]
+        except Exception as e:
+            logging.error(f"RerankTexts API 错误: {e}，降级使用前 {top_n} 条")
+            return texts[:top_n]

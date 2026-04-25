@@ -14,6 +14,7 @@ class AgentState(TypedDict):
     # 查询重写结果
     rewritten_query: NotRequired[str]
     extracted_keywords: NotRequired[str]
+    keyword_groups: NotRequired[List[str]]    # 分布式检索：最多 4 组关键词
 
     # 检索结果
     documents: NotRequired[List[str]]

@@ -1,7 +1,7 @@
 import re
 import json
 import logging
-from typing import Dict, Any
+from typing import Dict, Any, List
 from openai import OpenAI
 
 from src.utils.config_loader import load_config
@@ -36,51 +36,78 @@ class QueryRewriterNode:
             base_url=self.base_url
         )
 
-        # ---- 第一轮：精确提取 ----
-        self.system_prompt_precise = """你是一个数学检索关键词提取助手。从用户问题中提取适合检索教材的关键词。
+        # ---- 第一轮：精确提取（分布式检索） ----
+        self.system_prompt_precise = """""你是一个数学检索专家。你的任务是提取检索关键词。
+对于定理证明题，你必须遵循“锚点优先”原则：
 
-输出格式：严格 JSON --- {"tool": "RAG", "context": "关键词"}
+输出格式：严格 JSON --- {"tool": "RAG", "context": ["完整命题锚点", "核心术语1", "核心术语2", "补充术语"]}
 
-规则（第一轮-精确提取）：
-1. 提取数学定理的准确名称、编号（如"定理10"、"柯西-施瓦茨不等式"）
-2. 提取标准数学术语（如"初等因子"、"史密斯标准型"）
-3. 如果提供[纠错意见]，优先从中提取缺失的定理/概念名
-4. 关键词简洁准确，3-6个词为宜
-
-示例：
-问题: "证明定理10中λ-矩阵的相抵标准型唯一"
-输出: {"tool": "RAG", "context": "定理10 λ-矩阵 相抵 标准型 唯一性"}
-
-问题: "什么是线性空间？"
-输出: {"tool": "RAG", "context": "线性空间 定义 向量空间"}
-
-[纠错意见]: "缺少对拉格朗日中值定理的引用"
-问题: "证明ln(1+x) < x"
-输出: {"tool": "RAG", "context": "拉格朗日中值定理 不等式 证明 ln(1+x)"}"""
-
-        # ---- 第二轮：概念扩展 ----
-        self.system_prompt_expand = """你是一个数学检索关键词扩展助手。第一轮检索未找到相关内容，请将关键词扩展。
-
-输出格式：严格 JSON --- {"tool": "RAG", "context": "扩展后的关键词"}
-
-规则（第二轮-概念扩展）：
-1. 将原关键词扩展为上位概念或相关概念
-2. 添加同义词或相近术语
-3. 覆盖更广的范围，增加命中概率
-4. 5-8个关键词/短语，用空格分隔
+规则：
+1. 第一组（context[0]）：必须是定理的编号加上最完整的命题原文（保留 LaTeX 公式）。这是最高优先级的检索锚点。
+2. 后续组：将问题拆解为核心术语（如“初等因子”、“$\lambda$-矩阵”），用于弥补原文匹配的不足。
+3. 剥离噪音：去除“证明下述定理”、“老师脾气不好”等无关口语。
+4. 数量：1-4 组，按重要性从前到后填充。如果问题很短，只需 1 组。
 
 示例：
-原词: "初等因子"
-扩展: "初等因子 不变因子 行列式因子 λ-矩阵 史密斯标准型 矩阵对角化 多项式分解"
+问题："证明下述定理：定理10 设 $A(\lambda)$ 是满秩矩阵...则其因式方幂是初等因子"
+输出：{"tool":"RAG", "context":["定理10 设 $A(\lambda)$ 是满秩矩阵...其因式方幂是初等因子", "$\lambda$-矩阵初等因子", "满秩矩阵对角化", "初等变换"]}
 
-原词: "定理10"
-扩展: "定理10 λ-矩阵 相抵 初等变换 标准型"
+问题："线性空间维数公式怎么证"
+输出：{"tool":"RAG", "context":["线性空间维数公式 dim(V1+V2)", "维数定理证明", "线性空间基与维数"]}
 
-原词: "特征值"
-扩展: "特征值 特征向量 特征多项式 相似对角化 谱分解"
+问题："请帮我证明下述命题：设 $f(x), g(x) \\in K[x]$ ，则\n$$\n\\deg (f (x) \\pm g (x)) \\leqslant \\max  \\left\\{\\deg f (x), \\deg g (x) \\right\\}\n$$\n$$\n\\deg (f (x) g (x)) = \\deg f (x) + \\deg g (x)\n$$"
+输出：{"tool":"RAG", "context":["多项式次数性质", "deg(f±g)≤max(deg f,deg g)", "deg(fg)=deg f+deg g", "多项式运算次数公式"]}
 
-原词: "线性无关"
-扩展: "线性无关 线性相关 向量组的秩 极大线性无关组 线性组合"""
+问题："唯一分解定理怎么证明"
+输出：{"tool":"RAG", "context":["唯一分解定理", "多项式唯一分解", "不可约多项式分解唯一性"]}
+
+问题："证明定理10中\\lambda-矩阵的相抵标准型唯一"
+输出：{"tool":"RAG", "context":["定理10 \\lambda-矩阵相抵标准型", "\\lambda-矩阵初等变换", "\\lambda-矩阵相抵"]}
+
+问题："请说明线性映射、线性变换、正交变换和酉变换在定义上的核心区别"
+输出：{"tool":"RAG", "context":["线性映射定义", "线性变换定义", "正交变换定义", "酉变换定义"]}"""
+
+        # ---- 第二轮：概念扩展（分布式检索） ----
+        self.system_prompt_expand = """你是一个数学检索扩展专家。第一轮检索未能满足需求，你需要根据反馈进行“全域降级扩展”或“靶向精准补漏”。
+
+输出格式：严格 JSON --- {"tool": "RAG", "context": ["关键词组1", "关键词组2", "关键词组3", "关键词组4"]}
+
+规则：
+1. 数量约束：至少 1 组，最多 4 组，按重要性从前到后填充，且重点不同，多于 4 组将导致系统崩溃。
+2. 独立性：不要重复第一轮已失败的关键词。
+3. 双模态逻辑：
+   - 情况 A [上一轮不足]为空：说明第一轮完全没搜到。请执行“全域降级”，搜索该定理所属的章节名、上位概念或数学领域的通用同义词（例如：由“定理10”扩展为“Smith标准型”或“矩阵相抵”）。
+   - 情况 B [上一轮不足]不为空：说明搜到了但内容有缺失。请执行“靶向补漏”，将[上一轮不足]中的评价直接转化为搜索词。
+
+示例 1 (情况 A - 检索空转)：
+原问题："证明定理10：关于初等因子的分解"
+第一轮关键词：["定理10 设 A(\\lambda) 是满秩矩阵...初等因子", "定理10证明"]
+上一轮不足：""
+输出：{"tool":"RAG", "context":["\\lambda-矩阵的初等因子定义", "矩阵化为相抵标准型", "多项式矩阵的Smith标准型", "不变因子与初等因子的关系"]}
+
+示例 2 (情况 A - 检索空转)：
+原问题："请解释什么是有限维线性空间的基"
+第一轮关键词：["有限维线性空间的基定义", "线性空间基的性质"]
+上一轮不足：""
+输出：{"tool":"RAG", "context":["向量组的极大线性无关组", "线性空间的维数与基", "基变换与坐标变换", "线性代数基础概念-基"]}
+
+示例 3 (情况 B - 补漏重搜)：
+原问题："证明线性变换 A 在不同基下的矩阵是相似的"
+第一轮关键词：["线性变换在不同基下的矩阵", "矩阵相似定义"]
+上一轮不足："缺少对坐标变换公式 P^-1AP 的具体推导逻辑"
+输出：{"tool":"RAG", "context":["坐标变换公式推导", "过渡矩阵与线性变换矩阵的关系", "矩阵相似的几何意义", "基变换下的矩阵表示"]}
+
+示例 4 (情况 B - 补漏重搜)：
+原问题："求解方程 x^2 - 4 = 0 的复数根"
+第一轮关键词：["x^2 - 4 = 0 求解", "复数根定义"]
+上一轮不足："未提及代数基本定理在多项式根个数中的应用"
+输出：{"tool":"RAG", "context":["代数基本定理", "n次多项式的复根个数", "复数域上的多项式分解"]}
+
+示例 5
+原问题："证明定理10中\\lambda-矩阵的相抵标准型唯一"
+第一轮关键词：["定理10 \\lambda-矩阵相抵标准型", "\\lambda-矩阵初等变换"]
+上一轮不足："\\lambda-矩阵定义不准确"
+输出：{"tool":"RAG", "context":["\\lambda-矩阵定义", "\\lambda-矩阵相抵标准型", "\\lambda-矩阵初等变换", "史密斯标准型"]}"""
 
         logging.info(f"QueryRewriterNode (v2.0) 初始化完成，模型: {self.model_name}")
 
@@ -102,44 +129,71 @@ class QueryRewriterNode:
             return ""
 
     def _extract_json(self, text: str) -> Dict[str, Any]:
-        """鲁棒的 JSON 解析"""
+        """从文本中提取第一个合法 JSON（鲁棒版）"""
+
+        # 先尝试直接解析（最优路径）
         try:
             return json.loads(text)
         except json.JSONDecodeError:
             pass
 
-        json_patterns = [
-            r'\{[^{}]*"tool"[^{}]*"RAG"[^{}]*"context"[^{}]*[^{}]*\}',
-            r'```json\s*(.*?)\s*```',
-            r'```\s*(.*?)\s*```',
-            r'\{(.*)\}',
-        ]
+        # 提取 ```json ``` 块
+        code_block_pattern = r'```json\s*(.*?)\s*```'
+        matches = re.findall(code_block_pattern, text, re.DOTALL)
+        for match in matches:
+            try:
+                return json.loads(match)
+            except json.JSONDecodeError:
+                continue
 
-        for pattern in json_patterns:
-            matches = re.findall(pattern, text, re.DOTALL)
-            for match in matches:
-                try:
-                    if pattern.startswith(r'```'):
-                        return json.loads(match.strip())
-                    else:
-                        return json.loads("{" + match + "}")
-                except (json.JSONDecodeError, AttributeError):
-                    continue
+        # 使用“括号匹配”提取 JSON
+        stack = []
+        start = None
 
-        logging.warning(f"无法从文本中提取 JSON: {text[:100]}...")
+        for i, ch in enumerate(text):
+            if ch == '{':
+                if not stack:
+                    start = i
+                stack.append(ch)
+            elif ch == '}':
+                if stack:
+                    stack.pop()
+                    if not stack and start is not None:
+                        candidate = text[start:i + 1]
+                        # 先尝试标准解析
+                        try:
+                            return json.loads(candidate)
+                        except json.JSONDecodeError:
+                            pass
+                        # LaTeX 反斜杠修复后重试（如 \lambda → \\lambda）
+                        try:
+                            # 将未被合法转义的 \X 变为 \\X
+                            # JSON 合法转义: \" \\ \/ \b \f \n \r \t \uXXXX
+                            fixed = re.sub(
+                                r'\\([^"\\/bfnrtu]|$)',
+                                r'\\\\\1',
+                                candidate
+                            )
+                            return json.loads(fixed)
+                        except json.JSONDecodeError:
+                            continue
+
+        logging.warning(f"无法从文本中提取 JSON: {text[:200]}...")
         return {}
 
-    def rewrite(self, question: str, loop_count: int = 0, critique: str = "") -> Dict[str, Any]:
+    def rewrite(self, question: str, loop_count: int = 0, critique: str = "",
+                first_round_keywords: List[str] = None) -> Dict[str, Any]:
         """
-        阶梯式重写
+        阶梯式重写（分布式检索）
 
         Args:
             question: 原始问题
             loop_count: 当前轮次 (0=精确, 1=扩展)
             critique: 反思评分节点的纠错意见
+            first_round_keywords: 第一轮输出的关键词数组
 
         Returns:
-            {"tool": "RAG", "context": "关键词", "success": bool, "tier": int}
+            {"tool": "RAG", "context": ["关键词组1", ...], "success": bool, "tier": int}
         """
         tier = loop_count  # 0=精确, 1=扩展, 2+=fallback
 
@@ -156,17 +210,19 @@ class QueryRewriterNode:
                 user_content += f"\n[纠错意见]: {critique}"
             llm_output = self._call_llm(self.system_prompt_precise, user_content)
         elif tier == 1:
-            # 第二轮：概念扩展，将原问题作为输入
-            user_content = f"原词: {question}"
+            # 第二轮：概念扩展，传入第一轮关键词
+            user_content = f"原问题: {question}"
+            if first_round_keywords:
+                user_content += f"\n第一轮关键词: {json.dumps(first_round_keywords, ensure_ascii=False)}"
             if critique:
-                user_content = f"原词: {question}\n上一轮不足: {critique}"
+                user_content += f"\n上一轮不足: {critique}"
             llm_output = self._call_llm(self.system_prompt_expand, user_content)
         else:
-            # Fallback: 直接使用原始问题
+            # Fallback: 直接使用原始问题（包装为数组）
             logging.info(f"达到最大重写轮次 ({tier})，使用原始问题作为关键词")
             return {
                 "tool": "RAG",
-                "context": question,
+                "context": [question],
                 "success": True,
                 "tier": tier,
                 "note": "fallback_to_original"
@@ -178,14 +234,14 @@ class QueryRewriterNode:
             if self.fallback_to_original:
                 return {
                     "tool": "RAG",
-                    "context": question,
+                    "context": [question],
                     "success": False,
                     "tier": tier,
                     "error": "LLM调用失败，使用原始问题"
                 }
             return {
                 "tool": "RAG",
-                "context": "",
+                "context": [],
                 "success": False,
                 "tier": tier,
                 "error": "LLM调用失败"
@@ -202,7 +258,7 @@ class QueryRewriterNode:
         if self.fallback_to_original:
             return {
                 "tool": "RAG",
-                "context": question,
+                "context": [question],
                 "success": False,
                 "tier": tier,
                 "error": "JSON解析失败，使用原始问题"
@@ -210,7 +266,7 @@ class QueryRewriterNode:
 
         return {
             "tool": "RAG",
-            "context": "",
+            "context": [],
             "success": False,
             "tier": tier,
             "error": "JSON解析失败"
@@ -221,6 +277,7 @@ class QueryRewriterNode:
         route = state.get("route", "Math_RAG")
         loop_count = state.get("loop_count", 0)
         critique = state.get("critique", "")
+        first_round_kws = state.get("keyword_groups", [])
 
         if not question:
             return {"error": "缺少问题输入"}
@@ -229,9 +286,16 @@ class QueryRewriterNode:
             logging.info(f"路由为 {route}，跳过查询重写")
             return {"rewritten_query": question, "extracted_keywords": question}
 
-        rewrite_result = self.rewrite(question, loop_count, critique)
+        rewrite_result = self.rewrite(question, loop_count, critique, first_round_kws)
+        context = rewrite_result.get("context", [question])
+
+        # 确保 context 为列表，最多取前 4 组
+        if isinstance(context, str):
+            context = [context]
+        context = context[:4]
 
         return {
-            "rewritten_query": rewrite_result.get("context", question),
-            "extracted_keywords": rewrite_result.get("context", question)
+            "rewritten_query": context[0] if context else question,
+            "extracted_keywords": " ".join(context) if context else question,
+            "keyword_groups": context
         }

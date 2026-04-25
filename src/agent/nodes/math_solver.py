@@ -25,6 +25,7 @@ class MathSolverNode:
             base_url=self.base_url
         )
 
+        # 这里我们需要新增一个正则匹配，将<think>标签去除，而不是在sys_prompt中禁止思考
         self.system_prompt = (
             "你是一个数学解题助手。请直接解答以下数学问题。\n\n"
             "要求：\n"

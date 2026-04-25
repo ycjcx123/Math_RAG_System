@@ -1,5 +1,5 @@
 import logging
-from typing import Literal, Dict, Any
+from typing import Literal, Dict, Any, List
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
@@ -9,6 +9,7 @@ from .nodes.rewriter import QueryRewriterNode
 from .nodes.grader import ReflectiveGraderNode
 from .nodes.math_solver import MathSolverNode
 from src.utils.config_loader import load_config
+from src.rag.retriever import BlockAggregator, Reranker
 
 
 class AgentGraph:
@@ -48,9 +49,10 @@ class AgentGraph:
         # 文档相关性评分用内联节点 _grade_relevance_node 实现
         self.grader_node = None  # 不再使用原有的 GraderNode
 
-        # 初始化 RAG 工具
-        from src.pipeline.retriever import ChatPipeline
-        self.retriever = ChatPipeline(config, query="")
+        # 初始化分布式检索工具
+        retriever_config = config.get("retriever", {})
+        self.block_aggregator = BlockAggregator(retriever_config)
+        self.secondary_reranker = Reranker(retriever_config)
 
         # 初始化生成器
         from src.rag.generator import Generator
@@ -178,32 +180,57 @@ class AgentGraph:
     # ==================== 节点实现 ====================
 
     def _retrieve_node(self, state: AgentState) -> Dict[str, Any]:
+        """
+        分布式检索节点：
+        1. 对每组关键词执行：retrieve → rerank → block_aggregate，取 top-1 为主结果
+        2. 收集各组第 2、3 名入候选池
+        3. 以原始问题为 query 对候选池做第二次重排，取 top-1
+        4. 最终文档数 = len(keyword_groups) + 1
+        """
         question = state.get("question", "")
-        rewritten_query = state.get("rewritten_query", question)
+        keyword_groups: List[str] = state.get("keyword_groups", [question])
 
-        logging.info(f"检索节点: 使用查询 '{rewritten_query}'")
+        logging.info(f"分布式检索节点: {len(keyword_groups)} 组关键词")
 
-        try:
-            self.retriever.query = rewritten_query
-            documents = self.retriever.run()
+        primary_list = []    # 各组主结果（第1名）
+        secondary_pool = []  # 候选池（第2、3名）
 
-            document_texts = []
-            if isinstance(documents, tuple):
-                if len(documents) >= 2:
-                    document_texts = documents[0] if isinstance(documents[0], list) else []
-                else:
-                    document_texts = documents if isinstance(documents, list) else []
-            elif isinstance(documents, list):
-                document_texts = documents
-            else:
-                document_texts = [str(documents)]
+        for i, kw in enumerate(keyword_groups):
+            try:
+                # 用关键词 query 检索 → rerank → block 聚合
+                aggregated = self.block_aggregator.retrieve_and_aggregate(kw)
+                if not aggregated:
+                    logging.warning(f"第{i+1}组关键词无检索结果: {str(kw)[:30]}")
+                    continue
 
-            logging.info(f"检索到 {len(document_texts)} 个文档片段")
-            return {"documents": document_texts}
+                primary_list.append(aggregated[0])
+                if len(aggregated) > 1:
+                    secondary_pool.extend(aggregated[1:])
+                logging.info(f"第{i+1}组关键词 '{str(kw)[:30]}': "
+                             f"主结果 1 个, 候选 +{len(aggregated)-1} 个")
+            except Exception as e:
+                logging.error(f"第{i+1}组关键词 '{str(kw)[:30]}' 检索失败: {e}")
+                continue
 
-        except Exception as e:
-            logging.error(f"检索失败: {e}")
-            return {"documents": [], "error": f"检索失败: {str(e)}"}
+        logging.info(f"分布式检索第一阶段完成: 主结果 {len(primary_list)} 个, "
+                     f"候选池 {len(secondary_pool)} 个")
+
+        # 第二次重排：用原始问题从候选池精选
+        if secondary_pool:
+            try:
+                second_results = self.secondary_reranker.rerank_texts(
+                    query=question,
+                    texts=secondary_pool,
+                    top_n=1
+                )
+                if second_results:
+                    primary_list.append(second_results[0])
+                    logging.info(f"第二次重排完成，补充 1 个结果")
+            except Exception as e:
+                logging.error(f"第二次重排失败: {e}")
+
+        logging.info(f"分布式检索完成: 共 {len(primary_list)} 个文档")
+        return {"documents": primary_list}
 
     def _grade_relevance_node(self, state: AgentState) -> Dict[str, Any]:
         """
