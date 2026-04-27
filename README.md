@@ -34,7 +34,7 @@
 
 ## 🏗️ 系统架构
 为了保证 README 的简洁性，详细的 **双轨检索流程图** 请参阅doc/rag_report.md：
-```
+```mermaid
 graph TD
     A[用户问题] --> B{Router}
 
@@ -54,7 +54,7 @@ graph TD
     I --> J[Grader]
     J -->|高分| K[输出]
     J -->|低分| L[RAG]
-    ```
+```
 
 ---
 
@@ -74,8 +74,6 @@ graph TD
 | 纯血RAG | 1.52/2.0 | 1.412 | 
 | **v2.2 (Stable)** | **1.23 / 2.0** | **1.5 / 2.0** |
 | **v2.3 (Latest)** | *Testing...* | *Testing...* |
-
-*注：v2.2 相比全量 RAG，通过 Fast-Track 分流显著降低了推理成本，Token 消耗仅为原始方案的 1/4。*
 
 ---
 
