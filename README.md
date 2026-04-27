@@ -256,3 +256,141 @@ docker run -d --name llama-server --gpus all `
   --port 8080 --host 0.0.0.0 -n 2048 -ngl 99 -c 4096
 
 docker run -d -p 6333:6333 -p 6334:6334 -v "${PWD}/qdrant_storage:/qdrant/storage:z" --name MathRAG qdrant/qdrant
+
+# 🚀 MathRAG Agent v2.2 架构升级说明书
+
+## 一、 宏观架构精简 (Topology Update)
+1. **拓扑简化**：
+   * 移除独立的 `Math_RAG` 节点，将所有 RAG 决策逻辑下沉并内聚到 `Math` 主流程中。
+   * 移除独立的 `Grade_Relevance` 节点，其功能合并至 `Retrieve` 节点内部（通过 Dense Score、Rerank Score 及动态阈值实现硬件级过滤）。
+2. **保留核心节点**：
+   `Router` / `Math_Solver` / `Reflective_Grader` / `Rewriter` / `Retrieve` (内联) / `Generate` (内联) / `Chat` (内联) / `Fallback` (内联)。
+3. **路由策略更新**：
+   `Router` 现在仅执行最高维度的二元分流：**Chat**（日常闲聊）或 **Math**（数学专业问题）。
+
+## 二、 核心解题链路：三段式自适应路由 (Adaptive Workflow)
+`Math_Solver` 生成初始草稿（Draft）后，由 `Reflective_Grader` 进行评分，并按以下三段式逻辑分流：
+
+* **Fast-Track (Score ≥ 85)**：
+  置信度极高，无需 RAG，直接输出 Draft，实现极速响应与成本节约。
+* **Self-Refine Track (60 ≤ Score < 85)**：
+  草稿有瑕疵但具备基础逻辑。进入 Self-Refine 循环（最多 2 次）。
+  * 每次基于 Grader 的 Critique 进行自我修正。
+  * 若修正后 Score ≥ 85，跳出循环直接输出。
+  * 若提升幅度过小（Early Stopping）或 2 次后仍 < 85，则降级进入 RAG 流程。
+* **RAG Track (Score < 60)**：
+  草稿质量严重不达标（出现幻觉或公式断裂），直接进入 RAG 流程。
+
+## 三、 意图识别与重写 (Rewriter Optimization)
+在确定进入 RAG 流程后，`Rewriter` 负责制定检索策略。
+* **输出格式保持标准化 JSON**：`{"strategy": "multi/single", "contexts": ["x1","x2","x3","x4"]}`
+* **新增策略控制**：引入 `"strategy"` 字段，基于 Few-shot Prompt 动态判断该问题属于单点深挖（Single）还是多点综合（Multi）。
+  > **开发备注**：需在 Rewriter 节点的 System Prompt 中注入 3-5 个高质量的 Few-shot，明确定义 Single 与 Multi 的边界边界案例。
+
+## 四、 双轨检索机制 (Dual-Track Retrieval)
+
+### 模式 A：Multi-Recall (多概念聚合)
+适用于需要跨章节知识的综合性问题。
+1. **不再使用 Block 聚合**：彻底摒弃拼接逻辑，保持 Chunk 的独立性。
+2. **分布式检索与重排**：
+   * 遍历 `contexts`（最多 4 组）。
+   * 每组独立执行：Top-1 稳态进入「主结果池」；Top-2、Top-3 进入「全局候选池」。
+3. **二次过滤**：使用原始 Query 对「全局候选池」进行 Rerank，取 Top-1 作为高优补充。
+4. **截断机制**：主结果 + 全局补充，确保总传入 Chunk 数量 ≤ 5。
+
+### 模式 B：Single-Recall (单概念深挖)
+适用于针对特定定理/定义的精准问答。
+1. **全局寻优**：直接对重写后的 Query 进行 Rerank，获取 Top-3。
+2. **上下文感知扩展 (Context-Aware Expansion)**（仅针对 Top-1）：
+   * **前向寻找**：若 Top-1 是「定理」，自动向下加载后续区块（ID+1, ID+2），直到触碰新边界（遇到下一个定理/定义/例题）停止。
+   * **后向寻找**：若 Top-1 是「证明」，自动向上加载前置区块（ID-1, ID-2），直到触碰父级边界（遇到证明/解/例题）停止。
+3. **静默辅助**：Top-2、Top-3 作为辅助上下文，不触发扩展机制。
+
+## 五、 弹性重试与降级机制 (Retry & Fallback)
+当 `Retrieve` 阶段触发“召回不相关”（得分未达阈值）时，执行差异化重试：
+
+1. **Multi 模式重试**：
+   反馈给 `Rewriter`，要求细化或变更关键词，重新执行 Multi-Recall。
+2. **Single 模式重试（平滑降级）**：
+   * **Step 1 放松约束**：和multi-recall的二次检索相同，采用关键词细化
+3. **最终 Fallback**：
+   若循环重试次数耗尽（多次召回为空/不相关），终止检索，直接输出：*"在教材中未找到准确定义，建议换个问法"*。
+
+## 六、 最终生成 (Generation Logic)
+`Generate` 阶段将严格遵循优先级顺位：
+1. 优先使用：初始 Draft 评分 ≥ 85 的结果。
+2. 其次使用：经过 Self-Refine 后评分跃迁至 ≥ 85 的结果。
+3. 最后兜底：使用 RAG Pipeline 召回的高质量 Context 进行强化生成。
+
+
+
+
+v2.2:
+========================================================================
+  File: Test_agent_eval.json
+========================================================================
+
+  Total entries: 60 | Valid: 54 | Skipped: 6
+  Skipped IDs: [8, 18, 44, 52, 56, 60]
+
+  == RAG ==
+  (54 valid entries)
+Metric                      Avg  >=1 Count    >=1 %
+---------------------------------------------------
+  correctness            1.5185         94    87.0%
+  faithfulness           1.4167         87    80.6%
+  answer_relevance       1.9259        108   100.0%
+  context_relevance      1.8519        106    98.1%
+
+  == Agent ==
+
+  [Fast-Track] (loop=-1, no RAG): 45 entries
+Metric                      Avg  >=1 Count    >=1 %
+---------------------------------------------------
+  correctness            1.1667         65    72.2%
+  faithfulness              N/A        N/A      N/A
+  answer_relevance       1.8444         89    98.9%
+  context_relevance         N/A        N/A      N/A
+
+  [RAG] (loop=0/1): 9 entries (loop=0: 9 / 100.0%, loop=1: 0 / 0.0%)
+Metric                      Avg  >=1 Count    >=1 %
+---------------------------------------------------
+  correctness            1.5556         15    83.3%
+  faithfulness           1.5000         15    83.3%
+  answer_relevance       1.8889         17    94.4%
+  context_relevance      1.8333         17    94.4%
+  Total: 54 (Fast-Track 45 | RAG 9 | Fallback 0)
+========================================================================
+  File: longTest_agent_eval.json
+========================================================================
+
+  Total entries: 25 | Valid: 14 | Skipped: 11
+  Skipped IDs: [1, 4, 6, 7, 8, 9, 10, 11, 15, 16, 24]
+
+  == RAG ==
+  (14 valid entries)
+Metric                      Avg  >=1 Count    >=1 %
+---------------------------------------------------
+  correctness            0.9286         19    67.9%
+  faithfulness           1.0000         19    67.9%
+  answer_relevance       1.7143         27    96.4%
+  context_relevance      1.7500         27    96.4%
+
+  == Agent ==
+
+  [Fast-Track] (loop=-1, no RAG): 8 entries
+Metric                      Avg  >=1 Count    >=1 %
+---------------------------------------------------
+  correctness            0.5625          8    50.0%
+  faithfulness              N/A        N/A      N/A
+  answer_relevance       1.3750         14    87.5%
+  context_relevance         N/A        N/A      N/A
+
+  [RAG] (loop=0/1): 6 entries (loop=0: 6 / 100.0%, loop=1: 0 / 0.0%)
+Metric                      Avg  >=1 Count    >=1 %
+---------------------------------------------------
+  correctness            0.3333          4    33.3%
+  faithfulness           0.4167          5    41.7%
+  answer_relevance       1.5833         12   100.0%
+  context_relevance      1.5833         12   100.0%
+  Total: 14 (Fast-Track 8 | RAG 6 | Fallback 0)

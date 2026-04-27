@@ -85,3 +85,37 @@ class Reranker:
         except Exception as e:
             logging.error(f"RerankTexts API 错误: {e}，降级使用前 {top_n} 条")
             return texts[:top_n]
+
+    def rerank_texts_with_scores(self, query: str, texts: List[str], top_n: int = 3) -> Tuple[List[str], List[float]]:
+        """
+        对纯文本列表进行重排，并返回分数（用于阈值过滤，替代 LLM Grade_Relevance）
+        :param query: 查询文本
+        :param texts: 待重排的文本列表
+        :param top_n: 返回 top-n 条
+        :return: (texts, scores) 按分数降序排列，长度 <= top_n
+        """
+        if not texts:
+            return [], []
+
+        payload = {
+            "model": self.model_name,
+            "query": query,
+            "documents": texts,
+            "top_n": top_n,
+            "return_documents": False
+        }
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+
+        try:
+            response = requests.post(self.url, json=payload, headers=headers, timeout=10)
+            response.raise_for_status()
+            results = response.json().get("results", [])
+            top_indices = [res["index"] for res in results]
+            top_scores = [res["relevance_score"] for res in results]
+            return [texts[idx] for idx in top_indices], top_scores
+        except Exception as e:
+            logging.error(f"RerankWithScores API 错误: {e}，降级使用前 {top_n} 条，分数0")
+            return texts[:top_n], [0.0] * min(top_n, len(texts))

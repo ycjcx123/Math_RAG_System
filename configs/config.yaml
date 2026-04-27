@@ -97,6 +97,7 @@ retriever:
   top_k: 20
   block_aggregate: True
   rerank_pool_size: 10 # 这里是为了聚合block预留的大小
+  relevance_threshold: 0.3 # Rerank score 阈值，低于此值视为不相关（替代原 LLM Grade_Relevance）
 
   # 暂时只支持本地Qdrant
   Database:
@@ -124,24 +125,28 @@ generator:
   temperature: 0.1
   max_tokens: 4096
 
-# Agentic RAG 配置 v2.0，影响src/agent
+# Agentic RAG 配置 v2.2
 agent:
-  # 最大循环次数
+  # 最大循环次数（RAG 重试）
   max_loop_count: 2
+  # Self-Refine 最大轮次
+  self_refine_max: 2
+  # Self-Refine Early Stopping 提升幅度阈值（低于此值视为无提升）
+  early_stop_threshold: 5
   # Fallback 消息
   fallback_message: "在教材中未找到准确定义，建议换个问法"
-  # 路由节点配置（三元路由: Chat / Math / Math_RAG）
+  # 路由节点配置（二元路由: Chat / Math）
   router:
-    # 默认路径（当模型输出模糊时）
-    default_path: "Math_RAG"
+    default_path: "Math"
   # 查询重写配置（阶梯式重写）
   rewriter:
-    # JSON 解析失败时的回退策略
     fallback_to_original: true
   # 反思评分节点配置
   reflective_grader:
-    # 通过阈值（>=80 直接输出）
-    pass_threshold: 80
+    # 快速通道阈值（>=85 直接输出）
+    pass_threshold: 85
+    # RAG 通道阈值（<60 直接进入 RAG）
+    rag_threshold: 60
 
 # 测试，影响src/evaluation
 test:
@@ -149,7 +154,7 @@ test:
   output_path: "./test/result/Test.json"
   max_retries: 3
 
-  # 任务列表
+  # 任务列表(只针对rag系统)
   task:
     no_fix: 
       collection_name: "...."

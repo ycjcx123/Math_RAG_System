@@ -6,7 +6,7 @@ from src.utils.config_loader import load_config
 
 
 class MathSolverNode:
-    """数学直接求解节点：不依赖 RAG，让 1.7B 直接尝试解答"""
+    """数学直接求解节点 (v2.2)：支持首次求解 + Self-Refine 修正"""
 
     def __init__(self, config: dict = None):
         if config is None:
@@ -25,7 +25,6 @@ class MathSolverNode:
             base_url=self.base_url
         )
 
-        # 这里我们需要新增一个正则匹配，将<think>标签去除，而不是在sys_prompt中禁止思考
         self.system_prompt = (
             "你是一个数学解题助手。请直接解答以下数学问题。\n\n"
             "要求：\n"
@@ -41,10 +40,21 @@ class MathSolverNode:
             "$$\\boxed{x = \\pm 2}$$"
         )
 
-        logging.info(f"MathSolverNode 初始化完成，模型: {self.model_name}")
+        self.self_refine_prompt = (
+            "你是一个数学修正助手。你之前已经做出了一个解答，现在根据反馈意见修正你的答案。\n\n"
+            "要求：\n"
+            "1. 仔细阅读反馈意见，找出解答中的不足\n"
+            "2. 保留正确的部分，只修正有问题的步骤\n"
+            "3. 分步推理，每步标注依据\n"
+            "4. 使用标准 LaTeX 数学符号\n"
+            "5. 最终答案清晰突出（如 \\boxed{答案}）\n"
+            "6. 如果仍然不确定，请明确说'需要查阅教材'"
+        )
+
+        logging.info(f"MathSolverNode (v2.2) 初始化完成，模型: {self.model_name}")
 
     def solve(self, question: str) -> str:
-        """直接生成数学解答"""
+        """首次直接求解"""
         try:
             response = self.client.chat.completions.create(
                 model=self.model_name,
@@ -57,7 +67,6 @@ class MathSolverNode:
             )
 
             draft = response.choices[0].message.content.strip()
-            # 清理思维链标签
             draft = re.sub(r'<think>.*?</think>', '', draft, flags=re.DOTALL).strip()
             return draft
 
@@ -65,18 +74,58 @@ class MathSolverNode:
             logging.error(f"MathSolver LLM 调用失败: {e}")
             return ""
 
+    def solve_with_critique(self, question: str, draft: str, critique: str) -> str:
+        """基于 critique 进行 Self-Refine 修正"""
+        try:
+            user_content = (
+                f"原问题: {question}\n\n"
+                f"你之前的回答:\n{draft}\n\n"
+                f"反馈意见:\n{critique}\n\n"
+                f"请根据上述反馈修正你的回答："
+            )
+
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=[
+                    {"role": "system", "content": self.self_refine_prompt},
+                    {"role": "user", "content": user_content}
+                ],
+                temperature=self.temperature,
+                max_tokens=self.max_tokens
+            )
+
+            revised = response.choices[0].message.content.strip()
+            revised = re.sub(r'<think>.*?</think>', '', revised, flags=re.DOTALL).strip()
+            return revised
+
+        except Exception as e:
+            logging.error(f"MathSolver Self-Refine 调用失败: {e}")
+            return draft  # 保底：返回原有草稿
+
     def __call__(self, state: dict) -> dict:
         """LangGraph 节点接口"""
         question = state.get("question", "")
-        loop_count = state.get("loop_count", 0)
+        self_refine_count = state.get("self_refine_count", 0)
+        critique = state.get("critique", "")
 
         if not question:
             return {"internal_draft": "", "error": "缺少问题输入"}
 
-        logging.info(f"MathSolver 求解问题: {question}")
-        draft = self.solve(question)
-
-        return {
-            "internal_draft": draft,
-            "logic_path": f"{state.get('logic_path', '')} > Math_Solver"
-        }
+        if self_refine_count > 0 and critique:
+            # Self-Refine 模式
+            draft = state.get("internal_draft", "")
+            logging.info(f"MathSolver Self-Refine (第{self_refine_count}轮): {question[:50]}...")
+            revised = self.solve_with_critique(question, draft, critique)
+            return {
+                "internal_draft": revised,
+                "self_refine_count": self_refine_count,
+                "logic_path": f"{state.get('logic_path', '')} > Math_Solver(Self-Refine#{self_refine_count})"
+            }
+        else:
+            # 首次求解
+            logging.info(f"MathSolver 首次求解: {question[:60]}...")
+            draft = self.solve(question)
+            return {
+                "internal_draft": draft,
+                "logic_path": f"{state.get('logic_path', '')} > Math_Solver"
+            }

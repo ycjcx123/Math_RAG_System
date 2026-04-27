@@ -8,12 +8,12 @@ from src.utils.config_loader import load_config
 
 
 class ReflectiveGraderNode:
-    """反思评分节点 (v2.0)：对 Math_Solver 的草稿进行严格评分
+    """反思评分节点 (v2.2)：三段式评分的核心
 
-    输出:
-      - score (int): 0-100，>=80 表示通过
-      - critique (str): 当 score<80 时，指出缺少什么定理/依据
-      - passed (bool): True=直接输出，False=进入 Math_RAG 流程
+    评分分段:
+      - pass_threshold(85) ~ 100: Fast-Track（直接输出）
+      - rag_threshold(60) ~ pass_threshold(85): Self-Refine（自我修正）
+      - 0 ~ rag_threshold(60): RAG（检索教材补充）
     """
 
     def __init__(self, config: dict = None):
@@ -30,7 +30,8 @@ class ReflectiveGraderNode:
         self.max_tokens = generator_config.get("max_tokens", 256)
 
         grader_config = agent_config.get("reflective_grader", {})
-        self.pass_threshold = grader_config.get("pass_threshold", 80)
+        self.pass_threshold = grader_config.get("pass_threshold", 85)
+        self.rag_threshold = grader_config.get("rag_threshold", 60)
 
         self.client = OpenAI(
             api_key=self.api_key,
@@ -72,13 +73,12 @@ class ReflectiveGraderNode:
 - **0-39**：严重错误或完全缺失关键步骤
 - **40-59**：方向正确但重要步骤缺失
 - **60-79**：基本正确但有可改进之处（缺少引用、步骤不够清晰）
-- **80-100**：正确且完整，可直接作为最终答案
+- **80-84**：基本正确但需小幅修正
+- **85-100**：正确且完整，可直接作为最终答案
 
 如果得分 >= {self.pass_threshold}，critique 设为空字符串。
-如果得分 < {self.pass_threshold}，critique 必须具体说明：
-  1. 缺少哪个定理/定义的引用
-  2. 哪个步骤有逻辑断层
-  3. 建议查阅教材的哪些内容
+如果得分在 {self.rag_threshold}~{self.pass_threshold - 1} 之间，critique 应具体说明修正方向。
+如果得分 < {self.rag_threshold}，critique 应建议查阅教材的具体章节。
 
 输出要求：严格输出 JSON 对象，包含三个字段：
 - "score": 整数 0-100
@@ -167,18 +167,27 @@ class ReflectiveGraderNode:
     def __call__(self, state: dict) -> dict:
         question = state.get("question", "")
         draft = state.get("internal_draft", "")
-        loop_count = state.get("loop_count", 0)
+        self_refine_count = state.get("self_refine_count", 0)
 
         if not question:
-            return {"score": 0, "is_relevant": False, "error": "缺少问题输入"}
+            return {"score": 0, "error": "缺少问题输入"}
 
         score, critique, passed = self.grade(question, draft)
 
         result = {
             "score": score,
             "critique": critique if not passed else "",
-            "loop_count": loop_count + 1 if not passed else loop_count,
             "logic_path": f"{state.get('logic_path', '')} > ReflectiveGrader({score}/100)"
         }
+
+        # 三段式来源标记
+        if score >= self.pass_threshold:
+            result["generation_source"] = "fast_track"
+        elif score >= self.rag_threshold:
+            # Self-Refine 计数器递增（由 graph 的 _reflective_decision_v22 决策）
+            result["self_refine_count"] = self_refine_count + 1
+            result["generation_source"] = "self_refine"
+        else:
+            result["generation_source"] = "rag"
 
         return result

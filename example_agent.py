@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-MathRAG Agent 示例脚本 (v2.0)
+MathRAG Agent 示例脚本 (v2.2)
 
-演示升级后的三元路由 (Chat/Math/Math_RAG) + 反思评分机制。
+演示升级后的二元路由 (Chat/Math) + 三段式自适应流程 (Fast-Track / Self-Refine / RAG)。
 """
 
 import sys
@@ -34,7 +34,8 @@ def check_dependencies():
 
 def run_agent_example():
     print("=" * 60)
-    print("MathRAG Agent v2.0 示例")
+    print("MathRAG Agent v2.2 示例")
+    print("特性: 二元路由 + 三段式自适应 (Fast-Track/Self-Refine/RAG)")
     print("=" * 60)
 
     if not check_dependencies():
@@ -55,14 +56,15 @@ def run_agent_example():
         print(f"Agent 创建失败: {e}")
         sys.exit(1)
 
-    # 测试用例覆盖三种路由
+    # 测试用例覆盖两种路由 + 三段式流程
     test_queries = [
         # Chat 路径
         "你好，今天天气怎么样？",
-        # Math 路径
+        # Math 路径 - Fast-Track
         "求解方程 $x^2 - 4 = 0$",
+        # Math 路径 - Self-Refine (需修正)
         "什么是线性无关？",
-        # Math_RAG 路径
+        # Math 路径 - RAG (复杂定理)
         "证明下述定理：定理10 设 $A(\\lambda)$ 是 $\\mathbf{C}[\\lambda]$ 上的 $n$ 级满秩矩阵，通过初等变换把 $A(\\lambda)$ 化成对角矩阵，然后把主对角线上每个次数大于0的多项式分解成互不相同的一次因式方幂的乘积，那么所有这些一次因式的方幂（相同的按出现的次数计算）就是 $A(\\lambda)$ 的初等因子。"
     ]
 
@@ -76,7 +78,9 @@ def run_agent_example():
 
             print(f"  路由路径: {result.get('route', 'Unknown')}")
             print(f"  决策路径: {result.get('logic_path', 'N/A')}")
-            print(f"  循环次数: {result.get('loop_count', 0)}")
+            print(f"  生成来源: {result.get('generation_source', 'N/A')}")
+            print(f"  Self-Refine轮数: {result.get('self_refine_count', 0)}")
+            print(f"  RAG循环次数: {result.get('loop_count', 0)}")
             print(f"  反思评分: {result.get('score', 'N/A')}/100")
             if result.get('critique'):
                 print(f"  纠错意见: {result.get('critique', '')[:80]}...")
@@ -100,8 +104,8 @@ def run_agent_example():
 
 
 def main():
-    print("MathRAG Agentic RAG 系统 v2.0")
-    print("特性: 三元路由 + 反思评分 + 阶梯重写 + 块聚合")
+    print("MathRAG Agentic RAG 系统 v2.2")
+    print("特性: 二元路由 + 三段式自适应 + 双轨检索 + 硬件级阈值过滤")
     print()
     response = input("是否运行示例？(y/n): ").strip().lower()
     if response != 'y':

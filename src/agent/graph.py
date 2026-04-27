@@ -1,5 +1,5 @@
 import logging
-from typing import Literal, Dict, Any, List
+from typing import Literal, Dict, Any, List, Tuple
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
@@ -13,19 +13,18 @@ from src.rag.retriever import BlockAggregator, Reranker
 
 
 class AgentGraph:
-    """Agent 图编排 (v2.0)
+    """Agent 图编排 (v2.2)
 
-    新增拓扑：
+    拓扑（简化版）：
     入口 → Router
       ├── Chat → Chat_Node → END
-      ├── Math → Math_Solver → Reflective_Grader
-      │         ├── score>=80 → Generate → END  (草稿直接输出)
-      │         └── score<80  → Rewriter → Retrieve → Grader →
-      │                                              ├── relevant → Generate → END
-      │                                              └── not_relevant → Router/Fallback
-      └── Math_RAG → Rewriter → Retrieve → Grader →
-                                           ├── relevant → Generate → END
-                                           └── not_relevant → Router/Fallback
+      └── Math → Math_Solver → Reflective_Grader
+            ├── fast_track(≥85) → Generate → END
+            ├── self_refine(60~85) → Math_Solver(含critique) → Grader(循环)
+            └── rag(<60) → Rewriter → Retrieve(内嵌阈值过滤)
+                                      ├── 相关 → Generate → END
+                                      ├── 不相关 → Rewriter(重试) → ...
+                                      └── 达上限 → Fallback → END
     """
 
     def __init__(self, config: dict = None):
@@ -36,6 +35,8 @@ class AgentGraph:
         agent_config = config.get("agent", {})
 
         self.max_loop_count = agent_config.get("max_loop_count", 2)
+        self.self_refine_max = agent_config.get("self_refine_max", 2)
+        self.early_stop_threshold = agent_config.get("early_stop_threshold", 5)
         self.fallback_message = agent_config.get("fallback_message",
                                                   "在教材中未找到准确定义，建议换个问法")
 
@@ -45,14 +46,11 @@ class AgentGraph:
         self.math_solver_node = MathSolverNode(config)
         self.reflective_grader_node = ReflectiveGraderNode(config)
 
-        # 注意：grader.py 现在被 ReflectiveGraderNode 占用
-        # 文档相关性评分用内联节点 _grade_relevance_node 实现
-        self.grader_node = None  # 不再使用原有的 GraderNode
-
-        # 初始化分布式检索工具
+        # 初始化检索工具
         retriever_config = config.get("retriever", {})
         self.block_aggregator = BlockAggregator(retriever_config)
         self.secondary_reranker = Reranker(retriever_config)
+        self.relevance_threshold = retriever_config.get("relevance_threshold", 0.3)
 
         # 初始化生成器
         from src.rag.generator import Generator
@@ -63,63 +61,62 @@ class AgentGraph:
         self.checkpointer = MemorySaver()
         self.compiled_graph = self.graph.compile(checkpointer=self.checkpointer)
 
-        logging.info(f"AgentGraph v2.0 初始化完成，最大循环次数: {self.max_loop_count}")
+        logging.info(f"AgentGraph v2.2 初始化完成，循环上限: {self.max_loop_count}, "
+                     f"Self-Refine上限: {self.self_refine_max}, "
+                     f"相关性阈值: {self.relevance_threshold}")
 
     # ==================== 图构建 ====================
 
     def _build_graph(self) -> StateGraph:
         workflow = StateGraph(AgentState)
 
-        # 节点
+        # === 节点注册 ===
         workflow.add_node("router", self.router_node)
-        workflow.add_node("math_solver", self.math_solver_node)
+        workflow.add_node("math_solver", self._math_solver_wrapper)
         workflow.add_node("reflective_grader", self.reflective_grader_node)
         workflow.add_node("rewriter", self.rewriter_node)
         workflow.add_node("retrieve", self._retrieve_node)
-        workflow.add_node("grade_relevance", self._grade_relevance_node)
         workflow.add_node("generate", self._generate_node)
         workflow.add_node("chat", self._chat_node)
         workflow.add_node("fallback", self._fallback_node)
 
         workflow.set_entry_point("router")
 
-        # === Router → 三元分流 ===
+        # === Router → 二元分流 (Chat / Math) ===
         workflow.add_conditional_edges(
             "router",
             self._route_decision,
             {
                 "Chat": "chat",
                 "Math": "math_solver",
-                "Math_RAG": "rewriter",
                 "Fallback": "fallback"
             }
         )
 
-        # === Math 路径：解 → 自检 ===
+        # === Math_Solver → Reflective_Grader (唯一出口) ===
         workflow.add_edge("math_solver", "reflective_grader")
 
-        # === Reflective_Grader 条件分流 ===
+        # === Reflective_Grader → 三段式分流 ===
         workflow.add_conditional_edges(
             "reflective_grader",
-            self._reflective_decision,
+            self._reflective_decision_v22,
             {
-                "generate": "generate",     # score>=80，直接输出草稿
-                "rewriter": "rewriter"       # score<80，进入 RAG 流程补全
+                "fast_track": "generate",      # score >= pass_threshold(85): 直接输出
+                "self_refine": "math_solver",   # rag_threshold(60) <= score < 85: 自修正
+                "rag": "rewriter"               # score < rag_threshold(60): 直接进 RAG
             }
         )
 
-        # === RAG 路径 (Math_RAG 入口 + Reflective 失败降级) ===
+        # === RAG 路径：Rewriter → Retrieve → (条件) Generate / Rewriter 重试 ===
         workflow.add_edge("rewriter", "retrieve")
-        workflow.add_edge("retrieve", "grade_relevance")
 
-        # === 文档相关性评分 → 条件分流 ===
         workflow.add_conditional_edges(
-            "grade_relevance",
-            self._grade_decision,
+            "retrieve",
+            self._retrieve_decision,
             {
-                "relevant": "generate",
-                "not_relevant": "router",   # 重新路由（循环）
-                "max_loop": "fallback"
+                "generate": "generate",
+                "rewriter": "rewriter",
+                "fallback": "fallback"
             }
         )
 
@@ -132,172 +129,277 @@ class AgentGraph:
 
     # ==================== 决策函数 ====================
 
-    def _route_decision(self, state: AgentState) -> Literal["Chat", "Math", "Math_RAG", "Fallback"]:
-        """路由决策：Chat / Math / Math_RAG / Fallback"""
+    def _route_decision(self, state: AgentState) -> Literal["Chat", "Math", "Fallback"]:
+        """路由决策：二元分流 Chat / Math"""
         loop_count = state.get("loop_count", 0)
 
         if loop_count >= self.max_loop_count:
             logging.warning(f"达到最大循环次数 ({loop_count})，跳转到 Fallback")
             return "Fallback"
 
-        route = state.get("route", "Math_RAG")
-        return route
+        return state.get("route", "Math")
 
-    def _reflective_decision(self, state: AgentState) -> Literal["generate", "rewriter"]:
-        """反思评分决策：>=80 直接输出，<80 进入 RAG 补全"""
+    def _reflective_decision_v22(self, state: AgentState) -> Literal["fast_track", "self_refine", "rag"]:
+        """三段式自适应分流（在 Reflective_Grader 执行后调用）"""
         score = state.get("score", 0)
-        loop_count = state.get("loop_count", 0)
+        self_refine_count = state.get("self_refine_count", 0)
 
-        logging.info(f"反思评分决策: score={score}, loop_count={loop_count}")
+        logging.info(f"三段式分流: score={score}, self_refine_count={self_refine_count}")
 
-        if score >= 80:
-            logging.info("反思评分通过，直接输出草稿")
-            return "generate"
+        if score >= self.reflective_grader_node.pass_threshold:
+            logging.info("Fast-Track: 草稿可信度高，直接输出")
+            return "fast_track"
 
-        # score < 80，检查是否还有循环余量
-        if loop_count >= self.max_loop_count:
-            logging.warning(f"反思评分不通过且达到循环上限，进入 Fallback")
-            return "rewriter"  # 但后续 grade_decision 会拦住
+        if score >= self.reflective_grader_node.rag_threshold:
+            # Self-Refine 循环：检查是否超限
+            if self_refine_count >= self.self_refine_max:
+                logging.info(f"Self-Refine 已达上限 ({self_refine_count})，降级到 RAG")
+                return "rag"
+            logging.info(f"Self-Refine Track (第{self_refine_count + 1}轮)，继续修正")
+            return "self_refine"
 
-        logging.info(f"反思评分不通过，携带 critique 进入 RAG 检索补全")
-        return "rewriter"
+        logging.info(f"RAG Track: score={score} < 阈值，进入 RAG 检索")
+        return "rag"
 
-    def _grade_decision(self, state: AgentState) -> Literal["relevant", "not_relevant", "max_loop"]:
-        """文档相关性评分决策"""
-        loop_count = state.get("loop_count", 0)
+    def _retrieve_decision(self, state: AgentState) -> Literal["generate", "rewriter", "fallback"]:
+        """检索结果决策：基于 Rerank score 阈值过滤（替代原 LLM Grade_Relevance）"""
         is_relevant = state.get("is_relevant", False)
-
-        if loop_count >= self.max_loop_count:
-            logging.warning(f"达到最大循环次数 ({loop_count})，跳转到 Fallback")
-            return "max_loop"
+        loop_count = state.get("loop_count", 0)
 
         if is_relevant:
-            return "relevant"
+            return "generate"
 
-        logging.info(f"文档不相关，循环计数: {loop_count}")
-        return "not_relevant"
+        if loop_count >= self.max_loop_count:
+            logging.warning(f"检索不相关且达到循环上限 ({loop_count})，跳转到 Fallback")
+            return "fallback"
 
-    # ==================== 节点实现 ====================
+        logging.info(f"检索结果不相关 (loop={loop_count})，返回 Rewriter 重试")
+        return "rewriter"
+
+    # ==================== 节点包装器 ====================
+
+    def _math_solver_wrapper(self, state: AgentState) -> Dict[str, Any]:
+        """
+        Math_Solver 包装器：
+        - 首次进入：正常求解
+        - Self-Refine 进入：携带 critique 修正
+        """
+        self_refine_count = state.get("self_refine_count", 0)
+        critique = state.get("critique", "")
+
+        if self_refine_count > 0 and critique:
+            previous_score = state.get("score", 0)
+            revised = self.math_solver_node.solve_with_critique(
+                question=state.get("question", ""),
+                draft=state.get("internal_draft", ""),
+                critique=critique
+            )
+            return {
+                "internal_draft": revised,
+                "previous_score": previous_score,
+                "logic_path": f"{state.get('logic_path', '')} > Math_Solver(Self-Refine#{self_refine_count})"
+            }
+
+        return self.math_solver_node(state)
+
+    # ==================== 检索节点 ====================
 
     def _retrieve_node(self, state: AgentState) -> Dict[str, Any]:
         """
-        分布式检索节点：
-        1. 对每组关键词执行：retrieve → rerank → block_aggregate，取 top-1 为主结果
-        2. 收集各组第 2、3 名入候选池
-        3. 以原始问题为 query 对候选池做第二次重排，取 top-1
-        4. 最终文档数 = len(keyword_groups) + 1
+        检索节点 (v2.2)：
+        - 根据 strategy(multi/single) 走不同检索模式
+        - 使用 Rerank score + threshold 作相关性判断（替代原 LLM Grade_Relevance）
         """
         question = state.get("question", "")
+        strategy = state.get("strategy", "multi")
         keyword_groups: List[str] = state.get("keyword_groups", [question])
+        loop_count = state.get("loop_count", 0)
 
-        logging.info(f"分布式检索节点: {len(keyword_groups)} 组关键词")
+        logging.info(f"检索节点: strategy={strategy}, {len(keyword_groups)} 组关键词")
 
-        primary_list = []    # 各组主结果（第1名）
-        secondary_pool = []  # 候选池（第2、3名）
+        if strategy == "single":
+            documents, all_scores = self._single_recall(question, keyword_groups)
+        else:
+            documents, all_scores = self._multi_recall(question, keyword_groups)
+
+        # Rerank score 阈值过滤（核心替代 LLM Grade_Relevance）
+        top_score = max(all_scores) if all_scores else 0.0
+        is_relevant = top_score >= self.relevance_threshold
+
+        logging.info(f"检索完成: {len(documents)} 个文档, "
+                     f"最高 Rerank score: {top_score:.4f}, "
+                     f"阈值: {self.relevance_threshold}, "
+                     f"{'相关' if is_relevant else '不相关'}")
+
+        return {
+            "documents": documents,
+            "rerank_scores": all_scores,
+            "is_relevant": is_relevant,
+            "loop_count": loop_count + 1 if not is_relevant else loop_count
+        }
+
+    def _multi_recall(self, question: str, keyword_groups: List[str]) -> Tuple[List[str], List[float]]:
+        """Multi-Recall: 分布式检索 + 二次重排（不使用 block 聚合）"""
+        primary_list = []
+        secondary_pool = []
+        all_scores = []
 
         for i, kw in enumerate(keyword_groups):
             try:
-                # 用关键词 query 检索 → rerank → block 聚合
-                aggregated = self.block_aggregator.retrieve_and_aggregate(kw)
-                if not aggregated:
-                    logging.warning(f"第{i+1}组关键词无检索结果: {str(kw)[:30]}")
+                # 1. 基础检索（top_k=20）
+                nodes = self.block_aggregator.base_retriever.retrieve(kw)
+                if not nodes:
                     continue
 
-                primary_list.append(aggregated[0])
-                if len(aggregated) > 1:
-                    secondary_pool.extend(aggregated[1:])
-                logging.info(f"第{i+1}组关键词 '{str(kw)[:30]}': "
-                             f"主结果 1 个, 候选 +{len(aggregated)-1} 个")
+                # 2. Rerank（不聚合 block，直接取 top-3）
+                top_ids, top_texts = self.block_aggregator.reranker.rerank(kw, nodes)
+                if not top_texts:
+                    continue
+
+                primary_list.append(top_texts[0])
+                if len(top_texts) > 1:
+                    secondary_pool.extend(top_texts[1:])
             except Exception as e:
-                logging.error(f"第{i+1}组关键词 '{str(kw)[:30]}' 检索失败: {e}")
+                logging.error(f"第{i+1}组关键词检索失败: {e}")
                 continue
 
-        logging.info(f"分布式检索第一阶段完成: 主结果 {len(primary_list)} 个, "
-                     f"候选池 {len(secondary_pool)} 个")
-
-        # 第二次重排：用原始问题从候选池精选
         if secondary_pool:
             try:
-                second_results = self.secondary_reranker.rerank_texts(
-                    query=question,
-                    texts=secondary_pool,
-                    top_n=1
+                second_results, second_scores = self.secondary_reranker.rerank_texts_with_scores(
+                    query=question, texts=secondary_pool, top_n=1
                 )
                 if second_results:
                     primary_list.append(second_results[0])
-                    logging.info(f"第二次重排完成，补充 1 个结果")
+                    all_scores.extend(second_scores)
             except Exception as e:
-                logging.error(f"第二次重排失败: {e}")
+                logging.error(f"二次重排失败: {e}")
 
-        logging.info(f"分布式检索完成: 共 {len(primary_list)} 个文档")
-        return {"documents": primary_list}
+        # 截断 ≤ 5
+        result = primary_list[:5]
 
-    def _grade_relevance_node(self, state: AgentState) -> Dict[str, Any]:
-        """
-        文档相关性评分节点（内联实现，替代原有的 GraderNode）
-        注意：这与 ReflectiveGraderNode 不同，后者评估 Math_Solver 的草稿
-        本节点评估检索到的文档与问题的相关性
-        """
-        question = state.get("question", "")
-        documents = state.get("documents", [])
-        loop_count = state.get("loop_count", 0)
+        # 没有获取到 rerank scores 时，用阈值作保底判断
+        return result, all_scores if all_scores else [self.relevance_threshold]
 
-        if not documents:
-            logging.warning("文档为空，判定为不相关")
-            return {"is_relevant": False, "loop_count": loop_count + 1}
+    def _single_recall(self, question: str, keyword_groups: List[str]) -> Tuple[List[str], List[float]]:
+        """Single-Recall: 全局寻优 + 上下文感知扩展"""
+        query = keyword_groups[0] if keyword_groups else question
 
-        # 用 LLM 简单判断文档是否相关（复用 Generator）
-        if documents:
-            # 取前 2 个文档的前 400 字做快速评估
-            sample = "\n".join([d[:400] for d in documents[:2]])
-            prompt = (
-                f"问题: {question}\n\n"
-                f"参考资料:\n{sample}\n\n"
-                f"这些资料是否包含回答该问题所需的关键数学信息？只回答 Yes 或 No。"
+        try:
+            nodes = self.block_aggregator.base_retriever.retrieve(query)
+            if not nodes:
+                return [query], [0.0]
+
+            rerank_ids, rerank_texts = self.block_aggregator.reranker.rerank(query, nodes)
+            _, rerank_scores = self.secondary_reranker.rerank_texts_with_scores(
+                query=query, texts=rerank_texts, top_n=3
             )
 
-            try:
-                response = self.generator.client.chat.completions.create(
-                    model=self.generator.model_name,
-                    messages=[
-                        {"role": "system", "content": "你是一个文档相关性判断助手。只回答 Yes 或 No。"},
-                        {"role": "user", "content": prompt}
-                    ],
-                    temperature=0.1,
-                    max_tokens=10
-                )
-                answer = response.choices[0].message.content.strip().upper()
-                is_relevant = "YES" in answer
-            except Exception:
-                is_relevant = False
+            if not rerank_texts:
+                return [query], [0.0]
 
-            logging.info(f"文档相关性判断: {'相关' if is_relevant else '不相关'}")
+            # 上下文感知扩展（仅对 top-1）
+            expanded = self._context_aware_expand(rerank_ids, rerank_texts, query)
 
-            if not is_relevant:
-                return {"is_relevant": is_relevant, "loop_count": loop_count + 1}
+            # top-2, top-3 静默辅助
+            result = expanded + rerank_texts[1:3]
+            return result[:5], rerank_scores
 
-            return {"is_relevant": is_relevant}
+        except Exception as e:
+            logging.error(f"Single-Recall 失败: {e}")
+            return [query], [0.0]
 
-        return {"is_relevant": False, "loop_count": loop_count + 1}
+    def _context_aware_expand(self, rerank_ids: List[str], rerank_texts: List[str], query: str) -> List[str]:
+        """上下文感知扩展（仅对 top-1）"""
+        if not rerank_ids or not rerank_texts:
+            return []
+
+        top_text = rerank_texts[0]
+        chunk_type = self._detect_chunk_type(top_text)
+
+        try:
+            nodes = self.block_aggregator.base_retriever.retrieve(query)
+            node_map = {node.node.node_id: node for node in nodes}
+            node = node_map.get(rerank_ids[0])
+            if node:
+                chunk_id = node.metadata.get("id")
+                if chunk_id is not None:
+                    expanded = self._get_adjacent_chunks(int(chunk_id), chunk_type)
+                    if expanded:
+                        return [top_text] + expanded
+        except Exception as e:
+            logging.warning(f"上下文扩展失败: {e}")
+
+        return [top_text]
+
+    def _detect_chunk_type(self, text: str) -> str:
+        """从文本中检测 chunk 类型"""
+        for keyword, type_name in [
+            ("证明", "proof"), ("定理", "theorem"), ("定义", "definition"),
+            ("例题", "example"), ("命题", "proposition"), ("推论", "corollary")
+        ]:
+            if keyword in text[:200]:
+                return type_name
+        return "other"
+
+    def _get_adjacent_chunks(self, chunk_id: int, chunk_type: str) -> List[str]:
+        """获取相邻 chunk（基于类型感知）"""
+        try:
+            q_client = self.block_aggregator.q_client
+            collection = self.block_aggregator.collection_name
+
+            if chunk_type in ("theorem", "definition", "proposition", "corollary"):
+                # 前向：加载后续区块直到触碰新定理/定义/例题
+                texts = []
+                for offset in range(1, 10):
+                    hit = q_client.retrieve(
+                        collection_name=collection, ids=[chunk_id + offset],
+                        with_payload=True
+                    )
+                    if not hit:
+                        break
+                    text = hit[0].payload.get("text", "")
+                    if any(b in text[:100] for b in ("**定理", "**定义", "**例题", "**推论", "**命题")):
+                        break
+                    texts.append(text)
+                return texts
+
+            elif chunk_type == "proof":
+                # 后向：加载前置区块直到触碰父级边界
+                texts = []
+                for offset in range(1, 10):
+                    hit = q_client.retrieve(
+                        collection_name=collection, ids=[chunk_id - offset],
+                        with_payload=True
+                    )
+                    if not hit:
+                        break
+                    text = hit[0].payload.get("text", "")
+                    if any(b in text[:100] for b in ("**证明", "**解", "**例题", "**定理", "**定义")):
+                        break
+                    texts.insert(0, text)
+                return texts
+
+            return []
+        except Exception as e:
+            logging.warning(f"获取相邻 chunk 失败: {e}")
+            return []
+
+    # ==================== 生成 / 聊天 / 兜底 ====================
 
     def _generate_node(self, state: AgentState) -> Dict[str, Any]:
-        """生成节点：优先使用 internal_draft（反思通过的草稿），否则走 RAG 生成"""
+        """生成节点：Fast-Track / Self-Refined 草稿优先，否则 RAG"""
         question = state.get("question", "")
         documents = state.get("documents", [])
         internal_draft = state.get("internal_draft", "")
+        generation_source = state.get("generation_source", "rag")
 
-        # 如果来自反思评分通过，直接使用草稿
-        if internal_draft:
-            score = state.get("score", 0)
-            if score >= 80:
-                logging.info("生成节点: 使用反思通过的草稿")
-                return {"answer": internal_draft}
+        if generation_source in ("fast_track", "self_refined") and internal_draft:
+            logging.info(f"生成节点: 使用 {generation_source} 草稿")
+            return {"answer": internal_draft}
 
-        # 否则使用 RAG 生成
-        logging.info(f"生成节点: 基于 {len(documents)} 个文档生成答案")
-
+        logging.info(f"生成节点: 基于 {len(documents)} 个文档 RAG 生成")
         try:
-            answer = self.generator.generate(query=question, contexts=documents if documents else None)
+            answer = self.generator.generate(query=question, contexts=documents or None)
             return {"answer": answer}
         except Exception as e:
             logging.error(f"生成失败: {e}")
@@ -305,12 +407,10 @@ class AgentGraph:
 
     def _chat_node(self, state: AgentState) -> Dict[str, Any]:
         question = state.get("question", "")
-
         try:
             answer = self.generator.generate(query=question, contexts=None)
             return {"answer": answer}
         except Exception as e:
-            logging.error(f"聊天生成失败: {e}")
             return {"answer": f"生成回答时出错: {str(e)}", "error": str(e)}
 
     def _fallback_node(self, state: AgentState) -> Dict[str, Any]:
@@ -319,7 +419,7 @@ class AgentGraph:
     # ==================== 运行入口 ====================
 
     def run(self, question: str, config: dict = None) -> Dict[str, Any]:
-        logging.info(f"Agent v2.0 开始处理问题: {question}")
+        logging.info(f"Agent v2.2 开始处理问题: {question}")
 
         initial_state = create_initial_state(question)
 
@@ -334,15 +434,19 @@ class AgentGraph:
                 "answer": final_state.get("answer", ""),
                 "route": final_state.get("route", "Unknown"),
                 "loop_count": final_state.get("loop_count", 0),
+                "self_refine_count": final_state.get("self_refine_count", 0),
                 "score": final_state.get("score", 0),
                 "critique": final_state.get("critique", ""),
+                "generation_source": final_state.get("generation_source", "unknown"),
+                "documents": final_state.get("documents", []),
                 "documents_retrieved": len(final_state.get("documents", [])),
                 "is_relevant": final_state.get("is_relevant", False),
                 "logic_path": final_state.get("logic_path", ""),
                 "error": final_state.get("error", "")
             }
 
-            logging.info(f"Agent 处理完成，路径: {result['logic_path']}, 循环: {result['loop_count']}")
+            logging.info(f"Agent 处理完成，路径: {result['logic_path']}, "
+                         f"来源: {result['generation_source']}")
             return result
 
         except Exception as e:
@@ -354,8 +458,10 @@ class AgentGraph:
                 "answer": f"Agent 系统错误: {str(e)}",
                 "route": "Error",
                 "loop_count": 0,
+                "self_refine_count": 0,
                 "score": 0,
                 "critique": "",
+                "generation_source": "error",
                 "documents_retrieved": 0,
                 "is_relevant": False,
                 "error": str(e)
