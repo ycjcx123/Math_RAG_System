@@ -63,8 +63,8 @@ def main():
     # else:
     #     test_file = input("\n请输入测试集 JSON 文件路径: ").strip()
 
-    # test_file_list = ["./test/Test.json","./test/longTest.json"]
-    test_file_list = ["./test/longTest.json"]
+    test_file_list = ["./test/testset/Test.json","./test/testset/longTest.json"]
+    # test_file_list = ["./test/testset/longTest.json"]
     for idx, test_file in enumerate(test_file_list):
         test_file = resolve_test_path(test_file)
 

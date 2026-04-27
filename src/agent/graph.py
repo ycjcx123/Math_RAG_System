@@ -18,13 +18,15 @@ class AgentGraph:
     拓扑（简化版）：
     入口 → Router
       ├── Chat → Chat_Node → END
-      └── Math → Math_Solver → Reflective_Grader
-            ├── fast_track(≥85) → Generate → END
-            ├── self_refine(60~85) → Math_Solver(含critique) → Grader(循环)
-            └── rag(<60) → Rewriter → Retrieve(内嵌阈值过滤)
-                                      ├── 相关 → Generate → END
-                                      ├── 不相关 → Rewriter(重试) → ...
-                                      └── 达上限 → Fallback → END
+      └── Math → PreRetrieve(快速预检)
+            ├── score > 0.9 → Generate(直接RAG) → END
+            └── score ≤ 0.9 → Math_Solver → Reflective_Grader
+                  ├── fast_track(≥85) → Generate → END
+                  ├── self_refine(60~85) → Math_Solver(含critique) → Grader(循环)
+                  └── rag(<60) → Rewriter → Retrieve(内嵌阈值过滤)
+                                            ├── 相关 → Generate → END
+                                            ├── 不相关 → Rewriter(重试) → ...
+                                            └── 达上限 → Fallback → END
     """
 
     def __init__(self, config: dict = None):
@@ -39,6 +41,7 @@ class AgentGraph:
         self.early_stop_threshold = agent_config.get("early_stop_threshold", 5)
         self.fallback_message = agent_config.get("fallback_message",
                                                   "在教材中未找到准确定义，建议换个问法")
+        self.pre_retrieve_threshold = agent_config.get("pre_retrieve_threshold", 0.9)
 
         # 初始化节点
         self.router_node = RouterNode(config)
@@ -88,8 +91,19 @@ class AgentGraph:
             self._route_decision,
             {
                 "Chat": "chat",
-                "Math": "math_solver",
+                "Math": "pre_retrieve",
                 "Fallback": "fallback"
+            }
+        )
+
+        # === PreRetrieve: 快速预检 → score > threshold → 直接 RAG 生成 ===
+        workflow.add_node("pre_retrieve", self._pre_retrieve_node)
+        workflow.add_conditional_edges(
+            "pre_retrieve",
+            self._pre_retrieve_decision,
+            {
+                "generate": "generate",
+                "math_solver": "math_solver"
             }
         )
 
@@ -175,6 +189,62 @@ class AgentGraph:
 
         logging.info(f"检索结果不相关 (loop={loop_count})，返回 Rewriter 重试")
         return "rewriter"
+
+    def _pre_retrieve_node(self, state: AgentState) -> Dict[str, Any]:
+        """快速预检节点：路由判定为 Math 后，先用原问题检索并检查 Rerank score
+
+        - score > threshold: 直接走 RAG 生成
+        - score <= threshold: 走现有 Agent 流程
+        """
+        question = state.get("question", "")
+        logging.info(f"PreRetrieve 快速预检: {question[:50]}...")
+
+        try:
+            nodes = self.block_aggregator.base_retriever.retrieve(question)
+            if not nodes:
+                logging.warning("PreRetrieve 检索无结果")
+                return {"pre_retrieve_decision": "agent", "pre_retrieve_score": 0.0,
+                        "logic_path": f"{state.get('logic_path', '')} > PreRetrieve(no_results -> agent)"}
+
+            texts = [n.get_content() for n in nodes]
+            top_texts, top_scores = self.secondary_reranker.rerank_texts_with_scores(
+                query=question, texts=texts, top_n=3
+            )
+
+            if not top_scores:
+                return {"pre_retrieve_decision": "agent", "pre_retrieve_score": 0.0,
+                        "logic_path": f"{state.get('logic_path', '')} > PreRetrieve(no_scores -> agent)"}
+
+            top_score = max(top_scores)
+            logging.info(f"PreRetrieve 最高 score: {top_score:.4f}, 阈值: {self.pre_retrieve_threshold}")
+
+            if top_score > self.pre_retrieve_threshold:
+                logging.info(f"PreRetrieve 高分 ({top_score:.4f})，直接 RAG 生成")
+                return {
+                    "documents": top_texts,
+                    "rerank_scores": top_scores,
+                    "is_relevant": True,
+                    "pre_retrieve_decision": "direct_rag",
+                    "pre_retrieve_score": top_score,
+                    "generation_source": "pre_retrieve_rag",
+                    "loop_count": 0,
+                    "logic_path": f"{state.get('logic_path', '')} > PreRetrieve({top_score:.4f} -> direct_RAG)"
+                }
+
+            logging.info(f"PreRetrieve 低分 ({top_score:.4f})，进入 Agent 流程")
+            return {
+                "pre_retrieve_decision": "agent",
+                "pre_retrieve_score": top_score,
+                "logic_path": f"{state.get('logic_path', '')} > PreRetrieve({top_score:.4f} -> agent)"
+            }
+        except Exception as e:
+            logging.error(f"PreRetrieve 异常: {e}")
+            return {"pre_retrieve_decision": "agent", "pre_retrieve_score": 0.0,
+                    "logic_path": f"{state.get('logic_path', '')} > PreRetrieve(error -> agent)"}
+
+    def _pre_retrieve_decision(self, state: AgentState) -> Literal["generate", "math_solver"]:
+        """PreRetrieve 决策：direct_rag → Generate, 否则 → Math_Solver"""
+        return "generate" if state.get("pre_retrieve_decision", "agent") == "direct_rag" else "math_solver"
 
     # ==================== 节点包装器 ====================
 

@@ -209,3 +209,35 @@ math_rag_blockget | 0.77083(37)      | 1(48)     | 1.75(84) | 1.4583(70)     | 1
 
 关于模型：
     注意：Qwen3-1.7B 性能可能受限，推荐使用 Qwen2.5-7B/14B 或 DeepSeek-V3 以获得最佳生成体验。
+
+
+```mermaid
+graph TD
+    subgraph "Stage 1: 文档预处理 (Parser & Fixer)"
+        A[原始 PDF/MD] --> B[MinerU OCR 解析]
+        B --> C{公式检测}
+        C -- 报错/语法错 --> D[LLM 局部重写 + PyLaTeX 校验]
+        C -- 正常 --> E[结构化文本]
+        D --> E
+    end
+
+    subgraph "Stage 2: 语义感知切分 (Splitter)"
+        E --> F[标题路径注入]
+        F --> G[逻辑边界切分: 定义/定理/证明]
+        G --> H[Token 动态调整: 过短合并/过长切分]
+        H --> I[元数据分配: Block ID & Part ID]
+    end
+
+    subgraph "Stage 3: 混合检索与增强 (Retriever)"
+        I --> J[(Qdrant 向量库)]
+        K[用户查询] --> L[Hybrid Search: Dense + Sparse]
+        L --> M[RRF 排序融合]
+        M --> N[BGE-Reranker 重排序]
+        N --> O[Block 聚合: 根据 ID 还原完整逻辑块]
+    end
+
+    subgraph "Stage 4: 答案生成 (Generator)"
+        O --> P[Qwen LLM 推理]
+        P --> Q[输出最终答案]
+    end
+```

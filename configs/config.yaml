@@ -135,6 +135,8 @@ agent:
   early_stop_threshold: 5
   # Fallback 消息
   fallback_message: "在教材中未找到准确定义，建议换个问法"
+  # 快速预检阈值（路由判定为 Math 后，先检索原问题，score > 此值则直接 RAG 生成）
+  pre_retrieve_threshold: 0.9
   # 路由节点配置（二元路由: Chat / Math）
   router:
     default_path: "Math"
@@ -150,7 +152,7 @@ agent:
 
 # 测试，影响src/evaluation
 test:
-  test_file_path: "./test/Test.json"
+  test_file_path: "./test/testset/Test.json"
   output_path: "./test/result/Test.json"
   max_retries: 3
 
