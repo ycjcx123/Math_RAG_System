@@ -2,12 +2,18 @@
 """
 summary.py - Evaluate result summary
 
-Reads JSON result files from test/result/ and computes per-metric averages
-and >=1 counts.
+Reads JSON result files from test/result/v2.3/ and computes per-metric averages
+and >=1 counts with loop-counter breakdown for Agent.
+
+Modes:
+    strict (default)   连带跳过：仅保留 Origin/RAG/Agent 全部有效的条目，保证对比样本一致
+    per-field          逐字段独立校验，每个字段用各自最大有效样本
 
 Usage:
-    python test/summary.py                          # Process all JSON in test/result/
-    python test/summary.py test/result/xxx.json     # Process specific file
+    python test/summary.py                              # 默认 strict 模式，处理全部
+    python test/summary.py --per-field                   # per-field 模式，处理全部
+    python test/summary.py --strict path/to/file.json    # strict 模式，单文件
+    python test/summary.py --per-field path/to/file.json # per-field 模式，单文件
 """
 
 import json
@@ -17,7 +23,7 @@ import glob
 from collections import defaultdict
 
 METRICS = ["correctness", "faithfulness", "answer_relevance", "context_relevance"]
-METADATA_KEYS = {"id", "query", "answer"}
+METADATA_KEYS = {"id", "query", "answer", "skipped", "skip_reason"}
 FT_NA = {"faithfulness", "context_relevance"}  # N/A metrics for Fast-Track
 
 
@@ -130,7 +136,7 @@ def process_generic_field(entries: list, field: str):
 
 def process_agent(entries: list):
     """Process Agent field: split by loop_counter"""
-    groups = {"fast_track": [], "rag_0": [], "rag_1": [], "fallback": []}
+    groups = {"fast_track": [], "rag_0": [], "rag_1": [], "rag_2": [], "fallback": []}
 
     for entry in entries:
         fd = entry.get("Agent")
@@ -143,13 +149,16 @@ def process_agent(entries: list):
             groups["fallback"].append(entry)
         elif lc == 0:
             groups["rag_0"].append(entry)
-        else:
+        elif lc==1:
             groups["rag_1"].append(entry)
+        else:
+            groups["rag_2"].append(entry)
 
     n_fast = len(groups["fast_track"])
     n_rag0 = len(groups["rag_0"])
     n_rag1 = len(groups["rag_1"])
-    n_rag = n_rag0 + n_rag1
+    n_rag2 = len(groups["rag_2"])
+    n_rag = n_rag0 + n_rag1 + n_rag2
     n_fb = len(groups["fallback"])
     total_agent = n_fast + n_rag + n_fb
     fb_pct = round(n_fb / total_agent * 100, 1) if total_agent else 0
@@ -170,10 +179,11 @@ def process_agent(entries: list):
     if n_rag > 0:
         rag0_pct = round(n_rag0 / n_rag * 100, 1) if n_rag else 0
         rag1_pct = round(n_rag1 / n_rag * 100, 1) if n_rag else 0
-        print(f"\n  [RAG] (loop=0/1): {n_rag} entries "
-              f"(loop=0: {n_rag0} / {rag0_pct}%, loop=1: {n_rag1} / {rag1_pct}%)")
+        rag2_pct = round(n_rag2 / n_rag * 100, 1) if n_rag else 0
+        print(f"\n  [RAG] (loop=0/1/2): {n_rag} entries "
+              f"(loop=0: {n_rag0} / {rag0_pct}%, loop=1: {n_rag1} / {rag1_pct}%, loop=2: {n_rag2} / {rag2_pct}%)")
         rag_scores = {m: [] for m in METRICS}
-        for entry in groups["rag_0"] + groups["rag_1"]:
+        for entry in groups["rag_0"] + groups["rag_1"] + groups["rag_2"]:
             fd = entry.get("Agent", {})
             scores = collect_scores(fd, METRICS)
             for m in METRICS:
@@ -192,9 +202,9 @@ def process_agent(entries: list):
 # ==================== Main ====================
 
 
-def process_file(filepath: str):
+def process_file(filepath: str, mode: str = "strict"):
     print_separator()
-    print(f"  File: {os.path.basename(filepath)}")
+    print(f"  File: {os.path.basename(filepath)}  [mode={mode}]")
     print_separator()
 
     with open(filepath, "r", encoding="utf-8") as f:
@@ -204,51 +214,92 @@ def process_file(filepath: str):
         print("  (not a list format, skipped)")
         return
 
-    # ---- validity check ----
-    skipped_ids = []
-    valid_entries = []
-
-    for entry in data:
-        eid = entry.get("id", "?")
-        fields = get_field_names(entry)
-        skip_this = False
-
-        for field in fields:
-            valid, _ = field_is_valid(entry, field)
-            if not valid:
-                skip_this = True
-                break
-
-        if skip_this:
-            skipped_ids.append(eid)
-        else:
-            valid_entries.append(entry)
-
     total = len(data)
-    valid = len(valid_entries)
-    print(f"\n  Total entries: {total} | Valid: {valid} | Skipped: {len(skipped_ids)}")
-    if skipped_ids:
-        print(f"  Skipped IDs: {skipped_ids}")
+    print(f"\n  Total entries: {total}")
 
-    if not valid_entries:
-        print("  No valid entries.")
+    if total == 0:
         return
 
-    field_names = get_field_names(valid_entries[0])
+    field_names = get_field_names(data[0])
 
-    for field in field_names:
-        print(f"\n  == {field} ==")
-        if field == "Agent":
-            process_agent(valid_entries)
-        else:
-            process_generic_field(valid_entries, field)
+    if mode == "strict":
+        # ---- 连带跳过：仅保留 Origin/RAG/Agent 全部有效的条目 ----
+        valid_entries = []
+        skipped_ids = []
+
+        for entry in data:
+            eid = entry.get("id", "?")
+            all_valid = True
+            for field in field_names:
+                valid, _ = field_is_valid(entry, field)
+                if not valid:
+                    all_valid = False
+                    break
+            if all_valid:
+                valid_entries.append(entry)
+            else:
+                skipped_ids.append(eid)
+
+        n_valid = len(valid_entries)
+        print(f"  All-field valid: {n_valid}/{total}")
+        if skipped_ids:
+            print(f"  Skipped IDs: {skipped_ids}")
+
+        if n_valid == 0:
+            print("  No valid entries.")
+            return
+
+        for field in field_names:
+            print(f"\n  == {field} == ({n_valid} entries)")
+            if field == "Agent":
+                process_agent(valid_entries)
+            else:
+                process_generic_field(valid_entries, field)
+
+    else:
+        # ---- 逐字段独立校验 ----
+        for field in field_names:
+            valid_entries = []
+            skipped_ids = []
+
+            for entry in data:
+                eid = entry.get("id", "?")
+                valid, _ = field_is_valid(entry, field)
+                if valid:
+                    valid_entries.append(entry)
+                else:
+                    skipped_ids.append(eid)
+
+            n_valid = len(valid_entries)
+            print(f"\n  == {field} == ({n_valid}/{total} valid)")
+            if skipped_ids and n_valid < total:
+                print(f"  Skipped IDs: {skipped_ids}")
+
+            if n_valid == 0:
+                print("  No valid entries.")
+                continue
+
+            if field == "Agent":
+                process_agent(valid_entries)
+            else:
+                process_generic_field(valid_entries, field)
 
 
 def main():
-    result_dir = resolve_path("./test/result/")
+    result_dir = resolve_path("./test/result/v2.3")
+    mode = "strict"
 
-    if len(sys.argv) > 1:
-        paths = [resolve_path(sys.argv[1])]
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    for flag in sys.argv[1:]:
+        if flag == "--per-field":
+            mode = "per_field"
+        elif flag == "--strict":
+            mode = "strict"
+        elif flag.startswith("--mode="):
+            mode = flag.split("=", 1)[1]
+
+    if args:
+        paths = [resolve_path(args[0])]
     else:
         paths = sorted(glob.glob(os.path.join(result_dir, "*.json")))
 
@@ -260,8 +311,10 @@ def main():
         if not os.path.exists(p):
             print(f"File not found: {p}")
             continue
-        process_file(p)
+        process_file(p, mode=mode)
 
 
 if __name__ == "__main__":
+    # python test/summary.py --per-field
+    # python test/summary.py --strict
     main()

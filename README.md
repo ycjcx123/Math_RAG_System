@@ -3,15 +3,23 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Python](https://img.shields.io/badge/python-3.10%2B-green)
 ![Framework](https://img.shields.io/badge/framework-LlamaIndex%20%26%20LangGraph-orange)
-![Model](https://img.shields.io/badge/LLM-Qwen3--1.7B%20/%20Qwen2.5-red)
+![Model](https://img.shields.io/badge/LLM-Qwen3--1.7B%20-red)
+![Developer](https://img.shields.io/badge/developer-个人独立开发-purple)
 
 ## 📌 项目背景
 在数学教材（如《高等代数》）场景下，传统 RAG 存在两大核心瓶颈：
 1. **OCR 鲁棒性差**：跨页公式断裂、LaTeX 语法失衡导致索引质量极低。
 2. **逻辑链条破碎**：固定长度切分会切断“定理-证明”或“题目-详解”的完整语义，导致生成答案逻辑断裂。
 
-本项目通过 **Agentic RAG (v2.2+)** 架构，实现了从“知识检索”到“自适应逻辑推理”的跨越，显著提升了复杂数学问题的解决能力。
+本项目核心假设：通过精细化的RAG架构设计，轻量模型（1.7B级）可在复杂推理任务中达到甚至超越裸大模型的效果。
 
+**成果：** 本项目通过 **Agentic RAG (v2.2+)** 架构，实现了从“知识检索”到“自适应逻辑推理”的跨越，显著提升了复杂数学问题的解决能力。
+> 本项目为个人独立开发，覆盖数据清洗、语义切分、检索优化、Agent编排与量化评测全链路。
+---
+## 🎯 适合谁看？
+- 想了解Agentic RAG工程化实践的开发者
+- 数学/教育领域RAG落地的研究者
+- 招聘方：本项目为个人独立开发，全链路自主设计实现，详见源码（src/）、技术文档（doc/）与评测体系（test/）。
 ---
 
 ## ✨ 核心特性
@@ -60,20 +68,24 @@ graph TD
 
 ## 📊 实验表现
 
-> **测试基准**：基于《高等代数》标准教材构建的 85 条 QA 测试集（包含常规题与长证明压力测试）。
+- **测试基准**：基于《高等代数》标准教材构建的 85 条 QA 测试集（包含常规题与长证明压力测试）。
+
+- **测试模型**：Qwen3-1.7B（本地llama.cpp部署）。
+- **设计意图**：验证轻量模型在优质框架加持下能否突破其原生能力边界。基线对比实验进行中。
 
 ### 1. 检索性能对比 (Retrieval Quality)
 | 方案版本 | MAP@20 | MRR@20 | Recall@20 | 备注 |
 | :--- | :---: | :---: | :---: | :--- |
 | Baseline (Hybrid) | 0.3677 | 0.4916 | 0.6428 | 固定长度切分 |
-| **MathRAG (v2.2)** | **0.6125** | **0.7083** | **0.7194** | **Block 聚合 + 结构注入** |
+| **MathRAG (v2.3)** | **0.6125** | **0.7083** | **0.7194** | **Block 聚合 + 结构注入** |
 
 ### 2. Agent 系统效能 (Generation & Cost)
-| 版本 | 正确性 (Avg) | 忠诚度 (Faith) |
-| :--- | :---: | :---: |
-| 纯血RAG | 1.52/2.0 | 1.412 | 
-| **v2.2 (Stable)** | **1.23 / 2.0** | **1.5 / 2.0** |
-| **v2.3 (Latest)** | *Testing...* | *Testing...* |
+| 版本 | 正确性 (Avg) | 忠诚度 (Faith) | 备注 |
+| :--- | :---: | :---: | :---: |
+| Origin |  xxx   | xxx | - |
+| 纯血RAG | 1.52/2.0 | 1.412 | - | 
+| **v2.2** | **1.23 / 2.0** | **1.5 / 2.0** | xx%调用了RAG，其中xx%一次调用回答成功
+| **v2.3 (Latest)** | *Testing...* | *Testing...* | xx%调用了RAG，其中xx%一次调用回答成功
 
 ---
 
@@ -117,11 +129,15 @@ Math_RAG_System
 │  │  ├─ longTest.json
 │  │  └─ Test.json
 │  └─ result
-│     ├─ Long_Test.json
-│     ├─ Test_Result2.json
-│     └─ v2.2
-│        ├─ longTest_agent_eval.json
-│        └─ Test_agent_eval.json
+│     ├─ RAG
+│     │   ├─ Long_Test.json
+│     │   ├─ Test_Result2.json
+│     ├─ v2.2
+│     │   ├─ longTest_agent_eval.json
+│     │   └─ Test_agent_eval.json
+│     └─ v2.3
+│         ├─ longTest_agent_eval.json
+│         └─ Test_agent_eval.json
 ├─ src                                  # 源码
 │  ├─ __init__.py
 │  ├─ utils
@@ -181,13 +197,39 @@ Math_RAG_System
 
 ---
 
+## 🧠 设计决策与技术问题
+
+### 1. 为什么不用定长切分？
+数学教材中"定理-证明"跨越多个自然段，定长切分会切断逻辑链。采用**三级分层切分**：
+- **L1规则**：关键词触发（定理/命题/证明/例/解）
+- **L2语义**：逻辑衔接词（因此/综上…）+ 动态overlap
+- **L3兜底**：符号级切分（。；）保证长度约束
+
+### 2. 为什么选Qwen3-1.7B？
+项目核心假设是"框架增益 > 模型规模"。1.7B模型原生能力有限，若框架能使其在复杂推理任务中达到可用水平，则证明架构设计的有效性。**具体做法**：本地llama.cpp部署，CPU/GPU混合调度适配8GB显存约束。后续将在32B等模型上验证扩展性。
+
+### 3. 测试集只有85条，如何保证说服力？
+85条为压力测试集，聚焦跨页长证明、公式密集查询等hard case。常规case已通过人工抽检覆盖。
+
+### 4. 为什么不存在QPS等延迟数据？
+本项目聚焦算法架构验证，本地llama.cpp部署的绝对延迟受硬件约束（RTX 4060 8GB），无横向对比价值。并发、延迟等压力测试将在后续展开。
+
+### 5. 当前已知局限与后续优化
+- **切分逻辑**：L2/L3当前基于规则，正在调研LLM-based上下文感知切分
+- **索引关联**：定理-证明当前为单向索引，计划实现双向关联索引
+
+---
 ## 🚀 Roadmap
 - [ ] **Pre-Retrieval Probe (v2.3)**：引入前置低成本探针，针对高置信度命中（原文提取）实现极速截断。
 - [ ] **Small-Model Distillation**：针对 1.7B 模型在长逻辑场景下的“幻觉自信”进行微调优化。
+- [ ] **LLM-based Context-Aware Chunking**：针对当前基于规则的三段切分（L2/L3）局限性，调研并实现基于大模型的上下文感知切分逻辑。
 - [ ] **Multi-Modal Support**：支持教材插图与矩阵图像的语义解析。
-
+- [ ] **Theorem-Proof Connect**：block级的“定理-证明”双向索引添加
+- [ ] **Cross-Scale Validation**：在Qwen3-32B等多参数量模型上验证框架扩展性，建立1.7B→32B的能力增益曲线。
 ---
 ## ⚖️ 免责声明 / Disclaimer
+
+**项目用途**：本项目为个人实习作品，完全由个人独立开发，欢迎技术交流与合作机会。
 
 **版权说明**：本项目为个人学习及实习作品。涉及的部分原始教材资料来源于公开网络，仅做算法验证使用。若相关版权方认为本项目内容存在侵权，请通过 GitHub 联系作者删除。
 

@@ -123,9 +123,10 @@ generator:
   base_url: "http://localhost:8080/v1"
   api_key: "llama-cpp"
   temperature: 0.1
+  n_ctx: 16384          # 与 --ctx-size 保持一致
   max_tokens: 4096
 
-# Agentic RAG 配置 v2.2
+# Agentic RAG 配置 v2.3
 agent:
   # 最大循环次数（RAG 重试）
   max_loop_count: 2

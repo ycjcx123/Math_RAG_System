@@ -196,6 +196,17 @@ class AgentEvaluator:
             logger.error(f"RAG-only pipeline 运行失败: {e}")
             return [], f"错误: {str(e)}"
 
+    # ==================== 原始模型测试 ====================
+
+    def _run_original_model(self, query: str) -> str:
+        """运行原始模型（无 RAG 上下文），仅依靠模型自身知识"""
+        try:
+            answer = self.agent.generator.generate(query=query) or ""
+            return answer
+        except Exception as e:
+            logger.error(f"Original model 运行失败: {e}")
+            return f"错误: {str(e)}"
+
     # ==================== Agent 测试 ====================
 
     def _run_agent(self, query: str) -> Dict[str, Any]:
@@ -218,11 +229,12 @@ class AgentEvaluator:
 
     def _compute_loop_counter(self, agent_result: Dict[str, Any]) -> int:
         """
-        计算 loop_counter 语义值:
-          -1 = 未调用 RAG（Fast-Track / Self-Refined）
+        计算 loop_counter 语义值 (v2.3):
           -2 = Fallback / 系统错误
-           0 = RAG 一次命中
-           1 = RAG 第二次命中
+          -1 = Fast-Track / Self-Refined
+           0 = PreRetrieve 直接 RAG 生成
+           1 = RAG 一次命中
+           2 = RAG 第二次命中
         """
         route = agent_result.get("route", "")
         generation_source = agent_result.get("generation_source", "")
@@ -231,8 +243,10 @@ class AgentEvaluator:
             return -2
         if generation_source in ("fast_track", "self_refined"):
             return -1
-        # RAG 路径：loop_count 0=一次命中, 1=二次命中
-        return agent_result.get("loop_count", 0)
+        if generation_source == "pre_retrieve_rag":
+            return 0
+        # RAG 路径：源码 loop_count 0→1, 1→2
+        return agent_result.get("loop_count", 0) + 1
 
     def _get_agent_contexts(
         self, agent_result: Dict[str, Any], loop_counter: int
@@ -334,6 +348,35 @@ class AgentEvaluator:
                 "GLM": rag_glm,
             }
 
+            # ====== Original Model ======
+            logger.info("--- Original Model ---")
+            original_answer = self._run_original_model(query)
+
+            if original_answer:
+                original_ds = self._call_deepseek_judge(
+                    query, ref_answer, [], original_answer
+                )
+                original_glm = self._call_glm_judge(
+                    query, ref_answer, [], original_answer
+                )
+            else:
+                original_ds = {
+                    "reasoning": "",
+                    "scores": {
+                        "correctness": 0,
+                        "faithfulness": 0,
+                        "answer_relevance": 0,
+                        "context_relevance": 0,
+                    },
+                }
+                original_glm = dict(original_ds)
+
+            original_entry = {
+                "response": original_answer,
+                "deepseek": original_ds,
+                "GLM": original_glm,
+            }
+
             # ====== Agent ======
             logger.info("--- Agent ---")
             agent_result = self._run_agent(query)
@@ -377,6 +420,7 @@ class AgentEvaluator:
                 "id": i,
                 "query": query,
                 "answer": ref_answer,
+                "Original": original_entry,
                 "RAG": rag_entry,
                 "Agent": agent_entry,
             }
@@ -387,6 +431,9 @@ class AgentEvaluator:
                 json.dump(results, f, ensure_ascii=False, indent=4)
 
             # 打印摘要
+            logger.info(
+                f"  Original response: {original_answer[:60] if original_answer else '(空)'}..."
+            )
             logger.info(
                 f"  RAG response: {rag_answer[:60] if rag_answer else '(空)'}..."
             )

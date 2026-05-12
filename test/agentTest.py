@@ -42,7 +42,7 @@ def resolve_test_path(test_file: str) -> str:
 def resolve_output_path(test_file: str) -> str:
     """自动推导输出路径: test/result/{filename}_agent_eval.json"""
     test_dir = os.path.dirname(test_file)
-    result_dir = os.path.join(test_dir, "result")
+    result_dir = os.path.join(test_dir, "..\\result\\v2.3")
     test_name = os.path.splitext(os.path.basename(test_file))[0]
     return os.path.join(result_dir, f"{test_name}_agent_eval.json")
 
@@ -52,8 +52,8 @@ def main():
     logger = logging.getLogger(__name__)
 
     print("=" * 60)
-    print("MathRAG Agent 评测工具 (v2.2)")
-    print("评测系统: RAG-only vs Agentic RAG")
+    print("MathRAG Agent 评测工具 (v2.3)")
+    print("评测系统: Original Model vs RAG-only vs Agentic RAG (PreRetrieve)")
     print("评测裁判: DeepSeek + GLM")
     print("=" * 60)
 
@@ -63,8 +63,8 @@ def main():
     # else:
     #     test_file = input("\n请输入测试集 JSON 文件路径: ").strip()
 
-    test_file_list = ["./test/testset/Test.json","./test/testset/longTest.json"]
-    # test_file_list = ["./test/testset/longTest.json"]
+    # test_file_list = ["./test/testset/Test.json","./test/testset/longTest.json"]
+    test_file_list = ["./test/testset/longTest.json"]
     for idx, test_file in enumerate(test_file_list):
         test_file = resolve_test_path(test_file)
 

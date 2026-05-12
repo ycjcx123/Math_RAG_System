@@ -1,0 +1,1727 @@
+[
+    {
+        "id": 1,
+        "query": "证明下述定理：定理10 设 $A(\\lambda)$ 是 $\\mathbf{C}[\\lambda]$ 上的 $n$ 级满秩矩阵，通过初等变换把 $A(\\lambda)$ 化成对角矩阵，然后把主对角线上每个次数大于0的多项式分解成互不相同的一次因式方幂的乘积，那么所有这些一次因式的方幂（相同的按出现的次数计算）就是 $A(\\lambda)$ 的初等因子。",
+        "answer": "证明 设 $A(\\lambda)$ 经过初等变换化成了对角矩阵 $G(\\lambda)$\n$$\n\\boldsymbol {G} (\\lambda) = \\operatorname {d i a g} \\left\\{h _ {1} (\\lambda), h _ {2} (\\lambda), \\dots , h _ {n} (\\lambda) \\right\\},\n$$\n其中每个 $h_i(\\lambda)$ 的首项系数为1。\n设 $h_i(\\lambda)$ 的标准分解式为\n$$\nh _ {i} (\\lambda) = \\left(\\lambda - \\lambda_ {1}\\right) ^ {k _ {1 i}} \\left(\\lambda - \\lambda_ {2}\\right) ^ {k _ {2 i}} \\dots \\left(\\lambda - \\lambda_ {m}\\right) ^ {k _ {m i}}, i = 1, 2, \\dots , n,\n$$\n若 $h_i(\\lambda) = 1$ ，则各个一次因式方幂的指数为0。\n现在把 $G(\\lambda)$ 的主对角线上每个相同的一次因式方幂按递升幂次排列，使幂指数最高的方幂位于 $(n,n)$ 元，次高的位于 $(n - 1,n - 1)$ 元……这样得到的 $\\lambda-$ 矩阵记作 $L(\\lambda)$ 。\n这时 $L(\\lambda)$ 的主对角线上元素具有 $(i,i)$ 元整除 $(i + 1,i + 1)$ 元的特点， $i = 1,2,\\dots ,n - 1$ 。\n如果能证明 $G(\\lambda)$ 与 $L(\\lambda)$ 相抵，那么 $A(\\lambda)$ 就和 $L$ （20 $(\\lambda)$ 相抵，从而 $L(\\lambda)$ 就是 $A(\\lambda)$ 的相抵标准形，于是 $L(\\lambda)$ 的主对角线上全部一次因式方幂就是 $A(\\lambda)$ 的初等因子，而 $L(\\lambda)$ 的这些一次因式方幂正是 $G(\\lambda)$ 的所有一次因式方幂。\n首先对 $\\lambda -\\lambda_{1}$ 的方幂进行讨论。\n考虑 $G(\\lambda)$ 的相邻的两个主对角元 $h_i(\\lambda),h_{i + 1}(\\lambda)$ ，其中 $k_{1i} > k_{1,i + 1}$ 。\n设\n$$\nh _ {i} (\\lambda) = \\left(\\lambda - \\lambda_ {1}\\right) ^ {k _ {1 i}} g _ {1} (\\lambda), \\quad h _ {i + 1} (\\lambda) = \\left(\\lambda - \\lambda_ {1}\\right) ^ {k _ {1, i + 1}} g _ {2} (\\lambda),\n$$\n其中 $g_{j}(\\lambda)$ 与 $\\lambda -\\lambda_1$ 互素， $j = 1,2$ 。\n考虑两个二级对角 $\\lambda^{-}$ 矩阵：\n$$\nQ _ {1} (\\lambda) = \\left( \\begin{array}{c c} (\\lambda - \\lambda_ {1}) ^ {k _ {1 i}} g _ {1} (\\lambda) & 0 \\\\ 0 & (\\lambda - \\lambda_ {1}) ^ {k _ {1, i + 1}} g _ {2} (\\lambda) \\end{array} \\right),\n$$\n$$\nQ _ {2} (\\lambda) = \\left( \\begin{array}{c c} (\\lambda - \\lambda_ {1}) ^ {k _ {1, i + 1}} g _ {1} (\\lambda) & 0 \\\\ 0 & (\\lambda - \\lambda_ {1}) ^ {k _ {1 i}} g _ {2} (\\lambda) \\end{array} \\right) 。\n$$\n显然 $Q_{1}(\\lambda)$ 与 $Q_{2}(\\lambda)$ 的二阶行列式因子相同， $Q_{1}(\\lambda)$ 的一阶行列式因子为\n$$\n\\left(\\left(\\lambda - \\lambda_ {1}\\right) ^ {k _ {1 i}} g _ {1} (\\lambda), \\left(\\lambda - \\lambda_ {1}\\right) ^ {k _ {1, i + 1}} g _ {2} (\\lambda)\\right)\n$$\n$$\n= \\left(\\lambda - \\lambda_ {1}\\right) ^ {k _ {1, i + 1}} \\left(g _ {1} (\\lambda), g _ {2} (\\lambda)\\right),\n$$\n同理可求出 $Q_{2}(\\lambda)$ 的一阶行列式因子为\n$$\n\\left(\\lambda - \\lambda_ {1}\\right) ^ {k _ {1, i + 1}} \\left(g _ {1} (\\lambda), g _ {2} (\\lambda)\\right) 。\n$$\n$$\n这表明 $Q_{1}(\\lambda)$ 与 $Q_{2}(\\lambda)$ 有相同的各阶行列式因子，因此它们相抵。\n通过每次调整主对角线上相邻两个多项式的 $(\\lambda - \\lambda_{1})$ 的方幂的位置，可以得到一个对角 $\\lambda-$ 矩阵 $G_{1}(\\lambda)$ ，它的主对角线上元素是按照 $\\lambda - \\lambda_{1}$ 的升幂排列的。\n据上述可知， $G(\\lambda)$ 与 $G_{1}(\\lambda)$ 相抵。\n现在对于 $G_{1}(\\lambda)$ ，考虑 $\\lambda -\\lambda_{2}$ 的方幂，依次进行下去，最后便得到 $L(\\lambda)$ ，从而 $G(\\lambda)$ 与 $L(\\lambda)$ 相抵。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据定理10的证明思路，结合参考资料中的关键结论，可分步骤如下：\n\n1. **满秩矩阵的性质**：  \n   设 $ A(\\lambda) $ 是 $\\mathbf{C}[\\lambda]$ 上的 $n$ 级满秩矩阵，其特征矩阵 $\\lambda I - A$ 是满秩的。因此，$\\lambda I - A$ 的不变因子的乘积等于其行列式 $|\\lambda I - A|$。\n\n2. **初等变换化为对角矩阵**：  \n   通过初等变换将 $ A(\\lambda) $ 化为对角矩阵，主对角线上的元素为多项式 $ f_1(\\lambda), f_2(\\lambda), \\dots, f_n(\\lambda) $。\n\n3. **分解多项式为不可约因子**：  \n   每个 $ f_i(\\lambda) $ 的次数大于0的项分解为互不相同的不可约多项式的方幂乘积。由于 $\\mathbf{C}$ 是复数域，所有不可约多项式均为线性因子（即一次因式），因此每个 $ f_i(\\lambda) $ 可表示为 $ \\prod_{j=1}^k (a_j - \\lambda)^{e_j} $，其中 $ a_j $ 为根，$ e_j $ 为重数。\n\n4. **初等因子的定义**：  \n   根据定理10，这些分解后的多项式（即 $ f_i(\\lambda) $）的方幂（按次数合并）即为 $ A(\\lambda) $ 的初等因子。由于 $\\mathbf{C}$ 是域，所有不可约多项式均为线性因子，因此每个 $ f_i(\\lambda) $ 的分解结果直接对应初等因子。\n\n5. **唯一性与定理8的关联**：  \n   定理8指出，满秩矩阵的不变因子与初等因子互相唯一确定。由于 $ A(\\lambda) $ 的初等因子由对角矩阵的主对角线多项式分解得出，且其不变因子的乘积等于行列式，因此初等因子的分解与不变因子的分解一致。\n\n**结论**：  \n通过初等变换将 $ A(\\lambda) $ 化为对角矩阵，主对角线上的多项式分解为互不相同的不可约多项式方幂，这些方幂即为 $ A(\\lambda) $ 的初等因子。该结论与定理8一致，验证了初等因子与不变因子的唯一性关系。",
+            "loop_counter": 1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答未给出严格的数学证明，仅描述了步骤，缺少关键推导（如调整方幂顺序的相抵性证明），且未证明所有一次因式方幂即为初等因子，因此不完全正确，得1分。\n忠诚性：参考资料包含定理10的陈述和初等因子定义，但模型回答中提到了“特征矩阵λI-A”等参考资料未提及的内容，且未引用参考资料中的具体证明步骤，存在超出资料的信息，得1分。\n答案相关性：模型回答直接回应了问题，尝试证明定理，但内容较为概括，未偏离主题，得2分。\n上下文相关性：参考资料包含了定理10的陈述和初等因子定义，但缺乏证明所需的详细步骤，只能部分支持回答，得1分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            },
+            "GLM": {
+                "reasoning": "1. 正确性 (0分): 模型未能提供有效的数学证明。它只是复述了定理的定义和步骤，并没有给出任何逻辑推导过程（如参考答案中交换对角线元素证明相抵的步骤）。此外，模型在第一步中将一般的 $\\lambda$-矩阵 $A(\\lambda)$ 与常量矩阵 $A$ 的特征矩阵 $\\lambda I - A$ 混淆，这是一个概念性错误。\n2. 忠诚性 (0分): 模型回答中提到“$A(\\lambda)$...其特征矩阵 $\\lambda I - A$ 是满秩的”，这虽然与参考资料[3]中的片段相似，但参考资料[3]明确讨论的是“数域 $K$ 上的 $n$ 级矩阵 $A$”，而题目是关于一般的多项式矩阵 $A(\\lambda)$。这种张冠李戴属于未提及（且错误）的重大事实。此外，模型试图“证明”定理的逻辑链条（引用定理8）在提供的参考资料中并不足以支撑该证明过程。\n3. 答案相关性 (1分): 模型回答尝试按照证明题的格式分点作答，讨论了初等因子和对角化，主题是相关的。但由于没有实质性证明内容，只能算部分相关。\n4. 上下文相关性 (1分): 提供的参考资料[1]是题目本身，[2]和[3]提供了初等因子的定义和相关定理（如相抵的充要条件）。虽然这些资料与问题主题高度相关，但资料中并未包含证明定理10所需的具体数学推导过程（即如何通过对角变换得到初等因子），因此对于完整回答问题来说，资料是不充分的。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 1
+                }
+            }
+        }
+    },
+    {
+        "id": 2,
+        "query": "证明下述定理：定理11设 $c_{0},c_{1},\\dots ,c_{n}$ 是数域 $K$ 中 $n + 1$ 个不同的数 $d_0,d_1,\\dots ,d_n\\in K$ ，则 $K[x]$ 中存在唯一的一个次数不超过 $n$ 的多项式 $f(x)$ ，使得\n$$\nf \\left(c _ {i}\\right) = d _ {i}, \\quad i = 0, 1, 2, \\dots , n 。 \\tag {8}\n$$",
+        "answer": "证明 根据定理4得，满足(8)式的次数不超过 $n$ 的多项式 $f(x)$ 如果存在，那么它是唯一的。\n现在来证存在性。\n先看一个特殊情形：任意取定 $i \\in \\{0,1,\\dots,n\\}$ ，设\n$$\nd _ {0} = \\dots = d _ {i - 1} = d _ {i + 1} = \\dots = d _ {n} = 0,\n$$\n如果存在一个次数不超过 $n$ 的多项式 $f_{i}(x)$ ，使得\n$$\nf _ {i} \\left(c _ {j}\\right) = d _ {j} = 0, \\quad j \\neq i; \\quad f _ {i} \\left(c _ {i}\\right) = d _ {i}, \\tag {9}\n$$\n那么 $f_{i}(x)$ 有 $n$ 个不同的根 $c_{0},\\dots ,c_{i - 1},c_{i + 1},\\dots ,c_{n}$ 。\n由于 $\\deg f_i(x)\\leqslant n$ ，因此\n$$\nf _ {i} (x) = a _ {i} \\left(x - c _ {0}\\right) \\dots \\left(x - c _ {i - 1}\\right) \\left(x - c _ {i + 1}\\right) \\dots \\left(x - c _ {n}\\right) 。 \\tag {10}\n$$\n由于 $f_{i}(c_{i}) = d_{i}$ ，因此由（10）式，得\n$$\na _ {i} = \\frac {d _ {i}}{\\left(c _ {i} - c _ {0}\\right) \\cdots \\left(c _ {i} - c _ {i - 1}\\right) \\left(c _ {i} - c _ {i + 1}\\right) \\cdots \\left(c _ {i} - c _ {n}\\right)}, \\tag {11}\n$$\n把（11）式代入（10）式，得\n$$\nf _ {i} (x) = d _ {i} \\frac {\\left(x - c _ {0}\\right) \\cdots \\left(x - c _ {i - 1}\\right) \\left(x - c _ {i + 1}\\right) \\cdots \\left(x - c _ {n}\\right)}{\\left(c _ {i} - c _ {0}\\right) \\cdots \\left(c _ {i} - c _ {i + 1}\\right) \\left(c _ {i} - c _ {i + 1}\\right) \\cdots \\left(c _ {i} - c _ {n}\\right)}, \\tag {12}\n$$\n显然(12)式给出的 $f_{i}(x)$ 是次数不超过 $n$ 的多项式，且满足(9)式。\n现在来看一般情形。令\n$$\nf (x) = \\sum_ {i = 0} ^ {n} d _ {i} \\frac {\\left(x - c _ {0}\\right) \\cdots \\left(x - c _ {i - 1}\\right) \\left(x - c _ {i + 1}\\right) \\cdots \\left(x - c _ {n}\\right)}{\\left(c _ {i} - c _ {0}\\right) \\cdots \\left(c _ {i} - c _ {i - 1}\\right) \\left(c _ {i} - c _ {i + 1}\\right) \\cdots \\left(c _ {i} - c _ {n}\\right)}, \\tag {13}\n$$\n则 $\\deg f(x) \\leqslant n$ ，且满足\n$$\n\\begin{array}{l} f \\left(c _ {j}\\right) = \\sum_ {i = 0} ^ {n} d _ {i} \\frac {\\left(c _ {j} - c _ {0}\\right) \\cdots \\left(c _ {j} - c _ {i - 1}\\right) \\left(c _ {j} - c _ {i + 1}\\right) \\cdots \\left(c _ {j} - c _ {n}\\right)}{\\left(c _ {i} - c _ {0}\\right) \\cdots \\left(c _ {i} - c _ {i - 1}\\right) \\left(c _ {i} - c _ {i + 1}\\right) \\cdots \\left(c _ {i} - c _ {n}\\right)} \\\\ = d _ {j} 。 \\\\ \\end{array}\n$$",
+        "Original": {
+            "response": "定理11的证明如下：\n\n设数域 $ K $ 中 $ n + 1 $ 个不同的元素 $ c_0, c_1, \\dots, c_n \\in K $，构造多项式 $ f(x) = a_0 + a_1x + \\dots + a_nx^n $，使得 $ f(c_i) = d_i $，其中 $ i = 0, 1, \\dots, n $。  \n1. **线性方程组**：将 $ f(c_i) = d_i $ 转化为线性方程组：\n   $$\n   \\begin{cases}\n   a_0 + a_1c_0 + a_2c_0^2 + \\dots + a_n c_0^n = d_0 \\\\\n   a_0 + a_1c_1 + a_2c_1^2 + \\dots + a_n c_1^n = d_1 \\\\\n   \\vdots \\\\\n   a_0 + a_1c_n + a_2c_n^2 + \\dots + a_n c_n^n = d_n\n   \\end{cases}\n   $$\n   该方程组的系数矩阵为 $ A $，其中第 $ i $ 行为 $ 1, c_i, c_i^2, \\dots, c_i^n $。\n\n2. **行列式非零**：若存在非零解 $ (a_0, \\dots, a_n) $，则 $ A $ 的行列式 $ \\det(A) = 0 $。假设存在非零解，构造多项式 $ P(x) = \\sum_{k=0}^n b_k x^k $，使得 $ P(c_i) = 0 $ 对所有 $ i = 0, 1, \\dots, n $。由于 $ c_0, \\dots, c_n $ 互异，$ P(x) $ 必为零多项式，矛盾。故 $ \\det(A) \\neq 0 $。\n\n3. **唯一解**：由于 $ \\det(A) \\neq 0 $，方程组有唯一解 $ (a_0, \\dots, a_n) $，即存在唯一次数不超过 $ n $ 的多项式 $ f(x) $ 满足 $ f(c_i) = d_i $。\n\n**结论**：定理11成立，存在唯一多项式 $ f(x) $ 满足条件。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答通过线性方程组和范德蒙德行列式证明存在唯一性，思路正确，但缺少拉格朗日插值公式的具体构造，且未明确说明次数不超过n，存在性证明不够完整，因此得1分。忠诚性：参考资料为空，模型输出了具体知识，违反了忠诚性规则，得0分。答案相关性：回答直接针对问题，无偏离，得2分。上下文相关性：参考资料为空，无法提供有用信息，得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "1. **正确性**: 模型利用线性代数方法（范德蒙德矩阵/方程组）证明了插值多项式的存在性和唯一性。虽然与参考答案的构造法（拉格朗日插值公式）不同，但逻辑严密，数学推导正确，符合定理要求，得2分。\n2. **忠诚性**: 提供的参考资料为“暂无参考资料”。模型输出了具体的数学证明，这属于模型自身的外部知识，而非基于参考资料生成。根据规则，当参考资料为空时模型输出具体知识，忠诚性判为0分。\n3. **答案相关性**: 模型直接针对题目要求证明了定理11，内容紧密相关，得2分。\n4. **上下文相关性**: 参考资料为空列表，与问题完全无关，无法提供任何有用信息，得0分。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "根据定理11的证明，存在唯一的一个次数不超过 $n$ 的多项式 $f(x)$，满足 $f(c_i) = d_i$，其中 $c_0, c_1, \\dots, c_n$ 是数域 $K$ 中 $n+1$ 个不同的数，且 $d_0, d_1, \\dots, d_n \\in K$。具体证明如下：\n\n1. **构造拉格朗日插值多项式**  \n   设 $f(x)$ 为满足 $f(c_i) = d_i$ 的多项式，其形式为：\n   $$\n   f(x) = \\sum_{i=0}^{n} d_i \\cdot \\frac{(x - c_0)(x - c_1)\\cdots(x - c_{i-1})(x - c_{i+1})\\cdots(x - c_n)}{(c_i - c_0)(c_i - c_1)\\cdots(c_i - c_{i-1})(c_i - c_{i+1})\\cdots(c_i - c_n)}.\n   $$\n   此多项式满足 $f(c_i) = d_i$，且次数不超过 $n$。\n\n2. **唯一性证明**  \n   假设存在两个多项式 $f$ 和 $g$ 满足 $f(c_i) = g(c_i) = d_i$ 对所有 $i = 0, 1, \\dots, n$。则 $f(x) - g(x)$ 是一个次数不超过 $n$ 的多项式，且在 $n+1$ 个点 $c_i$ 处取值为零。根据多项式零点定理，若一个多项式在 $n+1$ 个点处为零，则其必须为零多项式。因此，$f(x) = g(x)$。\n\n3. **次数限制**  \n   每个分式项的次数为 $n$，因此整个多项式 $f(x)$ 的次数不超过 $n$。\n\n综上，定理11的结论成立。  \n**证明完成。**",
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确给出了拉格朗日插值多项式的构造和唯一性证明，与参考答案一致，得2分。\n忠诚性：模型回答中的构造和唯一性证明均可在参考资料[2]和[3]中找到直接支持，没有超出资料的内容，得2分。\n答案相关性：模型回答直接回应了问题，完整证明了定理，无无关内容，得2分。\n上下文相关性：参考资料[2]和[3]包含了定理的完整证明，高度相关，能够充分回答问题，得2分。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "1. Correctness (2): The model correctly constructs the Lagrange interpolation polynomial and provides a valid proof for both existence (the formula satisfies the conditions) and uniqueness (the difference polynomial has n+1 roots implying it is the zero polynomial). The mathematical logic is sound and complete.\n2. Faithfulness (2): The model's answer is strictly supported by Reference [2], which contains the exact proof of Theorem 11. The formula provided matches the one in the context, and the logical flow (referencing the theorem regarding roots for uniqueness) is consistent with the source material without introducing contradictory information.\n3. Answer Relevance (2): The model directly addresses the request to prove Theorem 11, providing a structured proof covering construction, uniqueness, and degree constraints.\n4. Context Relevance (2): Reference [2] contains the full proof of Theorem 11, including the necessary formulas and logical steps, making it highly relevant and sufficient to answer the question.",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据定理11的证明思路，结合拉格朗日插值法，可分两步完成：\n\n### 存在性证明\n1. **构造拉格朗日插值多项式**  \n   设 $ f(x) = \\sum_{i=0}^{n} d_i \\cdot L_i(x) $，其中 $ L_i(x) $ 为拉格朗日基多项式：  \n   $$\n   L_i(x) = \\prod_{\\substack{j=0 \\\\ j \\neq i}}^{n} \\frac{x - c_j}{c_i - c_j}\n   $$  \n   由于 $ c_0, c_1, \\dots, c_n $ 为数域 $ K $ 中不同的数，$ L_i(x) $ 在 $ x = c_j $ 时取值为 $ d_j $，且 $ \\deg L_i(x) = n $。\n\n2. **多项式次数限制**  \n   拉格朗日插值多项式 $ f(x) $ 的次数为 $ n $，因为每个 $ L_i(x) $ 的次数为 $ n $，且它们的线性组合不会导致次数超过 $ n $。\n\n### 唯一性证明\n1. **假设存在两个多项式 $ f(x) $ 和 $ g(x) $ 满足条件**  \n   若 $ f(x) - g(x) = h(x) $，则 $ h(x) $ 在 $ x = c_0, c_1, \\dots, c_n $ 处都为零。由于 $ n+1 $ 个点的多项式唯一确定，故 $ h(x) \\equiv 0 $，即 $ f(x) = g(x) $。\n\n### 结论\n定理11的证明完成，存在唯一一个次数不超过 $ n $ 的多项式 $ f(x) $，满足 $ f(c_i) = d_i $ 对所有 $ i = 0, 1, \\dots, n $。\n\n**最终答案**  \n定理11的证明基于拉格朗日插值法，构造的多项式 $ f(x) $ 存在且唯一，满足 $ f(c_i) = d_i $。具体步骤如下：  \n1. 通过拉格朗日基多项式 $ L_i(x) $ 构造插值多项式 $ f(x) = \\sum_{i=0}^{n} d_i L_i(x) $，确保 $ f(c_i) = d_i $。  \n2. 证明 $ f(x) $ 的次数不超过 $ n $，且唯一性由多项式插值的性质保证。  \n因此，存在唯一一个次数不超过 $ n $ 的多项式 $ f(x) $ 满足条件。",
+            "loop_counter": 1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确构造了拉格朗日插值多项式，并证明了存在性和唯一性，与参考答案一致。忠诚性：模型回答中的构造和证明步骤均可在参考资料中找到直接支持。答案相关性：回答直接针对问题，无多余内容。上下文相关性：参考资料提供了完整的定理和证明步骤，高度相关。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性：模型回答的证明思路清晰，构造的拉格朗日插值多项式与参考答案一致，存在性证明（构造基函数并求和）和唯一性证明（作差利用根的个数）在数学上均正确且完整，得分为2。\n\n忠诚性：参考资料[1]和[2]详细给出了定理的陈述和证明步骤，但并未出现“拉格朗日插值法”、“拉格朗日基多项式”等术语，也未使用“n+1个点唯一确定”这种通用的唯一性论证（而是引用了定理4）。模型回答引入了参考资料中未提及的特定数学名词（“拉格朗日”）以及外部逻辑作为推理依据，虽然核心证明逻辑忠实于资料，但包含少量外部知识，得分为1。\n\n答案相关性：模型回答直接针对“证明定理11”这一问题，给出了完整的证明过程，没有偏离主题，得分为2。\n\n上下文相关性：参考资料[1]给出了定理内容，参考资料[2]给出了证明的关键步骤（包括构造$f_i(x)$的过程），这些资料对于回答问题（证明定理）是高度相关且充分的。参考资料[3]虽然无关，但不影响整体资料的高相关性，得分为2。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 3,
+        "query": "求解下述例题：例20 设 $f(x), g(x) \\in \\mathbf{C}[x]$ ，且 $f(x)$ 与 $g(x)$ 的次数都大于0。证明：如果 $f^{-1}(0) = g^{-1}(0)$ ，且 $f^{-1}(1) = g^{-1}(1)$ ，那么 $f(x) = g(x)$ 。",
+        "answer": "证明 设 $\\max \\{\\deg f(x), \\deg g(x)\\} = n$ ，不妨设 $f(x)$ 的次数为 $n$ ，显然 $f^{-1}(0) \\cap f^{-1}(1) = \\emptyset$ ，如果能证明\n$$\n\\left| f ^ {- 1} (0) \\bigcup f ^ {- 1} (1) \\right| \\geqslant n + 1,\n$$\n那么由于 $f^{-1}(0) = g^{-1}(0)$ 且 $f^{-1}(1) = g^{-1}(1)$ ，因此 $f(x) = g(x)$ 。\n设 $f(x), f(x) - 1$ 的标准分解式分别为\n$$\nf (x) = a \\prod_ {i = 1} ^ {m} \\left(x - c _ {i}\\right) ^ {r _ {i}},\n$$\n$$\nf (x) - 1 = a \\prod_ {j = 1} ^ {s} \\left(x - d _ {j}\\right) ^ {t _ {j}},\n$$\n其中 $\\sum_{i=1}^{m} r_{i} = n = \\sum_{j=1}^{s} t_{j}$ 。\n显然\n$$\nf ^ {- 1} (0) = \\left\\{c _ {1}, c _ {2}, \\dots , c _ {m} \\right\\}, \\quad f ^ {- 1} (1) = \\left\\{d _ {1}, d _ {2}, \\dots , d _ {s} \\right\\},\n$$\n因此 $\\left| f^{-1}(0) \\bigcup f^{-1}(1) \\right| = m + s$ 。\n根据7.5节的定理1，我们有\n$$\n\\begin{array}{l} f ^ {\\prime} (x) = (f (x) - 1) ^ {\\prime} \\\\ = \\prod_ {i = 1} ^ {m} \\left(x - c _ {i}\\right) ^ {r _ {i} - 1} \\cdot \\prod_ {j = 1} ^ {s} \\left(x - d _ {j}\\right) ^ {t _ {j} - 1} \\cdot h (x), \\\\ \\end{array}\n$$\n其中 $h(x)$ 不能被 $x - c_{i}$ 整除， $i = 1,2,\\dots,m$ ；也不能被 $x - d_{j}$ 整除， $j = 1,2,\\dots,s$ ，于是\n$$\n\\sum_ {i = 1} ^ {m} \\left(r _ {i} - 1\\right) + \\sum_ {j = 1} ^ {s} \\left(t _ {j} - 1\\right) \\leqslant \\deg f ^ {\\prime} (x) = n - 1 。\n$$\n另一方面，我们有\n$$\n\\begin{array}{l} \\sum_ {i = 1} ^ {m} \\left(r _ {i} - 1\\right) + \\sum_ {j = 1} ^ {s} \\left(t _ {j} - 1\\right) = \\sum_ {i = 1} ^ {m} r _ {i} - m + \\sum_ {j = 1} ^ {s} t _ {j} - s \\\\ = 2 n - (m + s), \\\\ \\end{array}\n$$\n因此 $2n - (m + s) \\leqslant n - 1$ ，由此得出 $m + s \\geqslant n + 1$ ，即\n$$\n\\left| f ^ {- 1} (0) \\bigcup f ^ {- 1} (1) \\right| \\geqslant n + 1,\n$$\n从而 $f(x) = g(x)$ 。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "根据题设条件，设 $ f(x) $ 和 $ g(x) $ 的次数均为 $ n > 0 $，且 $ f^{-1}(0) = g^{-1}(0) $，$ f^{-1}(1) = g^{-1}(1) $。通过以下步骤证明 $ f(x) = g(x) $：\n\n1. **分解多项式**：  \n   将 $ f(x) $ 分解为 $ f(x) = a \\prod_{i=1}^{m} (x - c_i)^{r_i} $，$ g(x) = b \\prod_{j=1}^{s} (x - d_j)^{t_j} $，其中 $ m, s $ 分别为 $ f^{-1}(0) $ 和 $ f^{-1}(1) $ 的根数，$ r_i, t_j $ 为重数。\n\n2. **根集合相等的条件**：  \n   由于 $ f^{-1}(0) = g^{-1}(0) $，则 $ \\{c_1, c_2, \\dots, c_m\\} = \\{d_1, d_2, \\dots, d_s\\} $；同理，$ f^{-1}(1) = g^{-1}(1) $ 说明 $ \\{d_1, d_2, \\dots, d_s\\} = \\{e_1, e_2, \\dots, e_s\\} $。因此，$ m = s $，且 $ f^{-1}(0) $ 和 $ f^{-1}(1) $ 的根集合完全相同。\n\n3. **导数次数分析**：  \n   计算 $ f'(x) $ 和 $ f(x) - 1 $ 的导数分解：  \n   $$\n   f'(x) = \\prod_{i=1}^{m} (x - c_i)^{r_i - 1} \\cdot \\prod_{j=1}^{s} (x - d_j)^{t_j - 1} \\cdot h(x),\n   $$  \n   其中 $ h(x) $ 为不被 $ x - c_i $ 或 $ x - d_j $ 整除的因子。  \n   导数次数为 $ n - 1 $，即：  \n   $$\n   \\sum_{i=1}^{m} (r_i - 1) + \\sum_{j=1}^{s} (t_j - 1) = 2n - (m + s) \\leq n - 1.\n   $$  \n   解得 $ m + s \\geq n + 1 $。\n\n4. **根数与次数的矛盾**：  \n   由于 $ f $ 和 $ g $ 的次数均为 $ n $，其根的个数（包括重数）最多为 $ n $。若 $ m + s \\geq n + 1 $，则 $ m $ 和 $ s $ 必须满足 $ m = n $ 且 $ s = 1 $，或 $ m = n - 1 $ 且 $ s = 2 $，依此类推。但此时 $ f^{-1}(0) $ 和 $ f^{-1}(1) $ 的根集合完全相同，导致 $ f(x) $ 和 $ g(x) $ 的分解式必须完全一致，从而 $ f(x) = g(x) $。\n\n**结论**：  \n由于 $ f^{-1}(0) = g^{-1}(0) $ 且 $ f^{-1}(1) = g^{-1}(1) $，且 $ m + s \\geq n + 1 $，故 $ f(x) = g(x) $。  \n\n$$\n\\boxed{f(x) = g(x)}\n$$",
+            "deepseek": {
+                "reasoning": "正确性：模型回答在推理过程中存在错误，例如将g(x)的根集合与f(x)的根集合混淆，且未正确使用导数次数不等式推导出m+s≥n+1，最终结论虽然正确但推导有误，因此得1分。\n忠诚性：模型回答中大部分内容来自参考资料，但存在一些参考资料未提及的推理（如对m和s具体值的讨论），且参考资料中并未给出g(x)的分解式，模型自行添加了g(x)的分解，因此忠诚性得1分。\n答案相关性：模型回答直接回应了问题，试图证明f(x)=g(x)，没有偏离主题，得2分。\n上下文相关性：参考资料包含了完整的证明过程，与问题高度相关，能够充分回答所问问题，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答试图证明 $f(x)=g(x)$，并使用了参考资料中的主要思路（利用导数和根的重数建立不等式）。然而，模型在证明过程中存在多处逻辑错误和符号混乱：1. 在步骤1中，模型对 $g(x)$ 进行了因式分解，而参考答案是对 $f(x)$ 和 $f(x)-1$ 进行分解，导致后续符号（$d_j$）含义错乱；2. 步骤2中引入了未定义的变量 $e_1, \\dots, e_s$，且逻辑关系混乱（似乎将 $g$ 的零点集与 $f$ 的1点集等同）；3. 步骤4中得出的结论 '$m=n$ 且 $s=1$' 是完全错误的，由 $m+s \\ge n+1$ 无法推出该具体数值关系。虽然最终结论正确，但证明过程错误较多，故正确性给1分。忠诚性方面，模型虽然大体沿用了参考资料的框架和公式，但引入了外部幻觉变量（$e$）和错误的推论（$m=n, s=1$），未严格限于参考资料，故给1分。答案相关性方面，模型直接回答了问题，得2分。上下文相关性方面，参考资料提供了完整的题目和标准证明，高度相关，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 4,
+        "query": "证明下述定理：定理5（Sturm定理）设 $f(x)$ 是一个次数大于0的实系数多项式，对 $f(x)$ 与 $f^{\\prime}(x)$ 做下述略微修改的辗转相除法：\n$$\nf (x) = q _ {1} (x) f ^ {\\prime} (x) - f _ {2} (x), \\deg f _ {2} (x) <   \\deg f ^ {\\prime} (x),\n$$\n$$\nf ^ {\\prime} (x) = q _ {2} (x) f _ {2} (x) - f _ {3} (x), \\deg f _ {3} (x) <   \\deg f _ {2} (x), \\tag {4}\n$$\n$$\nf _ {s - 1} (x) = q _ {s} (x) f _ {s} (x) 。\n$$\n由此得到一个多项式序列：\n$$\nf _ {0} = f, \\quad f _ {1} = f ^ {\\prime}, \\quad f _ {2}, \\quad \\dots , \\quad f _ {s} 。 \\tag {5}\n$$\n称序列(5)是 $f(x)$ 的标准序列。\n假设区间 $[a,b]$ 使得 $f(a)\\neq 0,f(b)\\neq 0$ ，则 $f(x)$ 在区间 $(a,b)$ 内的不同实根的个数等于 $V_{a} - V_{b}$ ，其中 $V_{c}$ 表示序列 $f_0(c),f_1(c),\\dots ,f_s(c)$ 的变号数。",
+        "answer": "* 证明 根据7.3节的引理得， $f_{s}(x)$ 是 $f(x)$ 与 $f^{\\prime}(x)$ 的一个最大公因式。\n令 $g_{0}(x)$ 是用 $f_{s}(x)$ 去除 $f(x)$ 所得的商式，则 $g_{0}(x)$ 没有重因式，且 $g_{0}(x)$ 与 $f(x)$ 含有完全相同的不可约因式（不计重数），于是 $g_{0}(x)$ 与 $f(x)$ 含有完全相同的根（不计重数），但 $g_{0}(x)$ 没有重根。\n由于 $f_{s}(x)$ 是 $f(x)$ 与 $f^{\\prime}(x)$ 的一个最大公因式，因此 $f_{s}(x)$ 也是 $f_{i}(x)$ 与 $f_{i+1}(x)$ 的一个最大公因式， $i = 0,1,\\dots,s-1$ 。\n令 $g_{i}(x)$ 是用 $f_{s}(x)$ 去除 $f_{i}(x)$ 所得的商式，则从(4)式可得\n$$\ng _ {0} (x) = q _ {1} (x) g _ {1} (x) - g _ {2} (x),\n$$\n$$\ng _ {1} (x) = q _ {2} (x) g _ {2} (x) - g _ {3} (x),\n$$\n$$\n\\dots \\qquad \\dots \\qquad \\dots\n$$\n$$\ng _ {s - 1} (x) = q _ {s} (x) g _ {s} (x), \\tag {6}\n$$\n其中 $g_{s}(x) = 1$ 。\n这样我们从 $f(x)$ 的标准序列(5)得到了一个序列：\n$$\ng _ {0} (x), g _ {1} (x), g _ {2} (x), \\dots , g _ {s} (x), \\tag {7}\n$$\n称序列(7)为 $g_0(x)$ 对于区间 $[a,b]$ 的一个Sturm序列，其中 $g_{0}(a)\\neq 0,g_{0}(b)\\neq 0$ 。\n序列(7)的特点是： $g_{0}(x)$ 没有重根，且 $g_{i}(x)$ 与 $g_{i + 1}(x)$ 没有公共根（这是因为 $g_{s}(x) = 1$ ，从而 $g_{i}(x)$ 与 $g_{i + 1}(x)$ 的首一最大公因式为1)， $i = 0,1,\\dots ,s - 1$ 。\n要求 $f(x)$ 在区间 $(a,b)$ 内的不同实根的个数，只需求 $g_{0}(x)$ 在 $(a,b)$ 内的实根的个数即可。\n我们用 $V_{u}(g)$ 表示序列\n$$\ng _ {0} (u), g _ {1} (u), \\dots , g _ {s} (u) \\tag {8}\n$$\n的变号数，显然 $V_{u}(g)$ 是 $u$ 的函数， $u \\in [a, b]$ 。\n如果我们能证明：当 $u$ 从 $a$ 变到 $b$ 时，每经过 $g_{0}(x)$ 的一个实根， $V_{u}(g)$ 的值就减少1，而在其他情况下， $V_{u}(g)$ 的值保持不变，那么 $g_{0}(x)$ 在区间 $(a, b)$ 内的实根的个数就等于 $V_{a}(g) - V_{b}(g)$ 。\n由于 $f_{i}(x) = g_{i}(x)f_{s}(x)$ ，因此 $f_{i}(c) = g_{i}(c)f_{s}(c), \\forall c \\in \\mathbf{R}$ 。\n于是序列 $f_{0}(a), f_{1}(a), \\dots, f_{s}(a)$ 与序列 $g_{0}(a), g_{1}(a), \\dots, g_{s}(a)$ 的变号数相等；\n序列 $f_{0}(b), f_{1}(b), \\dots, f_{s}(b)$ 与序列 $g_{0}(b), g_{1}(b), \\dots, g_{s}(b)$ 的变号数相等。\n从而 $V_{a} = V_{a}(g), V_{b} = V_{b}(g)$ ，因此 $V_{a}(g) - V_{b}(g) = V_{a} - V_{b}$ 。\n由于序列(8)涉及多项式 $g_0(x), g_1(x), \\dots, g_s(x)$ 在 $u$ 处的值，而计算实数序列的变号数需要事先把其中的0去掉，因此我们必须考虑多项式 $g_0(x), g_1(x), \\dots, g_s(x)$ 在 $(a, b)$ 内的全部实根，把它们按由小到大的顺序排列成： $c_1 < c_2 < \\dots < c_m$ ，并且令 $c_0 = a, c_{m+1} = b$ ，于是区间 $(a, b)$ 包含 $m+1$ 个小区间\n$$\n\\left(c _ {0}, c _ {1}\\right), \\left(c _ {1}, c _ {2}\\right), \\dots , \\left(c _ {m}, c _ {m + 1}\\right) 。\n$$\n由于在小区间 $(c_{i}, c_{i+1})$ 内没有 $g_{0}(x), g_{1}(x), \\dots, g_{s}(x)$ 的实根，因此据 Weierstrass 关于连续函数的零点定理得，每一个多项式 $g_{j}(x) (j = 0, 1, \\dots, s)$ 在小区间 $(c_{i}, c_{i+1})$ 内的值保持相同的符号， $i = 0, 1, \\dots, m$ 。\n于是对于 $(c_{i}, c_{i+1})$ 内任意两点 $u_{1}, u_{2}$ ，有 $V_{u_{1}}(g) = V_{u_{2}}(g)$ ，即当 $u$ 跑遍 $(c_{i}, c_{i+1})$ 内每一点时， $V_{u}(g)$ 的值保持不变， $i = 0, 1, \\dots, m$ 。\n也容易证明：当 $u$ 跑遍 $[a, c_{1})$ 的每一点时， $V_{u}(g)$ 的值保持不变。\n证明如下：设 $u \\in (a, c_1)$ ，我们来证 $V_u(g) = V_a(g)$ 。\n如果 $a$ 不是序列 $g_0(x), g_1(x), \\dots, g_s(x)$ 中任何一个多项式的根，那么每个 $g_j(x)$ 在区间 $[a, u]$ 上没有根。\n同上面的道理得， $V_a(g) = V_u(g)$ 。\n现在假设 $a$ 是某个多项式 $g_k(x)$ 的根，显然 $0 < k < s$ 。\n因为\n$$\ng _ {k - 1} (x) = q _ {k} (x) g _ {k} (x) - g _ {k + 1} (x), \\tag {9}\n$$\n并且 $g_{k - 1}(x)$ 与 $g_{k}(x)$ 没有公共根， $g_{k}(x)$ 与 $g_{k + 1}(x)$ 没有公共根，所以由（9）式得， $g_{k - 1}(a)g_{k + 1}(a) < 0$ 。\n因为在区间 $[a,c_1)$ 上 $g_{k - 1}(x)$ 与 $g_{k + 1}(x)$ 都没有根，所以 $g_{k - 1}(a)$ 与 $g_{k - 1}(u)$ 同号， $g_{k + 1}(a)$ 也与 $g_{k + 1}(u)$ 同号，从而 $g_{k - 1}(u)g_{k + 1}(u) < 0$ 。\n于是数列 $g_{k - 1}(a),0,$ $g_{k + 1}(a)$ 的变号数是1；\n数列 $g_{k - 1}(u),g_k(u),g_{k + 1}(u)$ 的变号数也是1。\n由此推出 $V_{a}(g) =$ $V_{u}(g)$ 。\n同理， $u$ 跑遍 $(c_m,b]$ 的每一点时， $V_{u}(g)$ 的值保持不变，因此我们只需要考察 $u$ 经过 $c_{i}(i = 1,2,\\dots ,m)$ 时， $V_{u}(g)$ 的值如何改变。\n情形1 $c_{i}$ 不是 $g_{0}(x)$ 的根，则 $c_{i}$ 是某个 $g_{k}(x)$ 的根，其中 $0 < k < s$ 。在 $(c_{i-1}, c_{i})$ 内任取一点 $u_{1}$ ，同上面的道理得出， $V_{u_{1}}(g) = V_{c_{i}}(g)$ 。在 $(c_{i}, c_{i+1})$ 内任取一点 $u_{2}$ ，同理有 $V_{c_{i}}(g) = V_{u_{2}}(g)$ ，因此当 $u$ 经过 $c_{i}$ 时， $V_{u}(g)$ 的值保持不变。\n情形2 $c_{i}$ 是 $g_{0}(x)$ 的根，由于 $g_{0}(x)$ 与 $g_{1}(x)$ 没有公共根，因此 $c_{i}$ 不是 $g_{1}(x)$ 的根，从而 $g_{1}(x)$ 在 $(c_{i - 1},c_{i + 1})$ 内没有根，于是 $g_{1}(x)$ 在 $(c_{i - 1},c_{i + 1})$ 内的值保持相同的符号。\n由于 $c_{i}$ 是 $g_{0}(x)$ 的单根，因此\n$$\ng _ {0} (x) = \\left(x - c _ {i}\\right) p (x), p \\left(c _ {i}\\right) \\neq 0 。 \\tag {10}\n$$\n在 $(c_{i-1}, c_i)$ 内取一点 $u_1$ ，在 $(c_i, c_{i+1})$ 内取一点 $u_2$ ，使得 $p(x)$ 在 $[u_1, u_2]$ 上没有实根，于是 $p(x)$ 在 $[u_1, u_2]$ 上的值保持相同的符号，即与 $p(c_i)$ 同号。\n由于 $g_0(u_1)$ 与 $p(u_1)$ 反号，因此 $g_0(u_1)$ 与 $p(c_i)$ 反号；\n由于 $g_0(u_2)$ 与 $p(u_2)$ 同号，因此 $g_0(u_2)$ 与 $p(c_i)$ 同号。\n设 $c_i$ 是 $f(x)$ 的 $l$ 重根，由于\n$$\nf (x) = g _ {0} (x) f _ {s} (x) = \\left(x - c _ {i}\\right) p (x) f _ {s} (x),\n$$\n因此 $f_{s}(x) = (x - c_{i})^{l - 1}k(x)$ ，其中 $k(c_{i})\\neq 0$ ，从而 $f(x) = (x - c_i)^l p(x)k(x)$ 。于是有\n$$\n\\begin{array}{l} f ^ {\\prime} (x) = l \\left(x - c _ {i}\\right) ^ {l - 1} p (x) k (x) + \\left(x - c _ {i}\\right) ^ {l} \\left(p (x) k (x)\\right) ^ {\\prime} \\\\ = l p (x) f _ {s} (x) + \\left(x - c _ {i}\\right) ^ {l} (p (x) k (x)) ^ {\\prime} 。 \\\\ \\end{array}\n$$\n由于 $f_{s}(x)\\mid f^{\\prime}(x)$ ，因此 $f_{s}(x)\\mid (x - c_{i})^{l}(p(x)k(x))'$ ，从而 $k(x)\\mid (x - c_i)(p(x)k(x))'$ 。由于 $k(c_{i})\\neq 0$ ，因此 $k(x)\\mid (p(x)k(x))'$ ，从而 $(p(x)k(x))' = m(x)k(x)$ 。由于 $f^{\\prime}(x) = g_{1}(x)f_{s}(x)$ ，因此\n$$\ng _ {1} (x) = l p (x) + (x - c _ {i}) m (x),\n$$\n于是 $g_{1}(c_{i})$ 与 $p(c_{i})$ 同号，从而 $g_{1}(u_{1}), g_{1}(u_{2})$ 都与 $p(c_{i})$ 同号。\n因此 $g_{0}(u_{1})g_{1}(u_{1}) < 0$ ， $g_{0}(u_{2})g_{1}(u_{2}) > 0$ 。\n于是数列 $g_{0}(u_{1}), g_{1}(u_{1})$ 的变号数是 1；\n而数列 $g_{0}(u_{2}), g_{1}(u_{2})$ 的变号数为 0 。\n$c_{i}$ 当然也有可能是序列 $g_{0}, g_{1}, \\dots, g_{s}$ 的中间某些多项式 $g_{k} (0 < k < s)$ 的根。\n此时根据与情形1前面一段的论述同样的理由得，数列 $g_{k - 1}(u_1), g_k(u_1), g_{k + 1}(u_1)$ 的变号数与数列 $g_{k - 1}(u_2), g_k(u_2), g_{k + 1}(u_2)$ 的变号数相同，因此 $V_{u_1}(g) - V_{u_2}(g) = 1$ ，即当 $u$ 经过 $g_0(x)$ 的一个根 $c_i$ 时， $V_u(g)$ 的值减少1。\n至此我们完成了Sturm定理的证明。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据参考资料中的内容，Sturm定理的证明过程如下：\n\n1. **标准序列构造**  \n   通过修改的辗转相除法，将多项式序列 $ f_0, f_1, f_2, \\dots, f_s $ 构造为：  \n   $$\n   f_0 = f, \\quad f_1 = f', \\quad f_2, \\dots, f_s\n   $$  \n   其中 $ f_s(x) $ 是 $ f(x) $ 与 $ f'(x) $ 的最大公因式。\n\n2. **Sturm序列定义**  \n   通过 $ f_s(x) $ 去除 $ f_i(x) $ 得到 $ g_i(x) $，最终得到 Sturm 序列：  \n   $$\n   g_0(x), g_1(x), \\dots, g_s(x)\n   $$  \n   其中 $ g_0(x) $ 没有重根，且 $ g_i(x) $ 与 $ g_{i+1}(x) $ 没有公共根（因 $ g_s(x) = 1 $）。\n\n3. **变号数计算**  \n   对区间 $[a, b]$ 计算序列 $ g_0(c), g_1(c), \\dots, g_s(c) $ 的变号数 $ V_c $。  \n   若 $ f(a) \\neq 0 $ 且 $ f(b) \\neq 0 $，则 $ f(x) $ 在 $ (a, b) $ 内的不同实根的个数等于 $ V_a - V_b $。\n\n4. **关键证明步骤**  \n   - **引理应用**：$ f_s(x) $ 是 $ f(x) $ 与 $ f'(x) $ 的最大公因式，因此 $ g_i(x) $ 与 $ g_{i+1}(x) $ 没有公共根。  \n   - **变号数变化**：当 $ u $ 从 $ a $ 到 $ b $ 时，若 $ u $ 经过 $ g_0(x) $ 的实根，则 $ V_u(g) $ 减少 1；否则保持不变。  \n   - **结论**：$ g_0(x) $ 在 $ (a, b) $ 内的实根个数等于 $ V_a - V_b $，即 $ f(x) $ 在 $ (a, b) $ 内的不同实根的个数。\n\n**最终结论**：  \nSturm定理通过构造标准序列并计算变号数，证明了实系数多项式 $ f(x) $ 在区间 $[a, b]$ 内的不同实根的个数等于 $ V_a - V_b $，其中 $ V_c $ 表示序列 $ f_0(c), f_1(c), \\dots, f_s(c) $ 的变号数。",
+            "loop_counter": 1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答概括了Sturm定理证明的主要步骤，但缺少许多关键细节（如变号数变化的具体推导、处理重根和中间多项式根的情况等），因此不够完整，得1分。忠诚性：所有陈述均可在参考资料中找到直接支持，没有添加额外信息，得2分。答案相关性：回答直接回应了问题，没有偏离主题，得2分。上下文相关性：参考资料包含了证明所需的核心内容，但缺少部分细节（如具体推导），因此部分相关，得1分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            },
+            "GLM": {
+                "reasoning": "1. **Correctness**: 模型回答是对Sturm定理证明过程的总结，而非完整的数学证明。虽然它正确地概括了证明的逻辑结构（构造序列、定义变号数、分析变号数变化、得出结论），但省略了关键的代数推导步骤和具体的逻辑论证（例如证明根附近的变号数为何减少1的具体数学过程）。因此判定为部分正确。 2. **Faithfulness**: 模型回答中的所有陈述（如标准序列的构造、$f_s$作为最大公因式、$g_i$序列的性质、变号数$V$的变化规律）均能在提供的参考资料中找到直接依据，未出现幻觉或与资料矛盾的内容。 3. **Answer Relevance**: 模型回答直接针对题目要求的“证明Sturm定理”进行了回应，没有答非所问或包含无关信息。 4. **Context Relevance**: 提供的参考资料包含了Sturm定理的完整证明内容，高度相关且足以回答问题。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 5,
+        "query": "求解下述例题：例1 求多项式 $x^n - 1$ 在实数域上的标准分解式。",
+        "answer": "解 记 $\\xi = \\mathrm{e}^{\\mathrm{i}\\frac{2\\pi}{n}}$ 。根据7.6节的例12，在 $\\mathbf{C}[x]$ 中，有\n$$\nx ^ {n} - 1 = (x - 1) (x - \\xi) \\dots (x - \\xi^ {n - 1}), \\tag {11}\n$$\n当 $0 < k < n$ 时，有 $\\xi^k\\xi^{n - k} = 1$ ，由于 $\\xi^k\\overline{\\xi^k} = |\\xi^k|^2 = 1$ ，因此 $\\overline{\\xi^k} = \\xi^{n - k}$ ，从而 $\\xi^k +\\xi^{n - k} = 2\\cos \\frac{2k\\pi}{n}$\n情形1 $n = 2m + 1$ 。此时有\n$$\n\\begin{array}{l} x ^ {2 m + 1} - 1 = (x - 1) (x - \\xi) (x - \\xi^ {2 m}) \\dots (x - \\xi^ {m}) (x - \\xi^ {m + 1}) \\\\ = (x - 1) \\left(x ^ {2} - 2 x \\cos \\frac {2 \\pi}{2 m + 1} + 1\\right) \\dots \\left(x ^ {2} - 2 x \\cos \\frac {2 m \\pi}{2 m + 1} + 1\\right) \\\\ = (x - 1) \\prod_ {k = 1} ^ {m} \\left(x ^ {2} - 2 x \\cos \\frac {2 k \\pi}{2 m + 1} + 1\\right) 。 \\tag {12} \\\\ \\end{array}\n$$情形2 $n = 2m$ 。此时有 $\\xi^m = \\mathrm{e}^{\\mathrm{i}\\frac{2m\\pi}{2m}} = \\mathrm{e}^{\\mathrm{i}\\pi} = -1$ ，从而\n$$\n\\begin{array}{l} x ^ {2 m} - 1 = (x - 1) (x - \\xi) (x - \\xi^ {2 m - 1}) \\dots (x - \\xi^ {m - 1}) (x - \\xi^ {m + 1}) (x - \\xi^ {m}) \\\\ = (x - 1) \\left(x ^ {2} - 2 x \\cos \\frac {2 \\pi}{2 m} + 1\\right) \\dots \\left(x ^ {2} - 2 x \\cos \\frac {2 (m - 1) \\pi}{2 m} + 1\\right) (x + 1) \\\\ = (x - 1) (x + 1) \\prod_ {k = 1} ^ {m - 1} \\left(x ^ {2} - 2 x \\cos \\frac {k \\pi}{m} + 1\\right) 。 \\tag {13} \\\\ \\end{array}\n$$",
+        "Original": {
+            "response": "多项式 $x^n - 1$ 在实数域上的标准分解式如下：\n\n- **当 $n$ 为奇数时**：  \n  $x^n - 1 = (x - 1) \\cdot \\left(x^{n-1} + x^{n-2} + \\cdots + x + 1\\right)$  \n  其中，$x^{n-1} + x^{n-2} + \\cdots + x + 1$ 是一个不可约的实系数多项式，且其根为 $e^{2\\pi i k/n}$（$k = 0, 1, \\ldots, n-1$）。\n\n- **当 $n$ 为偶数时**：  \n  $x^n - 1 = (x - 1)(x + 1) \\cdot \\prod_{k=1}^{(n/2)-1} \\left(x^2 + 2\\cos\\left(\\frac{2\\pi k}{n}\\right)x + 1\\right)$  \n  其中，每个二次因式对应复数根 $e^{2\\pi i k/n}$ 和 $e^{-2\\pi i k/n}$ 的共轭根。\n\n**最终答案**：  \n$$\nx^n - 1 = \n\\begin{cases}\n(x - 1)\\left(x^{n-1} + x^{n-2} + \\cdots + x + 1\\right), & \\text{当 } n \\text{ 为奇数} \\\\\n(x - 1)(x + 1) \\prod_{k=1}^{(n/2)-1} \\left(x^2 + 2\\cos\\left(\\frac{2\\pi k}{n}\\right)x + 1\\right), & \\text{当 } n \\text{ 为偶数}\n\\end{cases}\n$$",
+            "deepseek": {
+                "reasoning": "正确性：模型回答中奇数情况给出的分解式 (x-1)(x^{n-1}+...+1) 在实数域上并非标准分解式，因为 x^{n-1}+...+1 在 n>1 时通常可进一步分解为二次因式的乘积，而参考答案给出了具体的二次因式分解。偶数情况中二次因式符号错误（应为 -2cos 而非 +2cos），且缺少 n=2 时的特殊情况。因此正确性得 0 分。\n忠诚性：参考资料为空，模型输出了具体知识，根据规则应判 0 分。\n答案相关性：模型回答直接针对问题，给出了分解式，但内容有误，不过仍相关，得 2 分。\n上下文相关性：参考资料为空，无法提供有用信息，得 0 分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性得0分：模型在奇数情况下的回答错误，将可约的多项式（当n>3时）$x^{n-1}+...+1$称为不可约，未进行实数域上的标准分解（应为二次因式之积）；偶数情况下的公式中，二次项系数符号有误，应为$-2\\cos$而非$+2\\cos$。忠诚性得0分：参考资料明确为“暂无参考资料”，但模型输出了具体的数学推导和结论，属于无依据的幻觉。答案相关性得2分：模型针对问题给出了分段回答，直接响应了求解要求。上下文相关性得0分：提供的参考资料为空，完全无法支持回答该数学问题。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "x^n - 1 在实数域上的标准分解式为：\n\n- **当 n 为偶数时**：  \n  $$\n  (x - 1)(x + 1) \\prod_{k=1}^{\\frac{n}{2} - 1} \\left(x^2 - 2\\cos\\left(\\frac{2\\pi k}{n}\\right)x + 1\\right)\n  $$\n  其中，每个二次因式对应复数根的共轭对。\n\n- **当 n 为奇数时**：  \n  $$\n  (x - 1) \\prod_{k=1}^{\\frac{n - 1}{2}} \\left(x^2 - 2\\cos\\left(\\frac{2\\pi k}{n}\\right)x + 1\\right)\n  $$\n\n**证明过程**：  \n1. **实数根**：  \n   - 当 $ n $ 为偶数时，$ x = 1 $ 和 $ x = -1 $ 是实根，其余根为复数根。  \n   - 当 $ n $ 为奇数时，$ x = 1 $ 是唯一实根，其余根为复数根。\n\n2. **复数根的共轭对**：  \n   - 对于每个复数根 $ \\xi $，其共轭根 $ \\overline{\\xi} $ 也必须存在，因此将复数根分解为二次因式。  \n   - 二次因式形式为 $ x^2 - 2\\cos\\left(\\frac{2\\pi k}{n}\\right)x + 1 $，其中 $ k = 1, 2, \\dots, \\frac{n}{2} - 1 $（当 $ n $ 为偶数）或 $ k = 1, 2, \\dots, \\frac{n - 1}{2} $（当 $ n $ 为奇数）。\n\n3. **分解结果**：  \n   - 当 $ n $",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答给出了正确的分解式，与参考答案一致，但缺少n=2m时的具体角度化简（如cos(2πk/n)应化简为cos(kπ/m)），且未明确写出n为偶数时k从1到n/2-1，但整体正确。扣1分。\n忠诚性：模型回答中的分解式和证明过程均可在参考资料中找到直接支持，未超出资料。\n答案相关性：模型回答直接回应了问题，给出了分解式和简要证明，无多余内容。\n上下文相关性：参考资料包含了完整的分解式推导，高度相关。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在数学上是完全正确的，给出了奇偶不同情况下多项式在实数域上的标准分解式，符合参考答案和数学定义，因此正确性得2分。模型回答直接回应了题目要求，针对性强，故答案相关性得2分。然而，仔细检查提供的参考资料，资料[1]仅为题目标题，资料[3]仅给出了复数域上 $x^n-a^n$ 的分解式，均未包含实数域上分解的具体步骤、共轭根配对逻辑以及最终的余弦公式。模型回答中包含了大量参考资料中未提及的详细推导和结论（如 $\\cos$ 项、实根分析），虽然内容正确但严重超出了参考资料范围，违反了忠诚性原则，故忠诚性得0分。参考资料中虽然包含了相关题目标题和复数域的分解逻辑，对于回答实数域的问题具有一定的基础作用，但缺乏实数域分解的关键信息，故上下文相关性得1分。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            }
+        }
+    },
+    {
+        "id": 6,
+        "query": "求解下述例题：例2 求多项式 $x^n + 1$ 分别在复数域上和实数域上的标准分解式。",
+        "answer": "解 先求 $x^n + 1$ 的全部复根。\n$z = r(\\cos \\theta +\\mathrm{i}\\sin \\theta)$ 是 $x^{n} + 1$ 的复根\n$$\n\\begin{array}{l} \\Longleftrightarrow r ^ {n} (\\cos n \\theta + \\mathrm {i} \\sin n \\theta) = \\cos \\pi + \\mathrm {i} \\sin \\pi \\\\ \\Longleftrightarrow r ^ {n} = 1 \\text {且} n \\theta = \\pi + 2 k \\pi , k \\in \\mathbf {Z} \\\\ \\Longleftrightarrow r = 1 \\text {且} \\theta = \\frac {(2 k + 1) \\pi}{n}, k \\in \\mathbf {Z} \\\\ \\Longleftrightarrow z = \\cos \\frac {(2 k + 1) \\pi}{n} + \\mathrm {i s i n} \\frac {(2 k + 1) \\pi}{n}, k \\in \\mathbf {Z}. \\\\ \\end{array}\n$$\n令 $w_{k} = \\mathrm{e}^{\\mathrm{i}\\frac{(2k + 1)\\pi}{n}}$ ， $k = 0,1,2,\\dots ,n - 1$\n易证 $\\omega_0, \\omega_1, \\dots, \\omega_{n-1}$ 两两不等，从而它们是 $x^n + 1$ 的全部复根，因此 $x^n + 1$ 在 $\\mathbf{C}[x]$ 中的标准分解式为\n$$\nx ^ {n} + 1 = \\left(x - w _ {0}\\right) \\left(x - w _ {1}\\right) \\dots \\left(x - w _ {n - 1}\\right) 。 \\tag {14}\n$$\n当 $0 \\leqslant k < n$ 时，有\n$$\nw _ {k} w _ {n - k - 1} = \\mathrm {e} ^ {\\mathrm {i} \\frac {(2 k + 1) \\pi + [ 2 (n - k - 1) + 1 ] \\pi}{n}} = 1,\n$$\n从而 $\\overline{\\mathcal{W}_k} = \\mathcal{W}_{n - k - 1}$ ，于是\n$$\nw _ {k} + w _ {n - k - 1} = 2 \\cos \\frac {(2 k + 1) \\pi}{n} 。\n$$\n情形1 $n = 2m + 1$ 。此时有\n$$\nw _ {m} = \\mathrm {e} ^ {\\mathrm {i} \\frac {(2 m + 1) \\pi}{2 m + 1}} = - 1,\n$$从而在 $\\mathbf{R}[x]$ 中 $x^{2m + 1} + 1$ 的标准分解式为\n$$\n\\begin{array}{l} x ^ {2 m + 1} + 1 = \\left(x - w _ {0}\\right) \\left(x - w _ {2 m}\\right) \\dots \\left(x - w _ {m - 1}\\right) \\left(x - w _ {m + 1}\\right) \\left(x - w _ {m}\\right) \\\\ = \\left(x ^ {2} - 2 x \\cos \\frac {\\pi}{2 m + 1} + 1\\right) \\dots \\left(x ^ {2} - 2 x \\cos \\frac {(2 m - 1) \\pi}{2 m + 1} + 1\\right) (x + 1) \\\\ = (x + 1) \\prod_ {k = 1} ^ {m} \\left(x ^ {2} - 2 x \\cos \\frac {(2 k - 1) \\pi}{2 m + 1} + 1\\right) 。 \\tag {15} \\\\ \\end{array}\n$$\n情形2 $n = 2m$ 。此时在 $\\mathbf{R}[x]$ 中 $x^{2m} + 1$ 的标准分解式为\n$$\n\\begin{array}{l} x ^ {2 m} + 1 = \\left(x - w _ {0}\\right) \\left(x - w _ {2 m - 1}\\right) \\dots \\left(x - w _ {m - 2}\\right) \\left(x - w _ {m + 1}\\right) \\left(x - w _ {m - 1}\\right) \\left(x - w _ {m}\\right) \\\\ = \\left(x ^ {2} - 2 x \\cos \\frac {\\pi}{2 m} + 1\\right) \\dots \\left(x ^ {2} - 2 x \\cos \\frac {(2 m - 3) \\pi}{2 m} + 1\\right) \\cdot \\\\ \\left(x ^ {2} - 2 x \\cos \\frac {(2 m - 1) \\pi}{2 m} + 1\\right) \\\\ = \\prod_ {k = 1} ^ {m} \\left(x ^ {2} - 2 x \\cos \\frac {(2 k - 1) \\pi}{2 m} + 1\\right) 。 \\tag {16} \\\\ \\end{array}\n$$",
+        "Original": {
+            "response": "在复数域上，多项式 $x^n + 1$ 的标准分解式为：\n$$\nx^n + 1 = \\prod_{k=0}^{n-1} \\left(x - e^{i\\pi(2k+1)/n}\\right)\n$$\n这是由于 $x^n + 1$ 的根为 $n$ 个单位根 $e^{i\\pi(2k+1)/n}$（$k=0,1,\\dots,n-1$），每个根对应一个线性因子。\n\n在实数域上，分解式取决于 $n$ 的奇偶性：\n- **当 $n$ 为奇数**：$x^n + 1$ 可分解为 $(x + 1)$ 乘以一个 $n-1$ 次多项式，该多项式在实数域上无法进一步分解。例如，$x^3 + 1 = (x + 1)(x^2 - x + 1)$。\n- **当 $n$ 为偶数**：$x^n + 1$ 可分解为多个实系数二次因式。例如，$x^4 + 1 = (x^2 + \\sqrt{2}x + 1)(x^2 - \\sqrt{2}x + 1)$。一般形式为：\n  $$\n  x^n + 1 = \\prod_{k=1}^{n/2} \\left(x^2 + 2\\cos\\left(\\frac{\\pi(2k-1)}{n}\\right)x + 1\\right)\n  $$\n  （当 $n$ 为偶数时，分解为 $n/2$ 个二次因式）。\n\n**最终答案**：\n- **复数域**：$\\prod_{k=0}^{n-1} \\left(x - e^{i\\pi(2k+1)/n}\\right)$\n- **实数域**：当 $n$ 为奇数时，$(x + 1) \\cdot \\prod_{k=1}^{n-1} (x^2 - 2x\\cos\\left(\\frac{\\pi(2k-1)}{n}\\right) + 1)$；当 $n$ 为偶数时，分解为多个实系数二次因式。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答在复数域分解正确，但实数域分解不完整且部分错误。奇数时仅给出一个例子，未给出一般公式；偶数时给出的公式中二次项系数符号错误（应为减号），且未区分n=2m时无一次因子。参考答案中奇数n=2m+1时分解为(x+1)乘以m个二次因子，偶数n=2m时分解为m个二次因子。模型回答的奇数情况缺少一般公式，偶数情况公式符号错误，因此正确性得1分。\n忠诚性：参考资料为空列表，模型输出了具体知识，根据规则应判0分。\n答案相关性：模型回答直接回应了问题，给出了复数域和实数域的分解，但实数域部分不完整，不过整体相关，得2分。\n上下文相关性：参考资料为空，与问题无关，得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "在复数域上，多项式 $x^n + 1$ 的标准分解式为 $n$ 个线性因子，每个因子对应一个复数根。具体分解如下：\n\n$$\nx^n + 1 = \\prod_{k=0}^{n-1} \\left(x - e^{i\\frac{\\pi(2k+1)}{n}}\\right)\n$$\n\n在实数域上，分解情况取决于 $n$ 的奇偶性：\n\n- **当 $n$ 为奇数**：多项式 $x^n + 1$ 有一个实根 $x = -1$，其余 $n-1$ 个根为复数，且成共轭对。因此分解式为：\n  $$\n  x^n + 1 = (x + 1) \\prod_{k=1}^{n-1} \\left(x - e^{i\\frac{\\pi(2k-1)}{n}}\\right)\n  $$\n  其中每个二次因子在实数域上不可约。\n\n- **当 $n$ 为偶数**：多项式 $x^n + 1$ 在实数域上无实根，所有根均为复数，且成共轭对。分解式为 $n$ 个不可约的二次因子的乘积：\n  $$\n  x^n + 1 = \\prod_{k=0}^{n-1} \\left(x^2 + \\sqrt{2}x + 1\\right)\n  $$\n  （具体分解需根据 $n$ 的具体值调整，但一般形式为 $n$ 个二次因子的乘积）。\n\n**最终答案**：\n- **复数域**：$\\prod_{k=0}^{n-1} \\left(x - e^{i\\frac{\\pi(2k+1)}{n}}\\right)$\n- **实数域**：当 $n$ 为奇数时，$(x + 1) \\prod_{k=1}^{n-1} \\left(x - e^{i\\frac{\\pi(2k-1)}{n}}\\right)$；当 $n$ 为偶数时，$\\prod_{k=0}^{n-1} \\left(x^2 + \\sqrt{2}x + 1\\right)$（具体形式需根据 $n$ 调整）。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答在复数域分解正确，但实数域分解错误。奇数情况给出的乘积中仍包含复数线性因子，未正确转化为实系数二次因子；偶数情况给出的二次因子形式错误（应为x^2 - 2x cos((2k+1)π/n) + 1，而非x^2 + √2 x + 1）。因此正确性得1分。\n忠诚性：参考资料中包含了完整的复数域和实数域分解式，但模型回答的实数域分解与参考资料不符，且引入了参考资料未提及的错误内容，因此忠诚性得1分。\n答案相关性：模型回答直接回应了问题，但实数域部分有错误，不过整体上仍围绕问题展开，得2分。\n上下文相关性：参考资料高度相关，包含了问题的完整解答，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "在复数域上，多项式 $x^n + 1$ 的标准分解式为 $n$ 个线性因子，每个因子对应一个根。具体分解如下：\n\n$$\nx^n + 1 = \\prod_{k=0}^{n-1} \\left(x - e^{i\\pi(2k+1)/n}\\right)\n$$\n\n在实数域上，分解式取决于 $n$ 的奇偶性：\n\n- **当 $n$ 为奇数**：  \n  $x^n + 1$ 可分解为 $(x + 1)$ 乘以一个不可约的 $n-1$ 次多项式。  \n  分解式为：  \n  $$\n  x^n + 1 = (x + 1) \\cdot \\left(x^{n-1} - x^{n-2} + \\cdots - x + 1\\right)\n  $$\n\n- **当 $n$ 为偶数**：  \n  $x^n + 1$ 可分解为多个二次因式的乘积。具体形式为：  \n  $$\n  x^n + 1 = \\prod_{k=1}^{n/2} \\left(x^2 - 2\\cos\\left(\\frac{\\pi k}{n}\\right)x + 1\\right)\n  $$\n\n**结论**：  \n- **复数域**：$x^n + 1$ 分解为 $n$ 个线性因子。  \n- **实数域**：  \n  - 若 $n$ 为奇数，分解为 $(x + 1)$ 与一个不可约的 $n-1$ 次多项式。  \n  - 若 $n$ 为偶数，分解为多个二次因式乘积。",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答在复数域上的分解正确，但实数域上的分解有误。当n为奇数时，正确的分解应为(x+1)乘以二次因式的乘积，而不是一个n-1次多项式；当n为偶数时，余弦参数应为(2k-1)π/(2m)而非πk/n。因此部分正确，得1分。\n忠诚性：参考资料中包含了复数域和实数域分解的完整推导，但模型回答中实数域分解部分与参考资料不一致（参考资料中奇数n分解为二次因式乘积，偶数n也有具体形式），且模型回答中奇数n的分解式在参考资料中未出现，属于外部知识。因此忠诚性得1分。\n答案相关性：模型回答直接回应了问题，给出了复数域和实数域上的分解式，没有多余内容，得2分。\n上下文相关性：参考资料包含了问题所需的完整信息（复数域和实数域分解），高度相关，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 7,
+        "query": "求解下述例题：例5 设 $p$ 是一个素数，多项式\n$$\nf _ {p} (x) = x ^ {p - 1} + x ^ {p - 2} + \\dots + x + 1\n$$\n称为 $p$ 阶分圆多项式。证明 $f_{p}(x)$ 在 $\\mathbf{Q}$ 上不可约。",
+        "answer": "证明 我们有\n$$\n(x - 1) f _ {p} (x) = x ^ {p} - 1,\n$$\n$x$ 用 $x + 1$ 代入，从上式得\n$$\n\\begin{array}{l} x f _ {p} (x + 1) = (x + 1) ^ {p} - 1 \\\\ = x ^ {p} + p x ^ {p - 1} + \\dots + C _ {p} ^ {k} x ^ {p - k} + \\dots + p x, \\\\ \\end{array}\n$$\n于是 $g(x):= f_{p}(x + 1) = x^{p - 1} + px^{p - 2} + \\dots +C_{p}^{k}x^{p - k - 1} + \\dots +p.$\n我们知道\n$$\nC _ {p} ^ {k} = \\frac {p (p - 1) \\cdots (p - k + 1)}{k !}, \\quad 1 \\leqslant k <   p,\n$$\n由于 $(p, k!) = 1$ ，因此\n$$\nk! \\mid (p - 1) \\dots (p - k + 1),\n$$\n从而 $p\\mid \\mathrm{C}_p^k,1\\leqslant k <   p$\n又 $p \\nmid 1, p^2 \\nmid p$ ，因此 $g(x)$ 在 $\\mathbf{Q}$ 上不可约，从而 $f_p(x)$ 在 $\\mathbf{Q}$ 上不可约。\n点评：根据7.6节的例12以及 $x^{p} - 1 = (x - 1)(x^{p - 1} + \\dots + x + 1)$ ，可得 $x^{p - 1} + x^{p - 2} + \\dots + x + 1 = (x - \\xi)(x - \\xi^2) \\dots (x - \\xi^{p - 1})$ ，其中 $\\xi = \\mathrm{e}^{\\mathrm{i}\\frac{2\\pi}{p}}$ 。\n由于 $p$ 是素数，因此对任意 $j(1 \\leqslant j < p)$ ，都有 $(p, j) = 1$ ，从而根据7.6节的例14得， $\\xi, \\xi^2, \\dots, \\xi^{p - 1}$ 都是本原 $p$ 次单位根。\n显然它们是全部本原 $p$ 次单位根，因此 $x^{p - 1} + x^{p - 2} + \\dots + x + 1$ 是 $p$ 阶分圆多项式。\n分圆多项式的定义如下：\n设 $n$ 是一个正整数， $\\eta_1, \\eta_2, \\dots, \\eta_r$ 是全部两两不等的本原 $n$ 次单位根，令\n$$\nf _ {n} (x) := \\left(x - \\eta_ {1}\\right) \\left(x - \\eta_ {2}\\right) \\dots \\left(x - \\eta_ {r}\\right),\n$$\n则称 $f_{n}(x)$ 是 $\\pmb{n}$ 阶分圆多项式。",
+        "Original": {
+            "response": "证明：  \n考虑多项式 $ f_p(x) = x^{p-1} + x^{p-2} + \\dots + x + 1 $。  \n1. **几何级数分解**：  \n   $ f_p(x) = \\frac{x^p - 1}{x - 1} $，其中 $ x \\neq 1 $。  \n2. **模 $ p $ 的分析**：  \n   在模 $ p $ 的多项式环 $ \\mathbb{F}_p[x] $ 中，$ x^p \\equiv x $（由费马小定理）。因此，  \n   $ x^p - 1 \\equiv x - 1 \\mod p $，  \n   从而 $ f_p(x) \\equiv \\frac{x - 1}{x - 1} = 1 \\mod p $。  \n   即 $ f_p(x) $ 在 $ \\mathbb{F}_p[x] $ 中恒等于常数多项式 1，因此不可约。  \n3. **有理数域不可约性**：  \n   若 $ f_p(x) $ 在 $ \\mathbb{Q} $ 上可约，则其必须分解为两个多项式，其中至少一个次数较低。但 $ f_p(x) $ 的次数为 $ p-1 $，且在 $ \\mathbb{Q} $ 上无有理根（如 $ x = 1 $ 或 $ x = -1 $ 时值不为零）。因此，$ f_p(x) $ 在 $ \\mathbb{Q} $ 上不可约。  \n\n**结论**：  \n$ f_p(x) $ 在 $ \\mathbb{Q} $ 上不可约。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答错误。首先，模p分析中，f_p(x) ≡ 1 mod p 的推导不正确，因为x^p ≡ x mod p 仅对整数x成立，多项式环中x是未定元，不能直接代入。其次，结论'因此不可约'逻辑错误，常数多项式1在F_p上可约（非零常数可逆，但不可约性通常针对非常数多项式）。最后，有理数域不可约性的论证不充分，仅凭无有理根不能推出不可约（次数≥4时可能有二次因子）。参考答案使用艾森斯坦判别法证明，模型回答未涉及。\n忠诚性：参考资料为空，模型输出了具体知识，根据规则应判0分。\n答案相关性：模型尝试回答问题，但回答错误，仍相关。\n上下文相关性：参考资料为空，无法支持问题，得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 8,
+        "query": "求解下述例题：例14设 $f(x) = (x - a_{1})(x - a_{2})\\dots (x - a_{n}) + 1$ ，其中 $a_1,a_2,\\dots ,a_n$ 是两两不等的整数。\n（1）证明：当 $n$ 是奇数时， $f(x)$ 在 $\\mathbf{Q}$ 上不可约；\n（2）证明：当 $n$ 是偶数且 $n\\geqslant 6$ 时， $f(x)$ 在 $\\mathbf{Q}$ 上不可约；\n(3) 当 $n = 2$ 或 4 时, $f(x)$ 在 $\\mathbf{Q}$ 上是否不可约?",
+        "answer": "（1）证明 假如 $f(x)$ 在 $\\mathbf{Q}$ 上可约，则\n$$\nf (x) = g _ {1} (x) g _ {2} (x), \\deg g _ {i} (x) <   n, g _ {i} (x) \\in \\mathbf {Z} [ x ], i = 1, 2 。\n$$\n$x$ 用 $a_{j}$ 代入，从上式得\n$$\n1 = f \\left(a _ {j}\\right) = g _ {1} \\left(a _ {j}\\right) g _ {2} \\left(a _ {j}\\right), \\quad j = 1, 2, \\dots , n,\n$$\n于是 $g_{1}(a_{j})$ 与 $g_{2}(a_{j})$ 同为1，或同为一1，从而\n$$\ng _ {1} \\left(a _ {j}\\right) - g _ {2} \\left(a _ {j}\\right) = 0, \\quad j = 1, 2, \\dots , n,\n$$\n这表明多项式 $g_{1}(x) - g_{2}(x)$ 有 $n$ 个不同的根 $a_1, a_2, \\dots, a_n$ 。\n但是 $g_{1}(x) - g_{2}(x)$ 的次数小于 $n$ ，因此 $g_{1}(x) - g_{2}(x) = 0$ ，从而 $f(x) = g_{1}^{2}(x)$ ，于是 $\\deg f(x) = 2\\deg g_{1}(x)$ 。\n这与已知 $n$ 是奇数矛盾，因此 $f(x)$ 在 $\\mathbf{Q}$ 上不可约。\n（2）证明 假如 $f(x)$ 在 $\\mathbf{Q}$ 上可约，由第(1)小题的证明过程得， $f(x) = g_1^2 (x)$ ，从而对一切 $t\\in \\mathbb{R}$ ，有 $f(t) = g_1^2 (t)\\geqslant 0$ 。\n不妨设n$$\na _ {1} <   a _ {2} <   a _ {3} <   a _ {4} <   a _ {5} <   a _ {6} <   \\dots <   a _ {n},\n$$\n$x$ 用 $a_1 + \\frac{1}{2}$ 代入，由 $f(x)$ 的表达式得\n$$\n\\begin{array}{l} f \\left(a _ {1} + \\frac {1}{2}\\right) = \\frac {1}{2} \\left(a _ {1} + \\frac {1}{2} - a _ {2}\\right) \\dots \\left(a _ {1} + \\frac {1}{2} - a _ {n}\\right) + 1 \\\\ = (- 1) ^ {n - 1} \\frac {1}{2} \\left(a _ {2} - a _ {1} - \\frac {1}{2}\\right) \\dots \\left(a _ {n} - a _ {1} - \\frac {1}{2}\\right) + 1, \\\\ \\end{array}\n$$\n由于\n$$\na _ {2} - a _ {1} - \\frac {1}{2} \\geqslant 1 - \\frac {1}{2} = \\frac {1}{2}, \\dots ,\n$$\n$$\na _ {j} - a _ {1} - \\frac {1}{2} \\geqslant (j - 1) - \\frac {1}{2} = \\frac {2 j - 3}{2}, \\dots ,\n$$\n$$\na _ {n} - a _ {1} - \\frac {1}{2} \\geqslant (n - 1) - \\frac {1}{2} = \\frac {2 n - 3}{2},\n$$\n且 $n\\geq 6$ ，因此\n$$\n\\begin{array}{l} \\frac {1}{2} \\left(a _ {2} - a _ {1} - \\frac {1}{2}\\right) \\dots \\left(a _ {n} - a _ {1} - \\frac {1}{2}\\right) \\geqslant \\frac {1}{2} \\cdot \\frac {1}{2} \\cdot \\frac {3}{2} \\cdot \\frac {5}{2} \\cdot \\frac {7}{2} \\cdot \\frac {9}{2} \\cdot \\dots \\cdot \\frac {2 n - 3}{2} \\\\ \\geqslant \\frac {1}{2} \\cdot \\frac {1}{2} \\cdot \\frac {3}{2} \\cdot \\frac {5}{2} \\cdot \\frac {7}{2} \\cdot \\frac {9}{2} \\\\ = \\frac {1 5 \\times 6 3}{6 4} > 1 。 \\\\ \\end{array}\n$$\n由于 $n$ 是偶数，因此\n$$\nf \\left(a _ {1} + \\frac {1}{2}\\right) = - \\frac {1}{2} \\left(a _ {2} - a _ {1} - \\frac {1}{2}\\right) \\dots \\left(a _ {n} - a _ {1} - \\frac {1}{2}\\right) + 1 <   - 1 + 1 = 0,\n$$\n矛盾，因此当 $n$ 为偶数且 $n \\geqslant 6$ 时， $f(x)$ 在 $\\mathbf{Q}$ 上不可约。\n（3）解当 $n = 2$ 或4时， $f(x)$ 有可能在 $\\mathbf{Q}$ 上可约。例如， $(x - 1)(x + 1) + 1 = x^{2}$\n$$\n\\begin{array}{l} x (x - 1) (x + 1) (x + 2) + 1 = x ^ {4} + 2 x ^ {3} - x ^ {2} - 2 x + 1 \\\\ = (x ^ {2} + x - 1) ^ {2} \\\\ \\end{array}\n$$",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 9,
+        "query": "证明下述定理：定理1（对称多项式基本定理）对于数域 $K$ 上任意一个 $n$ 元对称多项式 $f(x_{1},x_{2},\\dots ,x_{n})$ ，都存在数域 $K$ 上唯一的一个 $n$ 元多项式 $g(x_{1},x_{2},\\dots ,x_{n})$ ，使得\n$$\nf \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right) = g \\left(\\sigma_ {1}, \\sigma_ {2}, \\dots , \\sigma_ {n}\\right) 。\n$$",
+        "answer": "证明 存在性。\n因为 $n$ 元多项式按字典排列法排出各单项式的次序，所以我们从 $f(x_{1},x_{2},\\dots ,x_{n})$ 的首项开始转换成 $\\sigma_1,\\sigma_2,\\dots ,\\sigma_n$ 的多项式。\n设 $f(x_{1},x_{2},\\dots ,x_{n})$ 的首项是 $ax_{1}^{l_{1}}x_{2}^{l_{2}}\\dots x_{n}^{l_{n}}$ 。\n由于 $f$ 是对称多项式，因此对任一 $n$ 元排列 $j_{1}j_{2}\\dots j_{n}$ ， $f$ 还含有项 $ax_{j_1}^{l_1}x_{j_2}^{l_2}\\dots x_{j_n}^{l_n}$ ，从而首项的幂指数组 $(l_{1},l_{2},\\dots ,l_{n})$ 必定满足 $l_{1}\\geqslant l_{2}\\geqslant \\dots \\geqslant l_{n}$ 。\n理由如下：\n假如 $l_{i} < l_{i + 1}$ ，由于 $ax_1^{l_1}\\dots x_{i + 1}^{l_i}x_i^{l_{i + 1}}\\dots x_n^{l_n}$ 也是 $f$ 的一项，而此项的幂指数组 $(l_{1},\\dots ,$ $l_{i - 1},l_{i + 1},l_i,\\dots ,l_n)$ 先于首项的幂指数组 $(l_{1},\\dots ,l_{i - 1},l_{i},l_{i + 1},\\dots ,l_{n})$ ，因此矛盾，从而 $l_{1}\\geqslant l_{2}$ $\\geqslant \\dots \\geqslant l_{n}$ 。\n为了把 $f(x_{1},x_{2},\\dots ,x_{n})$ 的首项转换成 $\\sigma_1,\\sigma_2,\\dots ,\\sigma_n$ 的多项式，就需要从 $\\sigma_1,\\sigma_2$ ，…, $\\sigma_{n}$ 构造出 $ax_1^l x_2^{l_2}\\dots x_n^{l_n}$ 。\n由于 $\\sigma_{1}$ 的首项是 $x_{1},\\sigma_{2}$ 的首项是 $x_{1}x_{2},\\dots ,\\sigma_{n - 1}$ 的首项是 $x_{1}x_{2}\\dots x_{n - 1},\\sigma_{n}$ 的首项是 $x_{1}x_{2}\\dots x_{n}$ ，因此应当构造一个 $n$ 元多项式 $\\Phi_1(x_1,x_2,\\dots ,x_n)$ 如下：\n$$\n\\Phi_ {1} \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right) = a \\sigma_ {1} ^ {l _ {1} - l _ {2}} \\sigma_ {2} ^ {l _ {2} - l _ {3}} \\sigma_ {3} ^ {l _ {3} - l _ {4}} \\dots \\sigma_ {n - 1} ^ {l _ {n - 1} - l _ {n}} \\sigma_ {n} ^ {l _ {n}} 。\n$$\n容易看出， $\\Phi_1(x_1, x_2, \\dots, x_n)$ 的首项是 $ax_1^{l_1}x_2^{l_2}\\dots x_n^{l_n}$ 。\n根据命题2得， $\\Phi_1(x_1, x_2, \\dots, x_n)$ 仍是 $n$ 元对称多项式。\n令\n$$\nf _ {1} \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right) = f \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right) - \\Phi_ {1} \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right),\n$$\n则 $f_{1}$ 的首项“小于” $f$ 的首项（即 $f$ 的首项的幂指数组先于 $f_{1}$ 的首项的幂指数组），且 $f_{1}$ 仍为 $n$ 元对称多项式。\n对 $f_{1}$ 重复上述对于 $f$ 的做法，一直这样做下去，由于首项的幂指数组是非负整数组，因此必在有限步后终止，即\n$$\nf _ {2} = f _ {1} - \\Phi_ {2}, \\dots , f _ {s - 1} = f _ {s - 2} - \\Phi_ {s - 1}, f _ {s} = f _ {s - 1} - \\Phi_ {s} = 0,\n$$\n从而得到\n$$\nf = f _ {1} + \\Phi_ {1} = \\left(f _ {2} + \\Phi_ {2}\\right) + \\Phi_ {1} = \\dots = \\Phi_ {s} + \\dots + \\Phi_ {2} + \\Phi_ {1} 。\n$$\n设 $\\Phi_{i}(x_{1},x_{2},\\dots ,x_{n}) = a_{i}\\sigma_{1}^{t_{i1}}\\sigma_{2}^{t_{i2}}\\dots \\sigma_{n}^{t_{in}}$ ，则\n$$\nf \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right) = \\sum_ {i = 1} ^ {s} a _ {i} \\sigma_ {1} ^ {t _ {i 1}} \\sigma_ {2} ^ {t _ {i 2}} \\dots \\sigma_ {n} ^ {t _ {i n}} 。\n$$\n令\n则 $g(\\sigma_1,\\sigma_2,\\dots ,\\sigma_n) = f(x_1,x_2,\\dots ,x_n)$\n唯一性。\n如果 $K[x_1, x_2, \\dots, x_n]$ 中有两个不同的多项式 $g_1(x_1, x_2, \\dots, x_n), g_2(x_1, x_2, \\dots, x_n)$ ，使得\n$$\nf \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right) = g _ {1} \\left(\\sigma_ {1}, \\sigma_ {2}, \\dots , \\sigma_ {n}\\right),\n$$\n$$\nf \\left(x _ {1}, x _ {2}, \\dots , x _ {n}\\right) = g _ {2} \\left(\\sigma_ {1}, \\sigma_ {2}, \\dots , \\sigma_ {n}\\right),\n$$\n那么 $g_{1}(\\sigma_{1},\\sigma_{2},\\dots ,\\sigma_{n}) - g_{2}(\\sigma_{1},\\sigma_{2},\\dots ,\\sigma_{n}) = 0.$\n令 $g(x_{1},x_{2},\\dots ,x_{n}) = g_{1}(x_{1},x_{2},\\dots ,x_{n}) - g_{2}(x_{1},x_{2},\\dots ,x_{n}),$\n则 $g(\\sigma_1,\\sigma_2,\\dots ,\\sigma_n) = g_1(\\sigma_1,\\sigma_2,\\dots ,\\sigma_n) - g_2(\\sigma_1,\\sigma_2,\\dots ,\\sigma_n) = 0.$ (1）\n从假设得， $g(x_{1},x_{2},\\dots ,x_{n})\\neq 0$ ，于是根据7.9节的定理4得，存在 $b_{1},b_{2},\\dots ,b_{n}\\in K$ ，使得 $g(b_{1},b_{2},\\dots ,b_{n})\\neq 0$ 。\n令\n$$\n\\Phi (x) = x ^ {n} - b _ {1} x ^ {n - 1} + \\dots + (- 1) ^ {k} b _ {k} x ^ {n - k} + \\dots + (- 1) ^ {n} b _ {n},\n$$\n设 $\\Phi (x)$ 的 $n$ 个复根是 $c_{1},c_{2},\\dots ,c_{n}$ ，则从Vieta公式得\n$$\nb _ {1} = \\sigma_ {1} \\left(c _ {1}, c _ {2}, \\dots , c _ {n}\\right), \\dots , b _ {k} = \\sigma_ {k} \\left(c _ {1}, c _ {2}, \\dots , c _ {n}\\right), \\dots , b _ {n} = \\sigma_ {n} \\left(c _ {1}, c _ {2}, \\dots , c _ {n}\\right) 。\n$$\n$x_{1}, x_{2}, \\cdots, x_{n}$ 用 $c_{1}, c_{2}, \\cdots, c_{n}$ 代入，从（1）式得\n$$\ng \\left(\\sigma_ {1} \\left(c _ {1}, c _ {2}, \\dots , c _ {n}\\right), \\sigma_ {2} \\left(c _ {1}, c _ {2}, \\dots , c _ {n}\\right), \\dots , \\sigma_ {n} \\left(c _ {1}, c _ {2}, \\dots , c _ {n}\\right)\\right) = 0,\n$$\n即 $g(b_{1},b_{2},\\dots ,b_{n}) = 0$\n矛盾。\n唯一性得证。",
+        "Original": {
+            "response": "定理1的证明如下：\n\n**存在性**：  \n对于任意的数域 $ K $ 上的 $ n $ 元对称多项式 $ f(x_1, x_2, \\dots, x_n) $，存在唯一的多项式 $ g(\\sigma_1, \\sigma_2, \\dots, \\sigma_n) $，使得  \n$$\nf(x_1, x_2, \\dots, x_n) = g(\\sigma_1, \\sigma_2, \\dots, \\sigma_n).\n$$  \n证明：  \n1. **对称多项式的基底**：  \n   对称多项式 $ f $ 可以表示为 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 的多项式。例如，对于 $ n $ 元多项式，其对称函数 $ \\sigma_i $ 是变量的对称和，如 $ \\sigma_1 = x_1 + x_2 + \\dots + x_n $，$ \\sigma_2 = \\sum_{1 \\leq i < j \\leq n} x_i x_j $，依此类推。  \n   通过多项式展开的理论，任何对称多项式都可以唯一地表示为 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 的线性组合。例如，利用拉格朗日插值法或对称多项式的基底（如 Schur 函数），可以将 $ f $ 展开为 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 的多项式。\n\n2. **唯一性**：  \n   假设存在两个多项式 $ g_1 $ 和 $ g_2 $，使得 $ g_1(\\sigma_1, \\sigma_2, \\dots, \\sigma_n) = g_2(\\sigma_1, \\sigma_2, \\dots, \\sigma_n) = f(x_1, x_2, \\dots, x_n) $。  \n   由于 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 是 $ x_1, x_2, \\dots, x_n $ 的对称函数，它们的多项式展开在 $ x_1, x_2, \\dots, x_n $ 下是唯一的。因此，$ g_1 $ 和 $ g_2 $ 必须相等，即 $ g_1 = g_2 $。  \n   这表明 $ g $ 的存在性与唯一性成立。\n\n**结论**：  \n定理1的证明基于对称多项式的基底和多项式展开的唯一性，因此存在唯一的多项式 $ g $ 使得 $ f(x_1, \\dots, x_n) = g(\\sigma_1, \\dots, \\sigma_n) $。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答仅给出了一个非常简略的证明框架，没有展示具体的构造步骤（如字典序、首项处理、逐步消去等），也没有给出唯一性的严格论证（如利用Vieta定理和多项式根的存在性）。回答中提到的“拉格朗日插值法”或“Schur函数”并非标准证明方法，且未给出实质推导。因此正确性得0分。\n忠诚性：参考资料为空列表，模型输出了具体知识（如拉格朗日插值法、Schur函数等），这些内容在参考资料中完全未提及，违反了忠诚性规则，得0分。\n答案相关性：模型回答试图证明定理，但内容过于简略且不完整，部分内容（如提到Schur函数）偏离了标准证明思路，但整体上仍在尝试回答问题，得1分。\n上下文相关性：参考资料为空，无法提供任何有用信息，因此得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "参考资料为空（'暂无参考资料'），但模型输出了具体的数学知识和证明步骤，根据忠诚性评分规则得0分。模型回答试图证明定理，但采用了循环论证的方式（直接引用‘多项式展开理论’或‘基底’来断言结论，缺乏参考答案中基于字典序法的构造性步骤和基于反证法的唯一性步骤），未能提供有效的数学证明，因此正确性得0分。模型回答直接针对题目要求的证明进行了输出，未答非所问，得2分。由于参考资料为空，无法提供任何有用信息，上下文相关性得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "要证明定理1（对称多项式基本定理），我们需要利用对称多项式的基底性质和线性代数中的基底唯一性。\n\n---\n\n### **证明步骤**\n\n1. **基本对称多项式的线性无关性**  \n   在数域 $ K $ 上，考虑 $ n $ 元多项式 $ f(x_1, x_2, \\dots, x_n) $ 是一个对称多项式，即其值在变量的任意排列下保持不变。  \n   通过构造对称多项式 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $，其中：\n   $$\n   \\sigma_i = \\sum_{1 \\leq j_1 < \\dots < j_i \\leq n} x_{j_1} x_{j_2} \\cdots x_{j_i}\n   $$\n   可以证明 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 在多项式环 $ K[x_1, x_2, \\dots, x_n] $ 中是线性无关的。  \n   例如，对于 $ n = 3 $，$ \\sigma_1 = x_1 + x_2 + x_3 $，$ \\sigma_2 = x_1x_2 + x_1x_3 + x_2x_3 $，$ \\sigma_3 = x_1x_2x_3 $，它们的系数矩阵的行列式不为零，因此线性无关。\n\n2. **对称多项式的唯一表示**  \n   由于 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 是线性无关的，它们构成多项式环 $ K[x_1, x_2, \\dots, x_n] $ 的一个基底。  \n   因此，任何对称多项式 $ f(x_1, x_2, \\dots, x_n) $ 都可以唯一地表示为这些基底的线性组合：\n   $$\n   f(x_1, x_2, \\dots, x_n) = a_1 \\sigma_1 + a_2 \\sigma_2 + \\dots + a_n \\sigma_n\n   $$\n   其中 $ a_1, a_2, \\dots, a_n $ 是系数。\n\n3. **构造多项式 $ g $**  \n   将上述表达式代入对称和 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $，得到：\n   $$\n   f(x_1, x_2, \\dots, x_n) = g(\\sigma_1, \\sigma_2, \\dots, \\sigma_n)\n   $$\n   其中 $ g $ 是一个关于 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 的多项式。\n\n4. **唯一性**  \n   由于 $ \\sigma_1, \\sigma_2, \\dots, \\sigma_n $ 是线性无关的，它们的线性组合唯一确定了 $ f $ 的表达式。因此，$ g $ 是唯一的多项式满足上述等式。\n\n---\n\n### **结论**\n\n对于数域 $ K $ 上任意一个 $ n $ 元对称多项式 $ f(x_1, x_2, \\dots, x_n) $，存在唯一的一个 $ n $ 元多项式 $ g(x_1, x_2, \\dots, x_n) $，使得：\n$$\nf(x_1, x_2, \\dots, x_n) = g(\\sigma_1, \\sigma_2, \\dots, \\sigma_n)\n$$\n$$\n\\boxed{f(x_1, x_2, \\dots, x_n) = g(\\sigma_1, \\sigma_2, \\dots, \\sigma_n)}\n$$",
+            "loop_counter": -1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答声称基本对称多项式线性无关并构成基底，但这是错误的。实际上，σ_i 不是线性无关的（例如 n=2 时 σ_1^2 与 σ_2 线性相关），且对称多项式不能表示为 σ_i 的线性组合，而是多项式组合。因此回答完全错误，得0分。\n忠诚性：参考资料为空，模型输出了具体知识，违反了忠诚性规则，得0分。\n答案相关性：回答试图证明定理，但方法错误，仍与问题相关，得1分。\n上下文相关性：参考资料为空，无法提供有用信息，得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性：模型回答的证明过程存在严重的数学错误。它声称任意对称多项式 $f$ 可以表示为基本对称多项式 $\\sigma_i$ 的线性组合 ($a_1\\sigma_1 + \\dots + a_n\\sigma_n$)，这是不正确的。对称多项式构成环，需要多项式组合（包含乘积和幂），例如 $x^2 + y^2 = \\sigma_1^2 - 2\\sigma_2$ 就不是线性的。因此证明是错误的。忠诚性：参考资料明确为“暂无参考资料”。根据评分标准，当参考资料为空时，模型输出了任何具体知识（即证明内容），必须判定为 0 分。答案相关性：模型针对问题给出了证明尝试，意图是回答该数学证明题，因此具有相关性。上下文相关性：提供的参考资料为空，无法提供任何有用信息，因此评分为 0。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 10,
+        "query": "求解下述例题：例5设 $1 \\leqslant k \\leqslant n$ ，把幂和 $s_k(x_1, x_2, \\dots, x_n)$ 用初等对称多项式 $\\sigma_1(x_1, x_2, \\dots, x_n)$ ， $\\sigma_2(x_1, x_2, \\dots, x_n), \\dots, \\sigma_k(x_1, x_2, \\dots, x_n)$ 表示。",
+        "answer": "解 根据牛顿(Newton)公式，当 $1 \\leqslant k \\leqslant n$ 时，有\n$$\ns _ {k} - \\sigma_ {1} s _ {k - 1} + \\sigma_ {2} s _ {k - 2} + \\dots + (- 1) ^ {k - 1} \\sigma_ {k - 1} s _ {1} + (- 1) ^ {k} k \\sigma_ {k} = 0,\n$$\n从而 $s_1 = \\sigma_1$\n$$\ns _ {2} = \\sigma_ {1} s _ {1} - 2 \\sigma_ {2} = \\sigma_ {1} ^ {2} - 2 \\sigma_ {2} = \\left| \\begin{array}{c c} \\sigma_ {1} & 1 \\\\ 2 \\sigma_ {2} & \\sigma_ {1} \\end{array} \\right|,\n$$\n$$\ns _ {3} = \\sigma_ {1} s _ {2} - \\sigma_ {2} s _ {1} + 3 \\sigma_ {3} = \\left| \\begin{array}{c c c} \\sigma_ {1} & 1 & 0 \\\\ 2 \\sigma_ {2} & \\sigma_ {1} & 1 \\\\ 3 \\sigma_ {3} & \\sigma_ {2} & \\sigma_ {1} \\end{array} \\right|,\n$$\n由此受到启发，猜想\n$$\ns _ {k} = \\left| \\begin{array}{c c c c c c c c c} \\sigma_ {1} & 1 & 0 & 0 & 0 & 0 & \\dots & 0 & 0 \\\\ 2 \\sigma_ {2} & \\sigma_ {1} & 1 & 0 & 0 & 0 & \\dots & 0 & 0 \\\\ 3 \\sigma_ {3} & \\sigma_ {2} & \\sigma_ {1} & 1 & 0 & 0 & \\dots & 0 & 0 \\\\ 4 \\sigma_ {4} & \\sigma_ {3} & \\sigma_ {2} & \\sigma_ {1} & 1 & 0 & \\dots & 0 & 0 \\\\ \\vdots & \\vdots & \\vdots & \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots \\\\ (k - 1) \\sigma_ {k - 1} & \\sigma_ {k - 2} & \\sigma_ {k - 3} & \\sigma_ {k - 4} & \\sigma_ {k - 5} & \\sigma_ {k - 6} & \\dots & \\sigma_ {1} & 1 \\\\ k \\sigma_ {k} & \\sigma_ {k - 1} & \\sigma_ {k - 2} & \\sigma_ {k - 3} & \\sigma_ {k - 4} & \\sigma_ {k - 5} & \\dots & \\sigma_ {2} & \\sigma_ {1} \\end{array} \\right| 。 \\tag {20}\n$$\n我们用第二数学归纳法证明上述猜想。\n当 $k = 1$ 时， $\\left|\\sigma_1\\right| = \\sigma_1 = s_1$ ，因此命题成立。\n假设当小于 $k$ 时命题成立 $(1 < k \\leqslant n)$ ，现在来看 $k$ 的情形。对于上述右端的 $k$ 阶行列式按第 $k$ 行展开，得\n$$\n\\begin{array}{l} (- 1) ^ {k + 1} k \\sigma_ {k} + (- 1) ^ {k + 2} \\sigma_ {k - 1} \\sigma_ {1} + (- 1) ^ {k + 3} \\sigma_ {k - 2} \\left| \\begin{array}{c c c c c c c} \\sigma_ {1} & 1 & 0 & 0 & \\dots & 0 & 0 \\\\ 2 \\sigma_ {2} & \\sigma_ {1} & 0 & 0 & \\dots & 0 & 0 \\\\ 3 \\sigma_ {3} & \\sigma_ {2} & 1 & 0 & \\dots & 0 & 0 \\\\ \\vdots & \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots \\\\ (k - 1) \\sigma_ {k - 1} & \\sigma_ {k - 2} & \\sigma_ {k - 4} & \\sigma_ {k - 5} & \\dots & \\sigma_ {1} & 1 \\end{array} \\right| + \\dots + \\\\ (- 1) ^ {k + (k - 1)} \\sigma_ {2} s _ {k - 2} + (- 1) ^ {k + k} \\sigma_ {1} s _ {k - 1} \\\\ = (- 1) ^ {k + 1} k \\sigma_ {k} + (- 1) ^ {k} \\sigma_ {k - 1} s _ {1} + (- 1) ^ {k - 1} \\sigma_ {k - 2} s _ {2} + \\dots + (- 1) \\sigma_ {2} s _ {k - 2} + \\sigma_ {1} s _ {k - 1} = s _ {k} 。 \\\\ \\end{array}\n$$\n由第二数学归纳法原理得，当 $1 \\leqslant k \\leqslant n$ 时有（20）式成立。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据参考资料中的递推关系式，对于 $1 \\leqslant k \\leqslant n$，幂和 $s_k(x_1, x_2, \\dots, x_n)$ 可以用初等对称多项式 $\\sigma_1, \\sigma_2, \\dots, \\sigma_k$ 表示为：\n\n$$\ns_k = \\sigma_1 s_{k-1} - \\sigma_2 s_{k-2} + \\cdots + (-1)^{k-1} \\sigma_{k-1} s_1 + (-1)^k k \\sigma_k\n$$\n\n**证明过程：**\n\n1. **递推关系式推导：**  \n   根据参考资料中的方程（9）和（11），当 $k < n$ 时，幂和 $s_k$ 满足以下递推关系：\n   $$\n   s_k - \\sigma_1 s_{k-1} + \\sigma_2 s_{k-2} - \\cdots + (-1)^{k-1} \\sigma_{k-1} s_1 + (-1)^k k \\sigma_k = 0\n   $$\n   由此可得：\n   $$\n   s_k = \\sigma_1 s_{k-1} - \\sigma_2 s_{k-2} + \\cdots + (-1)^{k-1} \\sigma_{k-1} s_1 + (-1)^k k \\sigma_k\n   $$\n\n2. **特殊情况验证：**  \n   - 当 $k = 1$ 时，$s_1 = \\sigma_1$。\n   - 当 $k = 2$ 时，$s_2 = \\sigma_1 s_1 - 2\\sigma_2$，与已知公式一致。\n   - 当 $k = 3$ 时，$s_3 = \\sigma_1 s_2 - \\sigma_2 s_1 + 3\\sigma_3$，验证符合多项式展开结果。\n\n**最终答案：**  \n$$\ns_k(x_1, x_2, \\dots, x_n) = \\sigma_1 s_{k-1} - \\sigma_2 s_{k-2} + \\cdots + (-1)^{k-1} \\sigma_{k-1} s_1 + (-1)^k k \\sigma_k\n$$",
+            "loop_counter": 1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答给出了牛顿公式的递推关系，但未给出最终用初等对称多项式显式表示的表达式（如行列式形式），而参考答案要求的是显式表示。因此回答不完整，部分正确。\n忠诚性：模型回答中的递推关系在参考资料中有直接支持（方程9和11），没有超出资料的内容。\n答案相关性：回答直接针对问题，给出了幂和用初等对称多项式表示的递推形式，没有无关内容。\n上下文相关性：参考资料包含了牛顿公式的递推关系，足以回答问题的递推部分，但未包含行列式表示，因此部分相关。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答提供了牛顿公式作为幂和与初等对称多项式之间的递推关系，这与参考答案的第一部分一致，且在数学上是正确的。虽然参考答案进一步给出了行列式形式的解，但牛顿公式本身是此类问题的标准答案之一。模型内容忠实于参考资料[2]中的方程(11)，并正确引用了资料。模型直接回答了问题，且参考资料[2]提供了充分的信息支持该回答。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 11,
+        "query": "求解下述例题：例6设 $1 \\leqslant k \\leqslant n$ ，把初等对称多项式 $\\sigma_{k}(x_{1}, x_{2}, \\dots, x_{n})$ 用幂和 $s_{1}(x_{1}, x_{2}, \\dots, x_{n}), s_{2}(x_{1}, x_{2}, \\dots, x_{n}), \\dots, s_{k}(x_{1}, x_{2}, \\dots, x_{n})$ 表示。",
+        "answer": "\n解 根据牛顿(Newton)公式，当 $1 \\leqslant k \\leqslant n$ 时，可得\n$$\n\\begin{array}{l} \\sigma_ {1} = s _ {1}, \\\\ \\sigma_ {2} = \\frac {1}{2} (\\sigma_ {1} s _ {1} - s _ {2}) = \\frac {1}{2} (s _ {1} ^ {2} - s _ {2}) = \\frac {1}{2} \\left| \\begin{array}{c c} s _ {1} & 1 \\\\ s _ {2} & s _ {1} \\end{array} \\right|, \\\\ \\sigma_ {3} = \\frac {1}{3} \\left(s _ {3} - \\sigma_ {1} s _ {2} + \\sigma_ {2} s _ {1}\\right) = \\frac {1}{3} \\left(s _ {3} - s _ {1} s _ {2} + s _ {1} \\frac {1}{2} \\left| \\begin{array}{c c} s _ {1} & 1 \\\\ s _ {2} & s _ {1} \\end{array} \\right|\\right) \\\\ = \\frac {1}{6} \\left| \\begin{array}{c c c} s _ {1} & 1 & 0 \\\\ s _ {2} & s _ {1} & 2 \\\\ s _ {3} & s _ {2} & s _ {1} \\end{array} \\right|, \\\\ \\end{array}\n$$\n由此受到启发，猜想\n$$\n\\sigma_ {k} = \\frac {1}{k !} \\left| \\begin{array}{c c c c c c c} s _ {1} & 1 & 0 & 0 & \\dots & 0 & 0 \\\\ s _ {2} & s _ {1} & 2 & 0 & \\dots & 0 & 0 \\\\ s _ {3} & s _ {2} & s _ {1} & 3 & \\dots & 0 & 0 \\\\ \\vdots & \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots \\\\ s _ {k - 1} & s _ {k - 2} & s _ {k - 3} & s _ {k - 4} & \\dots & s _ {1} & k - 1 \\\\ s _ {k} & s _ {k - 1} & s _ {k - 2} & s _ {k - 3} & \\dots & s _ {2} & s _ {1} \\end{array} \\right| \\tag {21}\n$$\n我们用第二数学归纳法证明这个猜想。\n当 $k = 1$ 时， $|s_1| = s_1 = \\sigma_1$ ，命题为真。\n假设当小于 $k$ 时命题为真 $(1 < k \\leqslant n)$ ，现在来看 $k$ 的情形。把上述右端的行列式按最后一行展开，得\n$$\n(- 1) ^ {k + 1} s _ {k} (k - 1)! + (- 1) ^ {k + 2} s _ {k - 1} \\left| \\begin{array}{c c c c c c} s _ {1} & 0 & 0 & \\dots & 0 & 0 \\\\ s _ {2} & 2 & 0 & \\dots & 0 & 0 \\\\ s _ {3} & s _ {1} & 3 & \\dots & 0 & 0 \\\\ \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots \\\\ s _ {k - 1} & s _ {k - 3} & s _ {k - 4} & \\dots & s _ {1} & k - 1 \\end{array} \\right| +\n$$\n$$\n\\begin{array}{l} (- 1) ^ {k + 3} s _ {k - 2} \\left| \\begin{array}{c c c c c c} s _ {1} & 1 & 0 & \\dots & 0 & 0 \\\\ s _ {2} & s _ {1} & 0 & \\dots & 0 & 0 \\\\ s _ {3} & s _ {2} & 3 & \\dots & 0 & 0 \\\\ \\vdots & \\vdots & \\vdots & & \\vdots & \\vdots \\\\ s _ {k - 1} & s _ {k - 2} & s _ {k - 4} & \\dots & s _ {1} & k - 1 \\end{array} \\right| + \\dots + \\\\ (- 1) ^ {k + (k - 1)} s _ {2} (k - 1) (k - 2)! \\sigma_ {k - 2} + (- 1) ^ {k + k} s _ {1} (k - 1)! \\sigma_ {k - 1} \\\\ = (- 1) ^ {k + 1} (k - 1)! s _ {k} + (- 1) ^ {k} s _ {k - 1} (k - 1)! s _ {1} + (- 1) ^ {k - 1} s _ {k - 2} (k - 1)! \\sigma_ {2} + \\dots + \\\\ (- 1) (k - 1)! s _ {2} \\sigma_ {k - 2} + (k - 1)! s _ {1} \\sigma_ {k - 1} \\\\ = \\frac {k !}{k} \\left[ (- 1) ^ {k + 1} s _ {k} + (- 1) ^ {k} s _ {k - 1} \\sigma_ {1} + (- 1) ^ {k - 1} s _ {k - 2} \\sigma_ {2} + \\dots + (- 1) s _ {2} \\sigma_ {k - 2} + s _ {1} \\sigma_ {k - 1} \\right] \\\\ = k! \\sigma_ {k} 。 \\\\ \\end{array}\n$$\n根据第二数学归纳法原理得，当 $1 \\leqslant k \\leqslant n$ 时，有(21)式成立。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "我们需要将初等对称多项式 $\\sigma_k(x_1, x_2, \\dots, x_n)$ 表示为幂和 $s_1, s_2, \\dots, s_k$ 的线性组合。根据定义，初等对称多项式 $\\sigma_k$ 是变量 $x_1, x_2, \\dots, x_n$ 的 $k$ 次幂和，即：\n\n$$\n\\sigma_k = x_1^k + x_2^k + \\cdots + x_n^k\n$$\n\n而幂和 $s_i$ 定义为变量的 $i$ 次幂和，即：\n\n$$\ns_i = x_1^i + x_2^i + \\cdots + x_n^i\n$$\n\n因此，$\\sigma_k$ 本质上就是 $s_k$ 的值。对于任意 $k$，有：\n\n$$\n\\sigma_k = s_k\n$$\n\n---\n\n### 最终答案：\n$$\n\\boxed{\\sigma_k = s_k}\n$$",
+            "loop_counter": -1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答错误地将初等对称多项式σ_k定义为x_i^k的和，实际上σ_k是k个不同变量的乘积之和，而s_k是幂和。正确答案由牛顿公式给出，模型回答完全错误，得0分。\n忠诚性：参考资料为空列表，模型输出了具体知识（σ_k = s_k），属于无依据输出，根据规则应得0分。\n答案相关性：模型回答直接回应了问题（试图表示σ_k），但内容错误，不过仍相关，得1分。\n上下文相关性：参考资料为空，与问题无关，得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "Correctness: 0. 模型对初等对称多项式 $\\sigma_k$ 的定义理解完全错误。$\\sigma_k$ 应为所有 $k$ 个不同变量的乘积之和（如 $x_1x_2 \\dots x_k$），而模型将其错误地定义为 $k$ 次幂和（即 $s_k$ 的定义），导致结论 $\\sigma_k = s_k$ 在数学上不成立（除 $k=1$ 外）。Faithfulness: 0. 参考资料明确为“暂无参考资料”。根据评分标准，当参考资料为空时，模型输出任何具体知识（包括错误的定义和推导）均视为无依据，得 0 分。Answer Relevance: 2. 虽然模型回答的内容在数学上是错误的，但它直接针对题目要求的“将 $\\sigma_k$ 用 $s$ 表示”给出了一个明确的数学公式，没有答非所问或包含无关冗余信息。Context Relevance: 0. 提供的参考资料为空，无法为回答该数学问题提供任何有用信息。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 12,
+        "query": "证明下述定理：定理1 任一域 $F$ 上的任一线性空间 $V$ 都有一个基。",
+        "answer": "\n* 证明 按照基的定义, 要找出 $V$ 的一个子集满足两个条件, 第一个条件是这个子集是线性无关的, 第二个条件是 $V$ 中每一个向量都可以由这个子集中有限多个向量线性表出。\n为此我们把 $V$ 中所有线性无关的向量集组成一个集合, 记作 $S$ 。\n显然 $S$ 对于 $V$ 的子集的包含关系成为一个偏序集。\n我们要在 $S$ 中找一个元素, 希望它满足上述第二个条件, 直觉判断应找 $S$ 的一个极大元素。\n那么 $S$ 是否有极大元素呢? 根据 Zorn 引理, 应当任取 $S$ 的一条链 $T$ , 设 $T = \\{B_i | i \\in I\\}$ , 其中 $I$ 为指标集, 去证 $T$ 必有上界。\n为此令\n$$\nB = \\bigcup_ {i \\in I} B _ {i} := \\{\\alpha \\mid \\alpha \\in B _ {i} \\text {, 其 中} i \\in I \\},\n$$\n如果能证明 $B$ 是线性无关的，那么 $B \\in S$ 。\n又显然有 $B_i \\subseteq B, \\forall i \\in I$ ，因此 $B$ 就是 $T$ 的一个上界。\n现在假设 $B$ 线性相关，则 $B$ 有一个有限子集 $C$ 是线性相关的，设\n$$\nC = \\left\\{\\alpha_ {1}, \\alpha_ {2}, \\dots , \\alpha_ {r} \\right\\},\n$$\n设 $\\alpha_{1} \\in B_{i_{1}}, \\dots, \\alpha_{r} \\in B_{i_{r}}$ ，由于 $T$ 是一条链，因此在 $B_{i_{1}}, \\dots, B_{i_{r}}$ 中必定有一个包含了其余 $r - 1$ 个。\n不妨设它为 $B_{i_{r}}$ ，于是 $C \\subseteq B_{i_{r}}$ 。\n由于 $B_{i_{r}}$ 是线性无关的，因此 $C$ 是线性无关的，与假设相矛盾。\n这证明了 $B$ 是线性无关的，从而 $B$ 是 $T$ 的一个上界，因此 $S$ 有一个极大元素 $A$ ，从而 $A$ 是线性无关的向量集。\n在 $V$ 中任取一个向量 $\\alpha$ ，若 $\\alpha \\in A$ ，则 $\\alpha$ 可由 $A$ 线性表出（因为 $\\alpha = 1 \\cdot \\alpha$ ）。\n若 $\\alpha \\notin A$ ，则 $A \\subsetneq A \\cup \\{\\alpha\\}$ 。\n由于 $A$ 是 $S$ 的一个极大元素，因此 $A \\cup \\{\\alpha\\} \\notin S$ ，从而向量集 $A \\cup \\{\\alpha\\}$ 线性相关。\n于是 $A \\cup \\{\\alpha\\}$ 有一个有限子集 $A_{1}$ 是线性相关的，必有 $\\alpha \\in A_{1}$ （否则， $A_{1}$ 是 $A$ 的子集，矛盾）。\n由于 $A_{1} \\setminus \\{\\alpha\\} \\subseteq A$ ，因此 $A_{1} \\setminus \\{\\alpha\\}$ 线性无关，从而根据命题5得， $\\alpha$ 可以由 $A_{1} \\setminus \\{\\alpha\\}$ 线性表出，因此 $\\alpha$ 可以由 $A$ 中有限多个向量线性表出。\n综上所述得， $A$ 是 $V$ 的一个基。",
+        "Original": {
+            "response": "定理1：任一域 $ F $ 上的任一线性空间 $ V $ 都有一个基。\n\n**证明：**\n\n1. **有限维情况**：  \n   若 $ V $ 是有限维的，设其维数为 $ n $。通过构造基的方法，可逐次添加线性无关的向量。例如，选择一个向量 $ v_1 $，再选择 $ v_2 \\notin \\text{span}\\{v_1\\} $，依此类推，直到生成 $ n $ 个线性无关向量，此时 $ \\{v_1, v_2, \\dots, v_n\\} $ 为 $ V $ 的基。\n\n2. **无限维情况**：  \n   若 $ V $ 是无限维的，应用 **Zorn引理**：  \n   - 考虑 $ V $ 的所有非空子集 $ S $，并定义一个偏序关系：$ S \\leq S' $ 当且仅当 $ S \\subseteq S' $。  \n   - 对于每个 $ S $，若存在 $ v \\in S $ 使得 $ \\text{span}(S) = V $，则 $ S $ 是一个生成子空间。  \n   - 通过Zorn引理，存在一个极大线性无关集合 $ B $，即 $ \\text{span}(B) = V $ 且 $ B $ 中无向量可以被其他向量线性组合生成。  \n   - 由于 $ B $ 是线性无关的且生成 $ V $，因此 $ B $ 是 $ V $ 的基。\n\n**结论**：  \n无论 $ V $ 是有限维还是无限维，域 $ F $ 上的线性空间 $ V $ 都存在一个基。因此，定理1成立。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答试图证明定理，但证明不完整且存在逻辑错误。有限维情况未给出严格证明，无限维情况中Zorn引理的应用描述不准确（如偏序集定义错误、极大线性无关集合的论证不清晰），且未证明极大线性无关集合一定是基。参考答案给出了完整严格的证明，模型回答与之相比有较大差距，因此正确性得1分（部分正确）。\n忠诚性：参考资料为空列表，根据规则，模型输出了具体知识，应判定为0分。\n答案相关性：模型回答直接回应了问题，尝试证明定理，没有偏离主题，因此得2分。\n上下文相关性：参考资料为空，与问题无关，得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性：模型回答在数学上是部分正确的，但证明过程不够严谨和完整。对于有限维情况，模型仅描述了构造基的过程但没有严格证明；对于无限维情况，对Zorn引理的应用表述不够准确。忠诚性：由于题目明确指出'暂无参考资料'，而模型输出了一段完整的数学证明，这属于无依据输出，因此得0分。答案相关性：模型直接回应了证明定理的问题，没有偏离主题或包含无关内容，因此得2分。上下文相关性：题目明确指出'暂无参考资料'，因此参考资料与问题完全无关，得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "定理1的证明如下：\n\n1. **零元唯一性**：根据参考资料中的证明，线性空间的零元唯一，且每个元素的负元唯一。这确保了线性空间的结构满足基本的代数性质。\n\n2. **基的构造**：  \n   - 任取线性空间 $ V $ 中的一个向量 $ \\alpha \\in V $。  \n   - 通过递归构造向量组：  \n     - 选取一个非零向量 $ \\alpha_1 $，若其线性无关，则将其加入基。  \n     - 依次选取其他向量，确保每一步的向量组线性无关，并能生成整个空间。  \n   - 由于 $ V $ 是线性空间，其维度有限（或无限），存在一个有限的基，使得所有向量均可由该基线性组合生成。\n\n3. **线性无关性与生成性**：  \n   - 通过构造的向量组，确保每一步的向量组线性无关（如通过排除法验证）。  \n   - 由于 $ V $ 的维度有限（或无限），存在一个基，使得该基的线性组合可以生成 $ V $ 中的所有元素。\n\n4. **结论**：  \n   - 由于 $ V $ 是线性空间，存在一组线性无关的向量，能够生成 $ V $ 的所有元素，因此 $ V $ 有一个基。\n\n**最终结论",
+            "deepseek": {
+                "reasoning": "正确性：模型回答未给出严格的数学证明，而是模糊描述，未使用Zorn引理或超限归纳法，未证明无限维情形，且错误假设有限维，因此得0分。忠诚性：参考资料包含定理1的完整证明（使用Zorn引理），但模型回答未引用该证明，而是自行构造了不正确的论证，且未忠实于参考资料，因此得0分。答案相关性：模型回答试图证明定理，但内容不完整且不严谨，部分相关，得1分。上下文相关性：参考资料包含定理1的完整证明，高度相关，得2分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性：模型回答在数学上不完整且不正确。它没有使用Zorn引理来证明基的存在性，这是证明无限维空间基存在性的关键工具。模型假设了空间维度有限，这与定理内容矛盾，且证明过程过于简略，缺乏必要的数学严谨性。忠诚性：模型回答包含了许多参考资料中未提及的内容，如递归构造向量组、维度有限假设等，这些内容在参考资料中完全没有出现。答案相关性：模型回答确实尝试回答了问题，提供了证明的框架和结论，尽管证明过程不完整且有错误。上下文相关性：参考资料[1]直接列出了定理1但没有提供证明过程，参考资料[2]和[3]讨论了线性空间的某些性质但没有提供证明基存在性的关键信息。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 1
+                }
+            }
+        },
+        "Agent": {
+            "response": "定理1的证明如下：\n\n设 $ V $ 是域 $ F $ 上的线性空间。我们需要证明 $ V $ 至少存在一个基。\n\n**证明：**  \n1. **存在性**：  \n   任取 $ V $ 中的非零向量 $ v \\in V $。若 $ V $ 仅包含零向量，则 $ V $ 的维数为 0，此时 $ \\{v\\} $ 是基（但 $ v = 0 $，矛盾）。因此 $ V $ 至少包含一个非零向量。  \n   令 $ \\{v_1\\} $ 是 $ V $ 的一个非空子集。若 $ \\{v_1\\} $ 是基，则完成证明。否则，若 $ \\{v_1\\} $ 不是基，则存在非零向量 $ v_2 \\in V $ 使得 $ v_2 = a v_1 $（$ a \\in F $）。此时 $ \\{v_1, v_2\\} $ 仍是线性空间 $ V $ 的子集，但 $ \\{v_1\\} $ 仍可能不是基。  \n   通过递归构造，可以将 $ V $ 的元素分解为线性无关的向量集合，最终形成基。\n\n2. **基的构造**：  \n   令 $ \\{v_1, v_2, \\dots, v_n\\} $ 是 $ V $ 的一个线性无关的向量集合。若 $ \\{v_1, \\dots, v_n\\} $ 生成 $ V $，则它们构成基。若 $ \\{v_1, \\dots, v_n\\} $ 不生成 $ V $，则存在 $ v \\in V $ 无法由 $ \\{v_1, \\dots, v_n\\} $ 表示。此时，添加 $ v $ 到 $ \\{v_1, \\dots, v_n\\} $ 后，仍可能无法生成 $ V $，需继续添加更多向量，直到生成 $ V $。  \n   由于 $ V $ 是无限维或有限维的，通过无限次添加向量（或有限次），最终可构造出一个基。\n\n3. **唯一性**：  \n   基的定义要求线性无关且生成整个空间。若存在多个基，根据线性空间的性质，基的个数（维数）是唯一的。因此，存在至少一个基。\n\n**结论：**  \n任一域 $ F $ 上的线性空间 $ V $ 都存在一个基，因此定理1成立。",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答未给出严格证明，而是模糊描述，缺乏关键步骤（如使用Zorn引理或归纳法），且存在错误（如假设非零向量存在，但零空间也有基∅）。得0分。\n忠诚性：参考资料包含定理1的完整证明，但模型回答未引用，且内容与参考资料不符（参考资料使用Zorn引理，模型回答使用递归构造）。得0分。\n答案相关性：模型回答尝试证明定理，但内容不完整且部分无关（如讨论唯一性），但基本围绕问题。得1分。\n上下文相关性：参考资料包含定理1的完整证明，高度相关。得2分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性：模型回答使用了递归构造方法证明基的存在性，但没有使用Zorn引理这一标准方法。模型回答中存在逻辑错误，如'若{v₁}不是基，则存在非零向量v₂∈V使得v₂=av₁'是不正确的陈述。此外，模型回答讨论了唯一性，而原定理仅要求证明存在性。因此，模型回答在数学上不完全正确，得分为0分。忠诚性：模型回答中的证明方法（递归构造、无限次添加向量）在提供的参考资料中完全没有提及。参考资料[1]仅列出了定理但没有证明过程，参考资料[2]和[3]与证明方法无关。因此，模型回答没有严格基于提供的参考资料，得分为0分。答案相关性：模型回答确实尝试证明定理，直接回应了问题，但讨论了定理未要求的唯一性，包含多余内容。因此，得分为1分。上下文相关性：参考资料[1]直接列出了要证明的定理，但未提供证明方法；参考资料[2]和[3]与证明方法关联性较低。因此，参考资料部分相关，得分为1分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 1
+                }
+            }
+        }
+    },
+    {
+        "id": 13,
+        "query": "求解下述例题：例16 求下列数域 $K$ 上线性空间的一个基和维数：\n（1）数域 $K$ 上所有 $s \\times n$ 矩阵组成的线性空间 $M_{s \\times n}(K)$ ；\n（2）数域 $K$ 上所有 $n$ 级对称矩阵组成的线性空间 $V_{1}$ 。",
+        "answer": "解（1）任取 $A = (a_{ij})\\in M_{s\\times n}(K)$ ，有\n$$\n\\boldsymbol {A} = \\sum_ {i = 1} ^ {s} \\sum_ {j = 1} ^ {n} a _ {i j} \\boldsymbol {E} _ {i j}, \\tag {47}\n$$\n其中 $E_{ij}$ 是只有 $(i,j)$ 元为1，其余元素都为0的 $s\\times n$ 矩阵（称为基本矩阵）。假设\n$$\n\\sum_ {i = 1} ^ {s} \\sum_ {j = 1} ^ {n} k _ {i j} \\mathbf {E} _ {i j} = 0, \\tag {48}\n$$\n由于(48)式左端等于 $(i,j)$ 元为 $k_{ij}$ 的 $s\\times n$ 矩阵，因此从(48)式得， $k_{ij} = 0,1\\leqslant i\\leqslant s,1\\leqslant j\\leqslant$ $n$ ，从而\n$$\n\\boldsymbol {E} _ {1 1}, \\boldsymbol {E} _ {1 2}, \\dots , \\boldsymbol {E} _ {1 n}, \\boldsymbol {E} _ {2 1}, \\dots , \\boldsymbol {E} _ {2 n}, \\dots , \\boldsymbol {E} _ {s 1}, \\dots , \\boldsymbol {E} _ {s n} \\tag {49}\n$$\n线性无关，结合(47)式得，（49）式给出的 $sn$ 个基本矩阵是线性空间 $M_{s\\times n}(K)$ 的一个基，从而\n$$\n\\dim M _ {s \\times n} (K) = s n 。 \\tag {50}\n$$\n（2）根据本节习题第3题， $V_{1}$ 是 $K$ 上线性空间。\n$K$ 上任一 $_n$ 级对称矩阵A具有形式\n$$\n\\mathbf {A} = \\left( \\begin{array}{c c c c c} a _ {1 1} & a _ {1 2} & a _ {1 3} & \\dots & a _ {1 n} \\\\ a _ {1 2} & a _ {2 2} & a _ {2 3} & \\dots & a _ {2 n} \\\\ a _ {1 3} & a _ {2 3} & a _ {3 3} & \\dots & a _ {3 n} \\\\ \\vdots & \\vdots & \\vdots & & \\vdots \\\\ a _ {1 n} & a _ {2 n} & a _ {3 n} & \\dots & a _ {n n} \\end{array} \\right), \\tag {51}\n$$从而 $A = a_{11}E_{11} + a_{12}(E_{12} + E_{21}) + a_{13}(E_{13} + E_{31}) + \\dots +a_{1n}(E_{1n} + E_{n1})+$\n$$\na _ {2 2} \\mathbf {E} _ {2 2} + a _ {2 3} \\left(\\mathbf {E} _ {2 3} + \\mathbf {E} _ {3 2}\\right) + \\dots + a _ {2 n} \\left(\\mathbf {E} _ {2 n} + \\mathbf {E} _ {n 2}\\right) + \\dots + a _ {n n} \\mathbf {E} _ {n n} 。\n$$\n假设 $k_{11}\\pmb{E}_{11} + k_{12}(\\pmb{E}_{12} + \\pmb{E}_{21}) + k_{13}(\\pmb{E}_{13} + \\pmb{E}_{31}) + \\dots +k_{1n}(\\pmb{E}_{1n} + \\pmb{E}_{n1})+$\n$$\nk _ {2 2} \\boldsymbol {E} _ {2 2} + k _ {2 3} \\left(\\boldsymbol {E} _ {2 3} + \\boldsymbol {E} _ {3 2}\\right) + \\dots + k _ {2 n} \\left(\\boldsymbol {E} _ {2 n} + \\boldsymbol {E} _ {n 2}\\right) + \\dots + k _ {n n} \\boldsymbol {E} _ {n n} = 0, \\tag {52}\n$$\n由于 $\\{E_{ij} \\mid i = 1,2,\\dots,n; j = 1,2,\\dots,n\\}$ 是 $M_{s\\times n}(K)$ 的一个基，因此从（52）式得\n$$\nk _ {1 1} = k _ {1 2} = k _ {1 3} = \\dots = k _ {1 n} = k _ {2 2} = k _ {2 3} = \\dots = k _ {2 n} = \\dots = k _ {n n} = 0,\n$$从而\n$$\n\\boldsymbol {E} _ {1 1}, \\boldsymbol {E} _ {1 2} + \\boldsymbol {E} _ {2 1}, \\boldsymbol {E} _ {1 3} + \\boldsymbol {E} _ {3 1}, \\dots , \\boldsymbol {E} _ {1 n} + \\boldsymbol {E} _ {n 1}, \\boldsymbol {E} _ {2 2}, \\boldsymbol {E} _ {2 3} + \\boldsymbol {E} _ {3 2}, \\dots , \\boldsymbol {E} _ {2 n} + \\boldsymbol {E} _ {n 2}, \\dots , \\boldsymbol {E} _ {n n} \\tag {53}\n$$\n线性无关。又它们都是 $n$ 级对称矩阵，因此它们是 $V_{1}$ 的一个基。于是\n$$\n\\dim V _ {1} = n + (n - 1) + \\dots + 2 + 1 = \\frac {n (n + 1)}{2} 。 \\tag {54}\n$$",
+        "Original": {
+            "response": "（1）数域 $ K $ 上所有 $ s \\times n $ 矩阵组成的线性空间 $ M_{s \\times n}(K) $ 的维数为 $ s \\times n $。基由所有 $ s \\times n $ 矩阵的元素构成，每个元素对应一个基向量。  \n（2）数域 $ K $ 上所有 $ n $ 级对称矩阵组成的线性空间 $ V_1 $ 的维数为 $ \\frac{n(n+1)}{2} $。基由满足 $ A_{ij} = A_{ji} $ 的独立元素构成，每个独立元素对应一个基向量。  \n\n**证明过程：**  \n1. **$ M_{s \\times n}(K) $ 的维数：**  \n   每个 $ s \\times n $ 矩阵有 $ s \\times n $ 个元素。由于线性空间的维数等于基向量的个数，且每个元素可以独立选择，因此基的大小为 $ s \\times n $。  \n\n2. **$ V_1 $ 的维数：**  \n   对称矩阵 $ A $ 满足 $ A_{ij} = A_{ji} $。对于 $ n \\times n $ 矩阵，独立元素的数量为：  \n   $$\n   \\text{对角线元素} + \\text{非对角线元素} = n + \\frac{n(n-1)}{2} = \\frac{n(n+1)}{2}\n   $$  \n   因此，$ V_1 $ 的维数为 $ \\frac{n(n+1)}{2} $。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确给出了维数，但缺少基的具体表示（如基本矩阵），且证明过程不够严谨，未展示线性无关性和生成性，因此部分正确，得1分。忠诚性：参考资料为空列表，模型输出了具体知识，违反了忠诚性规则，得0分。答案相关性：回答直接回应了问题，没有偏离，得2分。上下文相关性：参考资料为空，与问题无关，得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "Correctness: 模型正确给出了两个线性空间的维数（$sn$ 和 $\frac{n(n+1)}{2}$），并对基的构成做出了正确的描述（对应矩阵位置的基向量），证明过程逻辑正确，故给2分。Faithfulness: 参考资料明确为“暂无参考资料”，但模型输出了具体的数学推导和结论，属于“存在参考资料中完全未提及的重大事实”且违反了空资料下不输出具体知识的规则，故给0分。Answer Relevance: 模型直接回答了关于基和维数的问题，无无关内容，故给2分。Context Relevance: 提供的参考资料为空，无法为回答问题提供任何信息，故给0分。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "### 例16 解答\n\n#### （1）数域 $ K $ 上所有 $ s \\times n $ 矩阵组成的线性空间 $ M_{s \\times n}(K) $ 的基与维数\n\n**基的构造**：  \n每个 $ s \\times n $ 矩阵由 $ s \\times n $ 个元素组成。若考虑每个元素作为基向量的线性组合，可以构造 $ s \\times n $ 个基向量。具体而言，每个基向量对应一个位置 $ (i, j) $，其中第 $ i $ 行第 $ j $ 列的元素为 1，其余为 0。例如，对于 $ s = 2 $, $ n = 3 $，基向量为：\n$$\n\\begin{bmatrix} 1 & 0 & 0 \\\\ 0 & 0 & 0 \\end{bmatrix}, \\quad\n\\begin{bmatrix} 0 & 1 & 0 \\\\ 0 & 0 & 0 \\end{bmatrix}, \\quad\n\\text{...} \\quad\n\\begin{bmatrix} 0 & 0 & 1 \\\\ 0 & 0 & 0 \\end{bmatrix}\n$$\n这些基向量的线性组合可以生成所有 $ s \\times n $ 矩阵。\n\n**维数**：  \n由于每个基向量对应 $ s \\times n $ 个元素，因此该线性空间的维数为 $ s \\times n $。\n\n---\n\n#### （2）数域 $ K $ 上所有 $ n $ 级对称矩阵组成的线性空间 $ V_1 $ 的基与维数\n\n**基的构造**：  \n对称矩阵满足 $ A^T = A $，即矩阵的元素满足 $ A_{ij} = A_{ji} $。对于 $ n \\times n $ 的矩阵，其自由度由以下方式确定：\n- 对角线元素（$ i = j $）有 $ n $ 个自由度；\n- 非对角线元素（$ i \\neq j $）中，每个 $ i < j $ 的元素由 $ A_{ij} = A_{ji} $ 确定，共有 $ \\frac{n(n-1)}{2} $ 个自由度。\n\n因此，总自由度为：\n$$\nn + \\frac{n(n-1)}{2} = \\frac{n(n+1)}{2}\n$$\n\n**维数**：  \n该线性空间的维数为 $ \\frac{n(n+1)}{2} $。\n\n---\n\n### 最终答案\n\n（1）基为所有 $ s \\times n $ 矩阵中每个位置的单位矩阵，维数为 $ s \\times n $。  \n（2）基为所有 $ n \\times n $ 对称矩阵中每个元素对应的位置的单位矩阵，维数为 $ \\frac{n(n+1)}{2} $。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确给出了维数，但基的构造描述不够精确，未明确写出基的具体矩阵形式（如E_{ij}），且对称矩阵的基未给出具体表达式，但整体正确。忠诚性：模型回答中的事实（维数公式、对称矩阵自由度）在参考资料中有直接支持，但基的构造描述与参考资料不完全一致（参考资料给出了具体基矩阵，模型回答描述较模糊），但未出现矛盾或超出资料的内容。答案相关性：模型回答直接回应了问题，给出了基和维数，无多余内容。上下文相关性：参考资料包含例16的完整解答，高度相关，能充分回答问题。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "对于正确性：模型回答在问题(1)中正确给出了基的构造方式和维数计算，与参考答案一致。在问题(2)中正确计算了维数为n(n+1)/2，但基的构造描述不够详细，没有明确指出非对角线元素对应的基向量是E_{ij}+E_{ji}的形式，只是笼统地说'每个元素对应的位置的单位矩阵'，因此只能算部分正确。对于忠诚性：模型回答中的所有内容都能在参考资料[1]中找到直接支持，没有超出资料范围。对于答案相关性：模型回答直接回应了题目要求的两个问题，提供了基的构造和维数计算，没有偏离主题。对于上下文相关性：参考资料[1]直接包含了与题目完全相同的例16，能够充分回答所问问题。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "### 例16 解答\n\n#### （1）数域 $ K $ 上所有 $ s \\times n $ 矩阵组成的线性空间 $ M_{s \\times n}(K) $ 的基与维数\n\n**证明：**  \n考虑 $ M_{s \\times n}(K) $ 作为 $ K $ 上的线性空间，其元素为所有 $ s \\times n $ 矩阵。每个矩阵由 $ s \\times n $ 个元素组成，因此整个空间的维度等于元素的个数，即 $ s \\times n $。\n\n**基的构造：**  \n选取一个基，例如矩阵 $ E_{i,j} $，其中 $ E_{i,j} $ 是一个 $ s \\times n $ 矩阵，其第 $ i $ 行第 $ j $ 个元素为 1，其余为 0。这些矩阵线性无关，且它们的线性组合可以生成整个空间。\n\n**结论：**  \n$ M_{s \\times n}(K) $ 的基为所有 $ s \\times n $ 矩阵 $ E_{i,j} $，维数为 $ s \\times n $。\n\n---\n\n#### （2）数域 $ K $ 上所有 $ n $ 级对称矩阵组成的线性空间 $ V_1 $ 的基与维数\n\n**证明：**  \n对称矩阵 $ A $ 满足 $ A^T = A $，即矩阵的转置与原矩阵相等。对于 $ n \\times n $ 的对称矩阵，其独立元素的数量为：  \n- 对角线元素 $ n $ 个，  \n- 非对角线元素 $ \\frac{n(n-1)}{2} $ 个，  \n总共有 $ n + \\frac{n(n-1)}{2} = \\frac{n(n+1)}{2} $ 个独立元素。\n\n**基的构造：**  \n选取所有 $ \\frac{n(n+1)}{2} $ 个独立元素对应的矩阵作为基。例如，对于每个 $ i \\leq j $，选取元素 $ a_{i,j} $ 作为基向量，确保对称性。\n\n**结论：**  \n$ V_1 $ 的基为所有 $ n \\times n $ 对称矩阵的独立元素对应的矩阵，维数为 $ \\frac{n(n+1)}{2} $。\n\n---\n\n**最终答案：**  \n（1）基为所有 $ s \\times n $ 矩阵 $ E_{i,j} $，维数为 $ s \\times n $；  \n（2）基为所有 $ n \\times n $ 对称矩阵的独立元素对应的矩阵，维数为 $ \\frac{n(n+1)}{2} $。",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确给出了维数，但基的构造不够具体（未明确写出基的表达式），且对称矩阵基的构造描述模糊，与参考答案相比不够完整，因此扣1分。忠诚性：参考资料中包含了例16的完整解答，模型回答中的维数和基的构造均能在参考资料中找到支持，没有超出资料的内容，因此得2分。答案相关性：模型回答直接针对问题，没有无关内容，得2分。上下文相关性：参考资料中例16的解答完整，能够充分回答问题，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性：模型回答在数学概念和结果上基本正确，但缺少一些细节和推导过程。对于问题(1)，模型正确指出了基为矩阵E_{i,j}和维数为s×n，但没有明确说明这些矩阵只有(i,j)元为1，其余为0，也没有证明线性无关性。对于问题(2)，维数计算正确，但基的构造描述过于笼统，没有给出具体的基向量形式。因此评分为1分（部分正确）。忠诚性：模型回答的基本结论与参考资料一致，但在具体细节和证明过程上有缺失。例如，没有明确说明E_{ij}的定义，也没有给出对称矩阵基向量的具体形式（如E_{12}+E_{21}等）。因此评分为1分（大部分陈述有据可查，但包含少量简化描述）。答案相关性：模型回答直接回应了题目要求，即求解给定线性空间的一个基和维数，没有偏离主题或多余内容。因此评分为2分（完全相关）。上下文相关性：参考资料[1]与问题高度相关，但参考资料[2]和[3]与问题相关性较低。因此评分为1分（部分相关）。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            }
+        }
+    },
+    {
+        "id": 14,
+        "query": "定理4（子空间的维数公式）设 $V_{1}, V_{2}$ 都是域 $F$ 上线性空间 $V$ 的有限维子空间，则 $V_{1} \\cap V_{2}, V_{1} + V_{2}$ 也是有限维的，并且\n$$\n\\dim V _ {1} + \\dim V _ {2} = \\dim \\left(V _ {1} + V _ {2}\\right) + \\dim \\left(V _ {1} \\cap V _ {2}\\right) 。 \\tag {12}\n$$",
+        "answer": "证明 设 $V_{1}, V_{2}, V_{1} \\cap V_{2}$ 的维数分别是 $n_{1}, n_{2}, m$ 。\n取 $V_{1} \\cap V_{2}$ 的一个基 $\\alpha_{1}, \\dots, \\alpha_{m}$ ，把它分别扩充成 $V_{1}$ 和 $V_{2}$ 的一个基： $\\alpha_{1}, \\dots, \\alpha_{m}, \\beta_{1}, \\dots, \\beta_{n_{1}-m}$ 和 $\\alpha_{1}, \\dots, \\alpha_{m}, \\gamma_{1}, \\dots, \\gamma_{n_{2}-m}$ ，于是根据命题 2 得\n$$\nV _ {1} + V _ {2} = \\left\\langle \\alpha_ {1}, \\dots , \\alpha_ {m}, \\beta_ {1}, \\dots , \\beta_ {n _ {1} - m}, \\gamma_ {1}, \\dots , \\gamma_ {n _ {2} - m} \\right\\rangle ,\n$$\n因此 $V_{1} + V_{2}$ 是有限维的。如果能证明\n$$\n\\alpha_ {1}, \\dots , \\alpha_ {m}, \\beta_ {1}, \\dots , \\beta_ {n _ {1} - m}, \\gamma_ {1}, \\dots , \\gamma_ {n _ {2} - m}\n$$\n线性无关，那么它就是 $V_{1} + V_{2}$ 的一个基，由此得出\n$$\n\\begin{array}{l} \\dim (V _ {1} + V _ {2}) = m + (n _ {1} - m) + (n _ {2} - m) \\\\ = n _ {1} + n _ {2} - m \\\\ = \\dim V _ {1} + \\dim V _ {2} - \\dim \\left(V _ {1} \\cap V _ {2}\\right) 。 \\\\ \\end{array}\n$$假设\n$$\nk _ {1} \\alpha_ {1} + \\dots + k _ {m} \\alpha_ {m} + p _ {1} \\beta_ {1} + \\dots + p _ {n _ {1} - m} \\beta_ {n _ {1} - m} + q _ {1} \\gamma_ {1} + \\dots + q _ {n _ {2} - m} \\gamma_ {n _ {2} - m} = 0, \\tag {13}\n$$\n则\n$$\nq _ {1} \\gamma_ {1} + \\dots + q _ {n _ {2} - m} \\gamma_ {n _ {2} - m} = - k _ {1} \\alpha_ {1} - \\dots - k _ {m} \\alpha_ {m} - p _ {1} \\beta_ {1} - \\dots - p _ {n _ {1} - m} \\beta_ {n _ {1} - m} 。 \\tag {14}\n$$\n(14)式左边的向量属于 $V_{2}$ ，右边的向量属于 $V_{1}$ ，从而它属于 $V_{1} \\cap V_{2}$ ，因此有\n$$\nq _ {1} \\gamma_ {1} + \\dots + q _ {n _ {2} - m} \\gamma_ {n _ {2} - m} = l _ {1} \\alpha_ {1} + \\dots + l _ {m} \\alpha_ {m} 。 \\tag {15}\n$$\n由（15）式得出， $q_{1} = \\dots = q_{n_{2} - m} = l_{1} = \\dots = l_{m} = 0$ 。代入（13）式可得出\n$$\nk _ {1} = \\dots = k _ {m} = p _ {1} = \\dots = p _ {n _ {1} - m} = 0,\n$$\n因此 $\\alpha_{1},\\dots ,\\alpha_{m},\\beta_{1},\\dots ,\\beta_{n_{1} - m},\\gamma_{1},\\dots ,\\gamma_{n_{2} - m}$ 线性无关。",
+        "Original": {
+            "response": "根据线性代数中的维数公式，设 $ V_1 $ 和 $ V_2 $ 为域 $ F $ 上有限维线性空间 $ V $ 的子空间，则 $ V_1 \\cap V_2 $ 和 $ V_1 + V_2 $ 也是有限维的。由维数公式可知：\n\n$$\n\\dim(V_1 + V_2) = \\dim(V_1) + \\dim(V_2) - \\dim(V_1 \\cap V_2).\n$$\n\n将该式代入题目给出的等式：\n\n$$\n\\dim(V_1 + V_2) + \\dim(V_1 \\cap V_2) = (\\dim(V_1) + \\dim(V_2) - \\dim(V_1 \\cap V_2)) + \\dim(V_1 \\cap V_2) = \\dim(V_1) + \\dim(V_2).\n$$\n\n因此，定理4的结论成立。\n\n**答案：**  \n$$\n\\dim V_1 + \\dim V_2 = \\dim (V_1 + V_2) + \\dim (V_1 \\cap V_2)\n$$  \n成立。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确陈述了维数公式并进行了代数推导，但未提供证明过程，仅验证了等式成立，因此不完全完整，得1分。忠诚性：参考资料为空，模型输出了具体知识（维数公式），违反忠诚性规则，得0分。答案相关性：模型直接回应了问题，验证了等式，得2分。上下文相关性：参考资料为空，无法支持问题，得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答尝试证明维数公式，但使用了循环论证，依赖于未在参考资料中提供的维数公式。由于参考资料为空，模型使用了外部知识，忠诚性得分为0。模型回答直接回应了问题，答案相关性得分为2。上下文相关性为0，因为没有提供参考资料。正确性得分为1，因为虽然数学推导没有错误，但证明不完整。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "根据参考资料中的证明过程，定理4的证明如下：\n\n设 $V_1, V_2$ 为域 $F$ 上线性空间 $V$ 的有限维子空间，其维数分别为 $n_1, n_2$，且 $V_1 \\cap V_2$ 的维数为 $m$。  \n1. **构造基**：  \n   - 取 $V_1 \\cap V_2$ 的一个基 $\\alpha_1, \\dots, \\alpha_m$，将其分别扩充为 $V_1$ 和 $V_2$ 的基：  \n     $$\n     \\alpha_1, \\dots, \\alpha_m, \\beta_1, \\dots, \\beta_{n_1 - m}, \\quad \\alpha_1, \\dots, \\alpha_m, \\gamma_1, \\dots, \\gamma_{n_2 - m}.\n     $$  \n   - 由此可知 $V_1 + V_2$ 的基为 $\\alpha_1, \\dots, \\alpha_m, \\beta_1, \\dots, \\beta_{n_1 - m}, \\gamma_1, \\dots, \\gamma_{n_2 - m}$。\n\n2. **证明线性无关**：  \n   假设存在系数 $k_1, \\dots, k_m, p_1, \\dots, p_{n_1 - m}, q_1, \\dots, q_{n_2 - m}$ 使得：  \n   $$\n   k_1 \\alpha_1 + \\dots + k_m \\alpha_m + p_1 \\beta_1 + \\dots + p_{n_1 - m} \\beta_{n_1 - m} + q_1 \\gamma_1 + \\dots + q_{n_2 - m} \\gamma_{n_2 - m} = 0.\n   $$  \n   由 $V_1 \\cap V_2$ 的基 $\\alpha_1, \\dots, \\alpha_m$ 的线性无关性，可得 $k_1 = \\dots = k_m = 0$。  \n   同理，$p_1 = \\dots = p_{n_1 - m} = 0$，且 $q_1 = \\dots = q_{n_2 - m} = 0$。  \n   因此，所有系数均为零，说明基 $\\alpha_1, \\dots, \\alpha_m, \\beta_1, \\dots, \\beta_{n_1 - m}, \\gamma_1, \\dots, \\gamma_{n_2 - m}$ 线性无关。\n\n3. **结论**：  \n   $$\n   \\dim(V_1 + V_2) = m + (n_1 - m) + (n_2 - m) = n_1 + n_2 - m.\n   $$  \n   由定理4的公式：  \n   $$\n   \\dim V_1 + \\dim V_2 = \\dim(V_1 + V_2) + \\dim(V_1 \\cap V_2),\n   $$  \n   即：  \n   $$\n   n_1 + n_2 = (n_1 + n_2 - m) + m \\quad \\text{（恒成立）}.\n   $$  \n   证明完成。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答在证明线性无关时错误地直接断言所有系数为零，未使用参考资料中正确的推理（即先利用γ的线性无关性得到q=0，再代入得到k=p=0），因此证明不完整且逻辑错误，得0分。忠诚性：模型回答中关于构造基的部分与参考资料一致，但线性无关的证明部分与参考资料矛盾（参考资料中通过γ的线性无关性推导，模型错误地直接断言），且参考资料中无此错误推理，因此忠诚性得1分（部分有据，部分矛盾）。答案相关性：模型回答直接回应了问题，试图证明定理，得2分。上下文相关性：参考资料提供了完整的定理证明，高度相关，得2分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在证明定理4时，基本遵循了参考答案的结构，但在证明线性无关的部分有所简化，缺少了关键的推理步骤。虽然结论正确，但证明过程不够严谨。模型回答中的大部分内容可以在参考资料中找到支持，但证明过程有所简化。模型回答直接针对问题展开，没有偏离主题。参考资料[1]和[2]包含了定理4的完整证明，与问题高度相关。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据定理4的证明过程，设 $V_1, V_2$ 为域 $F$ 上线性空间 $V$ 的有限维子空间，其维数分别为 $n_1, n_2$，且 $m = \\dim(V_1 \\cap V_2)$。通过以下步骤推导：\n\n1. **构造基**：  \n   - 取 $V_1 \\cap V_2$ 的一个基 $\\alpha_1, \\dots, \\alpha_m$，将其扩展为 $V_1$ 的基 $\\alpha_1, \\dots, \\alpha_m, \\beta_1, \\dots, \\beta_{n_1 - m}$。  \n   - 同样将 $\\alpha_1, \\dots, \\alpha_m$ 扩展为 $V_2$ 的基 $\\alpha_1, \\dots, \\alpha_m, \\gamma_1, \\dots, \\gamma_{n_2 - m}$。\n\n2. **合并基**：  \n   - $V_1 + V_2$ 的基为 $\\alpha_1, \\dots, \\alpha_m, \\beta_1, \\dots, \\beta_{n_1 - m}, \\gamma_1, \\dots, \\gamma_{n_2 - m}$。  \n   - 由于 $\\alpha_1, \\dots, \\alpha_m$ 已在 $V_1 \\cap V_2$ 中，且 $\\beta_i, \\gamma_j$ 为 $V_1, V_2$ 的额外基，故上述集合线性无关。\n\n3. **维数计算**：  \n   - $V_1 + V_2$ 的维数为 $m + (n_1 - m) + (n_2 - m) = n_1 + n_2 - m$。  \n   - 根据定理4，有 $\\dim V_1 + \\dim V_2 = \\dim(V_1 + V_2) + \\dim(V_1 \\cap V_2)$，即 $n_1 + n_2 = (n_1 + n_2 - m) + m$，验证成立。\n\n**结论**：  \n定理4的证明通过构造基并利用线性无关性，得出 $\\dim(V_1 + V_2) = \\dim V_1 + \\dim V_2 - \\dim(V_1 \\cap V_2)$，从而验证了维数关系。",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确复述了维数公式的证明思路，但缺少关键步骤（如线性无关性的详细证明），且最终结论表述不完整（未明确写出公式(12)）。因此部分正确，得1分。\n忠诚性：模型回答的所有内容均可在参考资料中找到直接支持，没有超出资料的信息，得2分。\n答案相关性：模型回答直接回应了问题，解释了定理的证明过程，没有偏离主题，得2分。\n上下文相关性：参考资料包含了定理的完整证明和例题，与问题高度相关，能够充分回答所问问题，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答正确地概述了定理4的证明过程，包括构造基、合并基和维数计算，但缺少了证明线性无关性的关键步骤，这是证明的重要组成部分，因此正确性评分为1分。模型回答中的所有陈述都能在参考资料中找到直接支持，特别是参考资料[2]中包含了几乎相同的证明过程，没有引入外部知识，因此忠诚性评分为2分。模型回答直接针对定理4的证明，没有偏离主题或包含无关内容，因此答案相关性评分为2分。参考资料[1]和[2]包含了定理4的陈述和完整证明，与问题高度相关，虽然参考资料[3]包含了一个相关但不直接相关的例题，但整体上参考资料与问题高度相关，因此上下文相关性评分为2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 15,
+        "query": "证明下述定理：定理7 设 $V_{1}, V_{2}$ 都是域 $F$ 上线性空间 $V$ 的子空间（可以是无限维的），则下列命题等价：\n（1）和 $V_{1} + V_{2}$ 是直和；\n（5） $V_{1}$ 的一个基与 $V_{2}$ 的一个基合起来是 $V_{1} + V_{2}$ 的一个基。",
+        "answer": "证明 $(1) \\Longrightarrow (5)$ 设和 $V_{1} + V_{2}$ 是直和，则 $V_{1} \\cap V_{2} = 0$ 。\n$V_{1}$ 中取一个基 $S_{1}, V_{2}$ 中取一个基 $S_{2}$ ，由于 $V_{1} \\cap V_{2} = 0$ ，因此 $S_{1} \\cap S_{2} = \\emptyset$ ，从而 $S_{1}$ 与 $S_{2}$ 合起来得到的子集是 $S_{1} \\cup S_{2}$ 。\n在 $S_{1} \\cup S_{2}$ 中任取一个有限子集 $\\Omega = \\{\\alpha_{11}, \\dots, \\alpha_{1m}, \\alpha_{21}, \\dots, \\alpha_{2r}\\}$ ，其中 $\\alpha_{1i} \\in S_{1}, \\alpha_{2j} \\in S_{2}, i = 1, \\dots, m; j = 1, \\dots, r$ 。\n设\n$$\nk _ {1 1} \\alpha_ {1 1} + \\dots + k _ {1 m} \\alpha_ {1 m} + k _ {2 1} \\alpha_ {2 1} + \\dots + k _ {2 r} \\alpha_ {2 r} = 0,\n$$\n则 $k_{11}\\alpha_{11} + \\dots + k_{1m}\\alpha_{1m} = -k_{21}\\alpha_{21} - \\dots - k_{2r}\\alpha_{2r} \\in V_1 \\cap V_2$ 。\n由于 $V_{1} \\cap V_{2} = 0$ ，因此\n$$\nk _ {1 1} \\alpha_ {1 1} + \\dots + k _ {1 m} \\alpha_ {1 m} = - k _ {2 1} \\alpha_ {2 1} - \\dots - k _ {2 r} \\alpha_ {2 r} = 0 。\n$$\n由此推出 $k_{11} = \\dots = k_{1m} = 0, k_{21} = \\dots = k_{2r} = 0,$\n从而 $\\Omega$ 线性无关。由于 $\\Omega$ 是 $S_{1} \\cup S_{2}$ 的任一有限子集，因此 $S_{1} \\cup S_{2}$ 线性无关。\n在 $V_{1} + V_{2}$ 中任取一个向量 $\\alpha = \\alpha_{1} + \\alpha_{2},\\alpha_{1}\\in V_{1},\\alpha_{2}\\in V_{2}$ 。由于 $S_{1},S_{2}$ 分别是 $V_{1},V_{2}$ 的一个基，因此\n$$\n\\alpha = \\left(a _ {1 i _ {1}} \\alpha_ {1 i _ {1}} + \\dots + a _ {1 i _ {l}} \\alpha_ {1 i _ {l}}\\right) + \\left(a _ {2 j _ {1}} \\alpha_ {2 j _ {1}} + \\dots + a _ {2 j _ {t}} \\alpha_ {2 j _ {t}}\\right),\n$$\n从而 $\\alpha$ 可以由 $S_{1} \\cup S_{2}$ 中有限多个向量线性表出。\n综上所述， $S_{1} \\cup S_{2}$ 是 $V_{1} + V_{2}$ 的一个基。\n$(5) \\Longrightarrow (1)$ $V_{1}$ 中取一个基 $S_{1}, V_{2}$ 中取一个基 $S_{2}$ ，由已知条件得， $S_{1}$ 与 $S_{2}$ 合起来是 $V_{1} + V_{2}$ 的一个基。\n任取 $\\alpha \\in V_{1} \\cap V_{2}$ ，则 $\\alpha = k_{11} \\alpha_{11} + \\dots + k_{1m} \\alpha_{1m}$ ，且 $\\alpha = k_{21} \\alpha_{21} + \\dots + k_{2r} \\alpha_{2r}$ ，其中 $\\alpha_{1i} \\in S_{1}, i = 1, \\dots, m; \\alpha_{2j} \\in S_{2}, j = 1, \\dots, r$ 。\n由此得出\n$$\nk _ {1 1} \\alpha_ {1 1} + \\dots + k _ {1 m} \\alpha_ {1 m} - k _ {2 1} \\alpha_ {2 1} - \\dots - k _ {2 r} \\alpha_ {2 r} = 0,\n$$\n于是有 $k_{11} = \\dots = k_{1m} = k_{21} = \\dots = k_{2r} = 0$ ，从而 $\\alpha = 0$ ，因此 $V_{1}\\cap V_{2} = 0$ ，所以 $V_{1} + V_{2}$ 是直和。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "根据定理7的证明，命题（1）和（5）等价的证明如下：\n\n### 证明：\n1. **命题（1） ⇒ 命题（5）**  \n   若 $V_1 + V_2$ 是直和，则 $V_1 + V_2$ 的基由 $V_1$ 和 $V_2$ 的基组成，并且它们的交集为零空间。因此，$V_1$ 的一个基与 $V_2$ 的一个基的并集可以作为 $V_1 + V_2$ 的一个基，从而满足命题（5）。\n\n2. **命题（5） ⇒ 命题（1）**  \n   若 $V_1$ 和 $V_2$ 的基的并集是 $V_1 + V_2$ 的一个基，则 $V_1 + V_2$ 的基由这两个基组成，并且它们的交集为零空间（因为基的交集若非零，则无法生成零空间）。因此，$V_1 + V_2$ 是直和。\n\n### 结论：\n命题（1）和（5）等价。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答仅给出了证明的概要，缺少详细步骤和严谨推理，例如未证明基的并集线性无关和生成性，也未明确使用直和定义（交为零）。因此不完全正确，得1分。\n忠诚性：参考资料中包含了定理7的完整证明，但模型回答中未引用具体细节，且存在“基的交集若非零则无法生成零空间”等参考资料未提及的表述，但整体未与资料矛盾。由于参考资料非空且模型回答未超出资料范围，但缺乏直接引用，得1分。\n答案相关性：模型回答直接回应了问题，试图证明等价性，但内容过于简略，未完全展开，得1分。\n上下文相关性：参考资料包含定理7的完整证明，高度相关，能够充分回答问题，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 1,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在数学结论上基本正确，但缺少关键证明步骤，不够完整。模型回答超出了参考资料的范围，包含了参考资料中未提及的证明细节，因此忠诚性得分为0。模型回答直接回应了问题，没有偏离主题，答案相关性得分为2。参考资料中包含一个核心参考资料（定理7的陈述），但也包含一些无关内容，因此上下文相关性得分为1。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据定理7的证明思路，以下为两个命题的等价性证明：\n\n---\n\n**证明（1）→（5）**  \n若 $V_1 + V_2$ 是直和，则 $V_1$ 的一个基与 $V_2$ 的一个基的并集是 $V_1 + V_2$ 的一个基。  \n- 由于 $V_1 + V_2$ 是直和，其基必须满足：  \n  1. $V_1$ 的基 $B_1$ 与 $V_2$ 的基 $B_2$ 的并集 $B_1 \\cup B_2$ 是 $V_1 + V_2$ 的基。  \n  2. $B_1$ 和 $B_2$ 的向量在 $V_1 + V_2$ 中线性无关（因为直和的基需线性无关）。  \n- 因此，$B_1 \\cup B_2$ 是 $V_1 + V_2$ 的基，满足（5）的条件。\n\n---\n\n**证明（5）→（1）**  \n若 $V_1$ 的一个基 $B_1$ 与 $V_2$ 的一个基 $B_2$ 的并集是 $V_1 + V_2$ 的一个基，则 $V_1 + V_2$ 是直和。  \n- 由于 $B_1 \\cup B_2$ 是 $V_1 + V_2$ 的基，说明：  \n  1. $B_1$ 和 $B_2$ 的向量在 $V_1 + V_2$ 中线性无关（因为基的线性无关性）。  \n  2. $B_1 \\cup B_2$ 的维数等于 $V_1 + V_2$ 的维数，即 $|B_1| + |B_2|$。  \n- 由于 $V_1$ 的维数为 $|B_1|$，$V_2$ 的维数为 $|B_2|$，则 $V_1 + V_2$ 的维数为 $|B_1| + |B_2|$，因此 $V_1 + V_2$ 是直和。\n\n---\n\n**结论**  \n定理7的两个命题等价，即（1）和（5）互为充要条件。",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答的证明过于简略，缺乏关键步骤（如直和定义、线性无关性证明、交为零的推导），且未处理无限维情况，与参考答案相比不完整，因此得1分。\n忠诚性：参考资料仅包含定理陈述和无关例题，未提供证明细节，模型回答中的推理（如维数论证）无法从参考资料中找到直接支持，因此得0分。\n答案相关性：模型回答直接针对问题中的定理证明，没有偏离主题，因此得2分。\n上下文相关性：参考资料仅包含定理陈述和无关内容，无法充分支持证明，因此得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答尝试证明定理7的两个命题等价，但过于简略，缺少关键证明步骤。虽然结论正确，但证明过程不完整，因此正确性评分为1分。模型回答中的维数论证等内容在参考资料中未提及，超出了资料范围，因此忠诚性评分为0分。模型回答直接针对问题进行证明，没有偏离主题，因此答案相关性评分为2分。参考资料[1]包含了定理陈述，但参考资料[2]和[3]与问题无关，因此上下文相关性评分为1分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            }
+        }
+    },
+    {
+        "id": 16,
+        "query": "证明下述定理：定理8设 $V_{1},V_{2},\\dots ,V_{s}$ 都是域 $F$ 上线性空间 $V$ 的子空间，则下列命题等价：\n（1）和 $V_{1} + V_{2} + \\dots +V_{s}$ 是直和；\n（2）和 $\\sum_{i = 1}^{s}V_{i}$ 中零向量的表法唯一；\n(3) $V_{i} \\cap (\\sum_{j \\neq i} V_{j}) = 0, i = 1,2,\\dots,s$ 。",
+        "answer": "证明 (1) $\\Longrightarrow$ (2) 是显然的。\n(2) $\\Longrightarrow$ (3) 任取 $\\alpha \\in V_{i} \\cap (\\sum_{j \\neq i} V_{j})$ , 则 $-\\alpha \\in V_{i}$ 且 $\\alpha \\in \\sum_{j \\neq i} V_{j}$ , 于是 $\\alpha = \\sum_{j \\neq i} \\alpha_{j}$ , $\\alpha_{j} \\in V_{j}, j = 1, \\dots, i - 1, i + 1, \\dots, s$ 。\n因此在和 $\\sum_{i=1}^{s} V_{i}$ 中零向量可以表示成\n$$\n0 = (- \\alpha) + \\alpha = (- \\alpha) + \\sum_ {j \\neq i} \\alpha_ {j} 。\n$$\n又 $0 = 0 + 0 + \\dots +0$ ，根据已知条件得， $-\\alpha = 0$ ，于是 $\\alpha = 0$ ，因此\n$$\nV _ {i} \\cap (\\sum_ {j \\neq i} V _ {j}) = 0 。\n$$\n(3) $\\Longrightarrow$ (1) 任取 $\\alpha \\in \\sum_{i=1}^{s} V_i$ , 假设 $\\alpha$ 有两种表法:\n$$\n\\begin{array}{l} \\alpha = \\alpha_ {1} + \\alpha_ {2} + \\dots + \\alpha_ {s}, \\quad \\alpha_ {i} \\in V _ {i}, \\quad i = 1, 2, \\dots , s; \\\\ \\alpha = \\beta_ {1} + \\beta_ {2} + \\dots + \\beta_ {s}, \\quad \\beta_ {i} \\in V _ {i}, \\quad i = 1, 2, \\dots , s 。 \\\\ \\end{array}\n$$任取 $i \\in \\{1, 2, \\dots, s\\}$ ，从上两式可得出\n$$\n\\beta_ {i} - \\alpha_ {i} = \\sum_ {j \\neq i} (\\alpha_ {j} - \\beta_ {j}) \\in V _ {i} \\cap (\\sum_ {j \\neq i} V _ {j}),\n$$\n由已知条件得， $\\beta_{i} - \\alpha_{i} = 0$ ，即 $\\beta_{i} = \\alpha_{i}, i = 1,2,\\dots ,s$ 。因此和 $V_{1} + V_{2} + \\dots +V_{s}$ 是直和。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "### 证明定理8\n\n**命题等价性证明：**\n\n1. **（1）→（2）**  \n   若 $V_1 + V_2 + \\dots + V_s$ 是直和，则每个向量可唯一表示为 $v = v_1 + v_2 + \\dots + v_s$，其中 $v_i \\in V_i$。  \n   由直和的定义，若存在非零向量 $v$ 可表示为 $v = v_1 + \\dots + v_s$，则其表示唯一。因此，零向量的表法唯一（即 $0 = 0 + 0 + \\dots + 0$）成立。  \n   **结论：（1）→（2）成立。**\n\n2. **（2）→（3）**  \n   若零向量的表法唯一，则任意 $v \\in V_i$ 无法被其他子空间 $V_j$（$j \\neq i$）的元素表示。  \n   假设存在 $v \\in V_i \\cap \\left(\\sum_{j \\neq i} V_j\\right)$，则 $v = v_i + v_j$，其中 $v_i \\in V_i$，$v_j \\in \\sum_{j \\neq i} V_j$。  \n   由于零向量的表法唯一，$v = 0$，故 $v_i = 0$ 且 $v_j = 0$。  \n   由此得 $V_i \\cap \\left(\\sum_{j \\neq i} V_j\\right) = 0$。  \n   **结论：（2）→（3）成立。**\n\n3. **（3）→（1）**  \n   若 $V_i \\cap \\left(\\sum_{j \\neq i} V_j\\right) = 0$，则每个子空间 $V_i$ 与其它子空间无公共非零元素。  \n   由线性代数中的直和条件，若任意两个子空间的交集为零，则它们的和为直和。  \n   例如，设 $v \\in V_1 + V_2 + \\dots + V_s$，则 $v = v_1 + v_2 + \\dots + v_s$，其中 $v_i \\in V_i$。  \n   若存在 $v \\neq 0$，则 $v$ 的表示唯一，即零向量的表法唯一。  \n   **结论：（3）→（1）成立。**\n\n**最终结论：**  \n定理8的三个命题等价。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答试图证明三个命题等价，但证明过程不严谨，存在逻辑跳跃和错误。例如，(2)→(3)的推导中，假设v∈V_i∩(∑_{j≠i}V_j)后，直接得出v=0，但未正确使用零向量表法唯一的条件。此外，(3)→(1)的论证不完整，未严格证明直和定义。参考答案中给出了标准证明，模型回答与之相比有较大差距，因此正确性得1分（部分正确）。\n忠诚性：参考资料中提供了例18和例19，但模型回答并未引用这些资料，而是自行推导。模型回答中的陈述（如“由直和的定义”、“由线性代数中的直和条件”）在参考资料中未直接出现，但参考资料包含相关定理，因此模型回答未超出资料，但未严格依据资料。由于参考资料包含直和的条件，模型回答基本忠实于资料，但存在轻微推论，得1分。\n答案相关性：模型回答直接回应了问题，试图证明三个命题等价，没有偏离主题，得2分。\n上下文相关性：参考资料包含例18和例19，它们分别涉及直和的另一种等价条件和另一种形式的交集条件，与问题部分相关，但并非直接证明定理8的完整资料。此外，参考资料中还有大量无关内容（如线性空间性质证明），因此得1分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答正确地证明了定理8的三个命题等价，但证明过程在某些部分不够严谨和详细。特别是在(2)→(3)和(3)→(1)这两个方向的证明上，模型回答缺少了一些关键的推理步骤。忠诚性方面，模型回答中有一些表述超出了参考资料的范围，特别是在(3)→(1)部分提到的'任意两个子空间的交集为零'这个条件在参考资料中没有明确提到。答案相关性方面，模型回答直接针对问题进行了证明，没有偏离主题。上下文相关性方面，提供的参考资料能够提供证明定理8所需的基本概念和部分相关条件。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "定理8的证明如下：\n\n### 1. **命题（1）→（2）**  \n若 $V_1 + V_2 + \\dots + V_s$ 是直和，则任意向量 $\\alpha \\in V$ 可唯一表示为 $\\alpha = \\alpha_1 + \\alpha_2 + \\dots + \\alpha_s$，其中 $\\alpha_i \\in V_i$。  \n- 由于直和的定义要求零向量的表法唯一，因此命题（2）成立。\n\n### 2. **命题（2）→（3）**  \n若零向量的表法唯一，则对于任意 $i$，不存在非零向量 $\\alpha \\in V_i \\cap \\left(\\sum_{j \\neq i} V_j\\right)$。  \n- 假设存在 $\\alpha \\in V_i \\cap \\left(\\sum_{j \\neq i} V_j\\right)$，则 $\\alpha = \\alpha_i + \\sum_{j \\neq i} \\alpha_j$，其中 $\\alpha_i \\in V_i$，$\\alpha_j \\in V_j$。  \n- 由于零向量的表法唯一，若 $\\alpha \\neq 0$，则 $\\alpha_i + \\sum_{j \\neq i} \\alpha_j \\neq 0$，矛盾。  \n- 因此，$V_i \\cap \\left(\\sum_{j \\neq i} V_j\\right) = 0$，即命题（3）成立。\n\n### 3. **命题（3）→（1）**  \n若 $V_i \\cap \\left(\\sum_{j \\neq i} V_j\\right) = 0$，则 $V_1 + V_2 + \\dots + V_s$ 是直和。  \n- 由例19可知，若每个 $V_i$ 与剩余子空间的交集为零，则和为直和。  \n- 证明：假设存在非零向量 $\\alpha \\in V_1 + V_2 + \\dots + V_s$，则 $\\alpha$ 可唯一表示为 $\\alpha = \\alpha_1 + \\alpha_2 + \\dots + \\alpha_s$，其中 $\\alpha_i \\in V_i$。  \n- 若 $\\alpha \\neq 0$，则 $\\alpha_i \\neq 0$ 对所有 $i$，但 $\\alpha_i \\in V_i$ 与 $\\sum_{j \\neq i} V_j$ 的交集为零，故 $\\alpha_i = 0$，矛盾。  \n- 因此，和为直和，即命题（1）成立。\n\n### 结论  \n命题（1）、（2）、（3）相互等价，定理8得证。",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答试图证明三个等价命题，但证明中存在逻辑错误。例如，在(2)→(3)中，假设α∈V_i∩(∑_{j≠i}V_j)后，α的表示应为α=α_i+∑_{j≠i}α_j，但α本身已经在交集中，所以α∈V_i且α∈∑_{j≠i}V_j，因此α可表示为∑_{j≠i}α_j，同时α∈V_i，但模型错误地写成了α=α_i+∑_{j≠i}α_j，这混淆了表示。此外，(3)→(1)的证明中，模型说“若α≠0，则α_i≠0对所有i”是不正确的，因为直和定义要求唯一表示，但这里假设了α有表示，然后说α_i≠0对所有i，这没有依据。实际上，正确的证明应如参考答案所示。因此正确性得1分（部分正确，但关键步骤有误）。\n忠诚性：模型回答中引用了参考资料中的例19，但参考资料中例19的条件是V_i∩(∑_{j=i+1}^s V_j)=0，而模型使用的是V_i∩(∑_{j≠i}V_j)=0，两者不等价（除非顺序排列）。此外，模型在(3)→(1)中直接引用例19，但例19的结论是充分必要条件，而模型未给出完整推理。模型还包含了一些参考资料未提及的陈述，如“由于直和的定义要求零向量的表法唯一”等，这些是常识，但参考资料中并未直接给出。因此忠诚性得1分（大部分有据，但存在轻微推论和引用不准确）。\n答案相关性：模型回答直接针对问题，试图证明定理8的三个等价命题，没有偏离主题。虽然证明有误，但整体相关。得2分。\n上下文相关性：参考资料包含例18、例19和一段无关的证明。例18和例19与问题相关，但例18的条件是“有一个向量可以唯一表示”，而问题要求的是零向量表法唯一；例19的条件是V_i∩(∑_{j=i+1}^s V_j)=0，与问题中的条件(3)不同。因此参考资料只能部分回答问题的子集，得1分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在正确性方面存在一些问题，特别是在(2) ⇒ (3)和(3) ⇒ (1)的证明过程中，表述不够严谨，存在错误。在(2) ⇒ (3)部分，'α = α_i + ∑_{j≠i} α_j'的表述不准确；在(3) ⇒ (1)部分，错误引用了例19（例19的条件是V_i ∩ (∑_{j=i+1}^s V_j) = 0，与题目条件不同），且引入了'若α ≠ 0，则α_i ≠ 0对所有i'这一不正确的陈述。在忠诚性方面，模型对例19的引用有误，且引入了一些参考资料中未明确支持的陈述。但模型回答直接回应了问题，没有偏离主题，且参考资料与问题高度相关。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 17,
+        "query": "证明下述定理：定理9 设 $V_{1}, V_{2}, \\dots, V_{s}$ 都是域 $F$ 上线性空间 $V$ 的有限维子空间，则下列命题等价：\n（1）和 $V_{1} + V_{2} + \\dots +V_{s}$ 是直和；\n(4) $\\dim (V_1 + V_2 + \\dots + V_s) = \\dim V_1 + \\dim V_2 + \\dots + \\dim V_s$ ;\n（5） $V_{1}$ 的一个基， $V_{2}$ 的一个基，…， $V_{s}$ 的一个基，它们合起来是 $V_{1} + V_{2} + \\dots + V_{s}$ 的一个基。",
+        "answer": "\n证明 (1) $\\Longrightarrow$ (4) 由于 $V_{1} + V_{2} + \\dots + V_{s}$ 是直和, 因此, $V_{i} \\cap (\\sum_{j \\neq i} V_{j}) = 0$ , $i = 1, 2, \\dots, s$ , 于是\n$$\n\\begin{array}{l} \\dim \\left(\\sum_ {i = 1} ^ {s} V _ {i}\\right) = \\dim \\left(V _ {1} + \\sum_ {i = 2} ^ {s} V _ {i}\\right) \\\\ = \\dim V _ {1} + \\dim \\left(\\sum_ {i = 2} ^ {s} V _ {i}\\right) 。 \\\\ \\end{array}\n$$\n注意 $V_{2}\\bigcap (V_{3} + \\dots +V_{s})\\subseteq V_{2}\\bigcap (V_{1} + V_{3} + \\dots +V_{s}) = 0$ ，因此对 $s$ 作数学归纳法，根据归纳假设可得\n$$\n\\dim \\left(\\sum_ {i = 2} ^ {s} V _ {i}\\right) = \\sum_ {i = 2} ^ {s} \\dim V _ {i},\n$$\n从而得到\n$$\n\\dim \\left(\\sum_ {i = 1} ^ {s} V _ {i}\\right) = \\dim V _ {1} + \\sum_ {i = 2} ^ {s} \\dim V _ {i} = \\sum_ {i = 1} ^ {s} \\dim V _ {i} 。\n$$\n根据数学归纳法原理，对一切正整数 $s$ ，命题为真。\n(4) $\\Longrightarrow$ (5) 设 $\\dim (\\sum_{i=1}^{s} V_i) = \\sum_{i=1}^{s} \\dim V_i$ ，在 $V_i$ 中取一个基 $\\alpha_{i1}, \\dots, \\alpha_{im_i}$ ， $i = 1, 2, \\dots, s$ ，则\n$$\n\\begin{array}{l} \\sum_ {i = 1} ^ {s} V _ {i} = \\left\\langle \\alpha_ {1 1}, \\dots , \\alpha_ {1 m _ {1}} \\right\\rangle + \\left\\langle \\alpha_ {2 1}, \\dots , \\alpha_ {2 m _ {2}} \\right\\rangle + \\dots + \\left\\langle \\alpha_ {s 1}, \\dots , \\alpha_ {s m _ {s}} \\right\\rangle \\\\ = \\left\\langle \\alpha_ {1 1}, \\dots , \\alpha_ {1 m _ {1}}, \\alpha_ {2 1}, \\dots , \\alpha_ {2 m _ {2}}, \\dots , \\alpha_ {s 1}, \\dots , \\alpha_ {s m _ {s}} \\right\\rangle 。 \\\\ \\end{array}\n$$\n由已知条件得， $\\dim (\\sum_{i = 1}^{s}V_{i}) = \\sum_{i = 1}^{s}\\dim V_{i} = m_{1} + m_{2} + \\dots +m_{s}$ ，因此 $\\alpha_{11},\\dots ,\\alpha_{1m_1},\\alpha_{21},\\dots ,$ $\\alpha_{2m_2},\\dots ,\\alpha_{s1},\\dots ,\\alpha_{sm_s}$ 是 $\\sum_{i = 1}^{s}V_{i}$ 的一个基。\n(5) $\\Longrightarrow$ (1) 在 $V_{i}$ 中取一个基 $\\alpha_{i1},\\dots ,\\alpha_{im_i},i = 1,2,\\dots ,s$ ，则由已知条件得， $\\alpha_{11},\\dots ,$ $\\alpha_{1m_1},\\dots ,\\alpha_{s1},\\dots ,\\alpha_{sm_s}$ 是 $\\sum_{i = 1}^{s}V_{i}$ 的一个基。\n在 $\\sum_{i = 1}^{s}V_{i}$ 中，设 $0 = \\alpha_{1} + \\alpha_{2} + \\dots +\\alpha_{s},\\alpha_{i}\\in V_{i}$ $i = 1,2,\\dots ,s$ ，则 $\\alpha_{i} = k_{i1}\\alpha_{i1} + \\dots +k_{im_{i}}\\alpha_{im_{i}}$ ，从而\n$$\n0 = k _ {1 1} \\alpha_ {1 1} + \\dots + k _ {1 m _ {1}} \\alpha_ {1 m _ {1}} + \\dots + k _ {s 1} \\alpha_ {s 1} + \\dots + k _ {s m _ {s}} \\alpha_ {s m _ {s}} 。\n$$\n由此推出 $k_{11} = \\dots = k_{1m_1} = \\dots = k_{s1} = \\dots = k_{sm_s} = 0.$\n因此有 $\\alpha_{i} = 0, i = 1,2,\\dots ,s$ 。这证明了在 $\\sum_{i = 1}^{s}V_{i}$ 中零向量的表法唯一，从而和 $\\sum_{i = 1}^{s}V_{i}$ 是直和。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "### 证明定理9\n\n#### 1. **（1）→（4）**  \n若 $V_1 + V_2 + \\dots + V_s$ 是直和，则其维数等于各子空间维数之和。  \n- 直和的维数定义为各子空间维数之和，因此 $ \\dim(V_1 + V_2 + \\dots + V_s) = \\sum_{i=1}^s \\dim V_i $。  \n- 由此可得（4）成立。\n\n#### 2. **（4）→（1）**  \n若 $ \\dim(V_1 + V_2 + \\dots + V_s) = \\sum_{i=1}^s \\dim V_i $，则 $V_1 + V_2 + \\dots + V_s$ 是直和。  \n- 根据线性代数中的定理，若两个子空间的维数之和等于总维数，则它们的和是直和。  \n- 通过归纳法或基的构造，若维数之和等于总维数，则子空间的和必为直和。  \n- 例如，假设 $V_1 + V_2 + \\dots + V_s$ 的维数等于各子空间维数之和，则其基由各子空间的基构成，且线性无关，因此为直和。\n\n#### 3. **（5）→（1）**  \n若各子空间的基合起来是 $V_1 + V_2 + \\dots + V_s$ 的一个基，则其和为直和。  \n- 若 $V_1 + V_2 + \\dots + V_s$ 的基由 $V_1, V_2, \\dots, V_s$ 的基构成，则每个子空间的基在总空间中线性无关。  \n- 由于基的线性无关性，各子空间的基在总空间中构成一个基，因此 $V_1 + V_2 + \\dots + V_s$ 是直和。\n\n#### 4. **（1）↔（4）↔（5）**  \n- **（1）↔（4）**：若 $V_1 + V_2 + \\dots + V_s$ 是直和，则（4）成立；反之，若（4）成立，则（1）成立。  \n- **（4）↔",
+            "deepseek": {
+                "reasoning": "正确性：模型回答试图证明定理9，但证明过程不完整且存在逻辑错误。例如，在(1)→(4)中，模型仅陈述结论而未给出严格证明；在(4)→(1)中，模型错误地声称“若两个子空间的维数之和等于总维数，则它们的和是直和”，这仅对两个子空间成立，对多个子空间需要额外条件；在(5)→(1)中，模型未正确证明直和定义中的唯一性。此外，模型未证明(4)→(5)和(5)→(4)，而参考答案中包含了这些步骤。因此正确性得1分。\n\n忠诚性：参考资料中仅包含关于两个子空间直和的讨论（如命题1和定理5的推论），并未直接涉及多个子空间直和的等价条件。模型回答中的许多陈述（如“直和的维数定义为各子空间维数之和”）在参考资料中未出现，且模型未引用参考资料中的具体内容。因此忠诚性得0分。\n\n答案相关性：模型回答直接针对问题“证明定理9”，并尝试证明三个等价条件，没有偏离主题。尽管证明不完整，但内容与问题相关。因此答案相关性得2分。\n\n上下文相关性：参考资料主要讨论两个子空间的直和以及投影映射，与问题（多个子空间直和的等价条件）部分相关，但未能提供证明所需的关键信息（如维数公式的归纳法证明、基的合并等）。因此上下文相关性得1分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答尝试证明定理9的三个命题等价，但证明过程不完整且不严谨。在(1)→(4)的证明中，模型错误地将直和维数关系作为定义而非定理；在(4)→(1)的证明中，模型引用了未明确指出的定理；在(5)→(1)的证明中，模型没有提供具体证明步骤。此外，模型回答在第4部分突然中断，没有完成证明。虽然模型回答直接回应了问题，没有偏离主题，但数学证明不完整且不严谨，因此正确性评分为0。模型回答中的陈述大部分能在参考资料中找到支持，但没有明确引用，因此忠诚性评分为1。模型回答直接回应了问题，没有偏离主题或多余内容，因此答案相关性评分为2。参考资料[3]直接包含了子空间直和的相关证明，与问题高度相关，因此上下文相关性评分为2。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "要证明定理9，需证明以下三个命题等价：\n\n---\n\n### **命题（1）**：$ V_1 + V_2 + \\dots + V_s $ 是直和  \n**命题（4）**：$ \\dim(V_1 + V_2 + \\dots + V_s) = \\dim V_1 + \\dim V_2 + \\dots + \\dim V_s $  \n**命题（5）**：$ V_1 $ 的一个基，$ V_2 $ 的一个基，…，$ V_s $ 的一个基，它们合起来是 $ V_1 + V_2 + \\dots + V_s $ 的一个基  \n\n---\n\n### **证明步骤**\n\n#### **1. （1）→（4）**  \n若 $ V_1 + V_2 + \\dots + V_s $ 是直和，则其交集 $ V_1 \\cap V_2 \\cap \\dots \\cap V_s = \\{0\\} $。  \n根据线性空间的维度公式：  \n$$\n\\dim(V_1 + V_2 + \\dots + V_s) = \\sum_{i=1}^s \\dim V_i - \\sum_{i < j} \\dim(V_i \\cap V_j) + \\sum_{i < j < k} \\dim(V_i \\cap V_j \\cap V_k) - \\dots\n$$  \n若 $ V_1 + \\dots + V_s $ 是直和，则所有交集的维度为零，因此：  \n$$\n\\dim(V_1 + \\dots + V_s) = \\sum_{i=1}^s \\dim V_i\n$$  \n**结论**：（1）→（4）成立。\n\n---\n\n#### **2. （4）→（1）**  \n若 $ \\dim(V_1 + \\dots + V_s) = \\sum_{i=1}^s \\dim V_i $，则根据维度公式，所有交集的维度之和为零，即：  \n$$\n\\sum_{i < j} \\dim(V_i \\cap V_j) = \\sum_{i < j < k} \\dim(V_i \\cap V_j \\cap V_k) = \\dots = 0\n$$  \n这意味着 $ V_1 \\cap V_2 \\cap \\dots \\cap V_s = \\{0\\} $，因此 $ V_1 + \\dots + V_s $ 是直和。  \n**结论**：（4）→（1）成立。\n\n---\n\n#### **3. （5）→（4）**  \n若存在 $ V_1 $、$ V_2 $、…、$ V_s $ 的基，它们合起来是 $ V_1 + \\dots + V_s $ 的一个基，则这些基向量线性无关，构成 $ V_1 + \\dots + V_s $ 的基。  \n由于 $ V_1 + \\dots + V_s $ 的维度等于基的个数，即 $ \\sum_{i=1}^s \\dim V_i $，因此：  \n$$\n\\dim(V_1 + \\dots + V_s) = \\sum_{i=1}^s \\dim V_i\n$$  \n**结论**：（5）→（4）成立。\n\n---\n\n#### **4. （4）→（5）**  \n若 $ \\dim(V_1 + \\dots + V_s) = \\sum_{i=1}^s \\dim V_i $，则存在 $ V_1 $、$ V_2 $、…、$ V_s $ 的基，它们合起来是 $ V_1 + \\dots + V_s $ 的一个基。  \n根据线性代数中的基的构造定理，若 $ V_1 + \\dots + V_s $ 的维度等于各子空间维度之和，则存在这样的基。  \n**结论**：（4）→（5）成立。\n\n---\n\n### **最终结论**\n\n定理9的三个命题等价，因此成立。  \n$$\n\\boxed{\\text{定理9成立}}\n$$",
+            "loop_counter": -1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答试图证明等价性，但证明过程存在严重错误。首先，直和的条件是任意两个子空间的交为{0}，而非所有子空间的交为{0}；其次，维度公式使用错误，直和时所有交的维度为零并不成立，正确的公式是维数相加；此外，（5）→（4）的证明中，基的个数等于维数和是显然的，但（4）→（5）的证明缺乏严谨性，且（4）→（1）的证明错误。因此正确性得0分。\n忠诚性：参考资料为空，模型输出了具体知识，根据规则应判为0分。\n答案相关性：模型回答直接针对问题，试图证明定理，没有偏离主题，得2分。\n上下文相关性：参考资料为空，无法提供有用信息，得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性：模型回答尝试证明三个命题的等价性，但在证明(1)→(4)和(4)→(1)时使用了不准确的维数公式，错误地认为直和条件等价于所有子空间的简单交集为零，而实际上应该是每个子空间与其它子空间的和的交集为零。证明(5)→(4)基本正确，但(4)→(5)缺乏详细证明步骤。因此评分为1分（部分正确）。忠诚性：参考资料为空列表，但模型输出了具体数学知识，根据评分标准应判定为0分。答案相关性：模型回答直接回应了问题，尝试证明三个命题的等价性，没有偏离主题，评分为2分。上下文相关性：参考资料为空，与问题完全无关，评分为0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 18,
+        "query": "求解下述例题：例4设数域 $K$ 上3级矩阵 $A$ 为\n$$\n\\boldsymbol {A} = \\left( \\begin{array}{c c c} 0 & 0 & 1 \\\\ 1 & 0 & 0 \\\\ 4 & - 2 & 1 \\end{array} \\right),\n$$\n求 $\\mathrm{C}(A)$ 的一个基和维数。",
+        "answer": "解 $\\mathbf{X} = (x_{ij})_{3\\times 3}$ 与 $\\mathbf{A}$ 可交换当且仅当\n$$\n\\left( \\begin{array}{c c c} 0 & 0 & 1 \\\\ 1 & 0 & 0 \\\\ 4 & - 2 & 1 \\end{array} \\right) \\left( \\begin{array}{c c c} x _ {1 1} & x _ {1 2} & x _ {1 3} \\\\ x _ {2 1} & x _ {2 2} & x _ {2 3} \\\\ x _ {3 1} & x _ {3 2} & x _ {3 3} \\end{array} \\right) = \\left( \\begin{array}{c c c} x _ {1 1} & x _ {1 2} & x _ {1 3} \\\\ x _ {2 1} & x _ {2 2} & x _ {2 3} \\\\ x _ {3 1} & x _ {3 2} & x _ {3 3} \\end{array} \\right) \\left( \\begin{array}{c c c} 0 & 0 & 1 \\\\ 1 & 0 & 0 \\\\ 4 & - 2 & 1 \\end{array} \\right),\n$$\n即\n$$\n\\begin{array}{l} \\left( \\begin{array}{c c c} x _ {3 1} & x _ {3 2} & x _ {3 3} \\\\ x _ {1 1} & x _ {1 2} & x _ {1 3} \\\\ 4 x _ {1 1} - 2 x _ {2 1} + x _ {3 1} & 4 x _ {1 2} - 2 x _ {2 2} + x _ {3 2} & 4 x _ {1 3} - 2 x _ {2 3} + x _ {3 3} \\end{array} \\right) \\\\ = \\left( \\begin{array}{c c c} x _ {1 2} + 4 x _ {1 3} & - 2 x _ {1 3} & x _ {1 1} + x _ {1 3} \\\\ x _ {2 2} + 4 x _ {2 3} & - 2 x _ {2 3} & x _ {2 1} + x _ {2 3} \\\\ x _ {3 2} + 4 x _ {3 3} & - 2 x _ {3 3} & x _ {3 1} + x _ {3 3} \\end{array} \\right) 。 \\\\ \\end{array}\n$$由此得出\n$$\n\\begin{array}{l} x _ {3 1} = x _ {1 2} + 4 x _ {1 3}, \\quad x _ {3 2} = - 2 x _ {1 3}, \\quad x _ {3 3} = x _ {1 1} + x _ {1 3}, \\\\ x _ {1 1} = x _ {2 2} + 4 x _ {2 3}, \\quad x _ {1 2} = - 2 x _ {2 3}, \\quad x _ {1 3} = x _ {2 1} + x _ {2 3}, \\\\ 4 x _ {1 1} - 2 x _ {2 1} + x _ {3 1} = x _ {3 2} + 4 x _ {3 3}, \\quad 4 x _ {1 2} - 2 x _ {2 2} + x _ {3 2} = - 2 x _ {3 3}, \\\\ 4 x _ {1 3} - 2 x _ {2 3} + x _ {3 3} = x _ {3 1} + x _ {3 3} 。 \\\\ \\end{array}\n$$\n把前6个式子代入到最后3个式子中，得\n$$\n\\begin{array}{l} 4 \\left(x _ {2 2} + 4 x _ {2 3}\\right) - 2 x _ {2 1} + \\left[ - 2 x _ {2 3} + 4 \\left(x _ {2 1} + x _ {2 3}\\right) \\right] \\\\ = - 2 \\left(x _ {2 1} + x _ {2 3}\\right) + 4 \\left[ \\left(x _ {2 2} + 4 x _ {2 3}\\right) + \\left(x _ {2 1} + x _ {2 3}\\right) \\right], \\\\ 4 \\left(- 2 x _ {2 3}\\right) - 2 x _ {2 2} + \\left[ - 2 \\left(x _ {2 1} + x _ {2 3}\\right) \\right] \\\\ = - 2 \\left[ \\left(x _ {2 2} + 4 x _ {2 3}\\right) + \\left(x _ {2 1} + x _ {2 3}\\right) \\right], \\\\ 4 \\left(x _ {2 1} + x _ {2 3}\\right) - 2 x _ {2 3} + \\left[ \\left(x _ {2 2} + 4 x _ {2 3}\\right) + \\left(x _ {2 1} + x _ {2 3}\\right) \\right] \\\\ = \\left[ (- 2 x _ {2 3}) + 4 \\left(x _ {2 1} + x _ {2 3}\\right) \\right] + \\left[ \\left(x _ {2 2} + 4 x _ {2 3}\\right) + \\left(x _ {2 1} + x _ {2 3}\\right) \\right]. \\\\ \\end{array}\n$$\n整理得 $0 = 0,0 = 0,0 = 0$\n这说明 $x_{21}, x_{22}, x_{23}$ 可以取数域 $K$ 中任意数，即 $x_{21}, x_{22}, x_{23}$ 是自由未知量。由前6个式子得\n$$\nx _ {1 1} = x _ {2 2} + 4 x _ {2 3}, \\quad x _ {1 2} = - 2 x _ {2 3}, \\quad x _ {1 3} = x _ {2 1} + x _ {2 3},\n$$\n$$\nx _ {3 1} = 4 x _ {2 1} + 2 x _ {2 3}, \\quad x _ {3 2} = - 2 x _ {2 1} - 2 x _ {2 3}, \\quad x _ {3 3} = x _ {2 1} + x _ {2 2} + 5 x _ {2 3} 。\n$$\n$$\n因此 $X = (x_{ij})_{3\\times 3}$ 与 $\\mathbf{A}$ 可交换当且仅当\n$$\n\\mathbf {X} = \\left( \\begin{array}{c c c} x _ {2 2} + 4 x _ {2 3} & - 2 x _ {2 3} & x _ {2 1} + x _ {2 3} \\\\ x _ {2 1} & x _ {2 2} & x _ {2 3} \\\\ 4 x _ {2 1} + 2 x _ {2 3} & - 2 x _ {2 1} - 2 x _ {2 3} & x _ {2 1} + x _ {2 2} + 5 x _ {2 3} \\end{array} \\right)\n$$\n$$\n\\begin{array}{l} = x _ {2 1} \\left( \\begin{array}{c c c} 0 & 0 & 1 \\\\ 1 & 0 & 0 \\\\ 4 & - 2 & 1 \\end{array} \\right) + x _ {2 2} \\left( \\begin{array}{c c c} 1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{array} \\right) + x _ {2 3} \\left( \\begin{array}{c c c} 4 & - 2 & 1 \\\\ 0 & 0 & 1 \\\\ 2 & - 2 & 5 \\end{array} \\right) \\\\ = x _ {2 1} \\mathbf {A} + x _ {2 2} \\mathbf {I} + x _ {2 3} \\mathbf {B}, \\\\ \\end{array}\n$$\n其中 $\\pmb{B}$ 是上面等式中第3个矩阵，于是 $\\mathrm{C}(A)$ 中每一个矩阵 $X$ 可由 $A, I, B$ 线性表出。\n由于 $A, I, B$ 可看成是向量组 $(1,0,0), (0,1,0), (0,0,1)$ 的延伸组，因此 $A, I, B$ 线性无关，从而 $A, I, B$ 是 $\\mathrm{C}(A)$ 的一个基，于是 $\\dim \\mathrm{C}(A) = 3$ 。\n直接计算得， $B = A^2$ 。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "例4中，矩阵 $ \\boldsymbol{A} $ 的列向量为：\n$$\n\\boldsymbol{v}_1 = \\begin{pmatrix} 0 \\\\ 1 \\\\ 4 \\end{pmatrix}, \\quad \n\\boldsymbol{v}_2 = \\begin{pmatrix} 0 \\\\ 0 \\\\ -2 \\end{pmatrix}, \\quad \n\\boldsymbol{v}_3 = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}.\n$$\n计算这三个向量的行列式：\n$$\n\\det \\begin{pmatrix} 0 & 0 & 1 \\\\ 1 & 0 & 0 \\\\ 4 & -2 & 1 \\end{pmatrix} = -2 \\neq 0,\n$$\n说明它们线性无关。因此，矩阵 $ \\boldsymbol{A} $ 的列空间的维数为 3，基为这三个列向量。\n\n**答案：**  \n$\\mathrm{C}(A)$ 的一个基为 $\\{\\boldsymbol{v}_1, \\boldsymbol{v}_2, \\boldsymbol{v}_3\\}$，维数为 3。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答错误地将C(A)理解为列空间，而题目要求的是与A可交换的矩阵空间，因此答案完全错误。忠诚性：参考资料中明确给出了求解可交换矩阵空间的方法和结果，模型回答未使用这些信息，而是自行推导了列空间，因此忠诚性为0。答案相关性：模型回答虽然给出了一个基和维数，但回答的是列空间而非可交换矩阵空间，与问题不相关。上下文相关性：参考资料包含了求解可交换矩阵空间的完整过程，与问题高度相关。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答完全错误，它将中心化子C(A)误解为矩阵A的列空间，计算了列向量和行列式，而没有求解与A可交换的矩阵的集合。模型回答中的内容在参考资料中找不到支持，也没有直接回答所问问题。然而，参考资料[1]包含了问题的原文，与问题高度相关。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 19,
+        "query": "求解下述例题：例10 设 $V_{1}, V_{2}, \\dots, V_{s}$ 都是域 $F$ 上线性空间 $V$ 的真子空间，证明：如果域 $F$ 的特征为0，那么\n$$\nV _ {1} \\cup V _ {2} \\cup \\dots \\cup V _ {s} \\neq V _ {\\circ}\n$$",
+        "answer": "证明 对真子空间的个数 $s$ 作数学归纳法。当 $s = 1$ 时，由于 $V_{1}$ 是 $V$ 的真子空间，因此 $V_{1} \\neq V$ 。假设命题对于 $s - 1$ 的情形为真，现在来看 $s$ 的情形，根据归纳假设得\n$$\nV _ {1} \\cup V _ {2} \\cup \\dots \\cup V _ {s - 1} \\neq V,\n$$\n因此 $V$ 中存在 $\\alpha \\notin V_{1} \\cup V_{2} \\cup \\dots \\cup V_{s-1}$ 。\n若 $\\alpha \\notin V_{s}$ ，则 $\\alpha \\notin V_{1} \\cup V_{2} \\cup \\dots \\cup V_{s-1} \\cup V_{s}$ 。\n接下来设 $\\alpha \\in V_{s}$ 。\n由于 $V_{s} \\neq V$ ，因此存在 $\\beta \\notin V_{s}$ 。\n若 $\\beta \\notin V_{1} \\cup V_{2} \\cup \\dots \\cup V_{s-1}$ ，则\n$$\n\\beta \\notin V _ {1} \\bigcup V _ {2} \\bigcup \\dots \\bigcup V _ {s - 1} \\bigcup V _ {s} 。\n$$\n下面设 $\\beta \\in V_{1} \\cup V_{2} \\cup \\dots \\cup V_{s-1}$ 。\n由于 $V_{1} \\cup V_{2} \\cup \\dots \\cup V_{s-1}$ 不是 $V$ 的子空间，因此不能像例9的证明那样推出 $\\alpha + \\beta$ 不属于 $V_{1} \\cup V_{2} \\cup \\dots \\cup V_{s-1} \\cup V_{s}$ 。\n放宽考虑 $V$ 的下述子集 $W$ ：\n$$\nW = \\left\\{k \\alpha + \\beta \\mid k \\in F \\right\\} 。\n$$\n我们断言 $\\forall k\\in F$ ，都有 $k\\alpha +\\beta \\notin V_{s}$ 。\n这是因为假如有某个 $k\\in F$ 使得 $k\\alpha +\\beta \\in V_s$ ，则由于 $\\alpha \\in V_s$ ，且 $V_{s}$ 是 $V$ 的一个子空间，因此有 $(k\\alpha +\\beta) - k\\alpha \\in V_s$ ，即 $\\beta \\in V_{s}$ ，矛盾。\n下面我们想说明存在 $k_0\\in F$ ，使得 $k_{0}\\alpha +\\beta \\notin V_{1}\\bigcup V_{2}\\bigcup \\dots \\bigcup V_{s - 1}$ 。\n论证的途径是看每个 $V_{i}(i = 1,2,\\dots ,$ （20 $s - 1)$ 中含有多少个形如 $k\\alpha +\\beta$ 的向量。\n假如 $k_{1}\\alpha +\\beta ,k_{2}\\alpha +\\beta \\in V_{i}(i\\in \\{1,2,\\dots ,s - 1\\})$ ，且 $k_{1}\\neq k_{2}$ ，则 $(k_{1}\\alpha +\\beta) - (k_{2}\\alpha +\\beta)\\in V_{i}$ ，即 $(k_{1} - k_{2})\\alpha \\in V_{i}$ 。\n由于 $k_{1} - k_{2}\\neq 0$ ，因此 $\\alpha = (k_1 - k_2)^{-1}(k_1 - k_2)\\alpha \\in V_i$ ，从而 $\\alpha \\in V_1\\bigcup V_2\\bigcup \\dots \\bigcup V_{s - 1}$ ，矛盾。\n所以 $V_{i}(i = 1,2,\\dots ,s - 1)$ 中至多含有 $W$ 中一个向量，从而 $V_{1}\\bigcup V_{2}\\bigcup \\dots \\bigcup V_{s - 1}$ 中至多含有 $W$ 中 $s - 1$ 个向量。\n但是由于域 $F$ 的特征为0，因此域 $F$ 含有无穷多个元素。\n又由于 $k_{1}\\alpha +$ $\\beta = k_{2}\\alpha +\\beta$ 当且仅当 $(k_{1} - k_{2})\\alpha = 0$ ，又由于 $\\alpha \\neq 0$ ，因此 $(k_{1} - k_{2})\\alpha = 0$ 当且仅当 $k_{1} = k_{2}$ 。\n于是 $W$ 中含有无穷多个向量，从而 $W$ 中存在一个向量 $k_{0}\\alpha +\\beta \\notin V_{1}\\bigcup V_{2}\\bigcup \\dots \\bigcup V_{s - 1}$ 。\n又由于 $k_{0}\\alpha +\\beta \\notin V_{s}$ ，因此\n$$\nk _ {0} \\alpha + \\beta \\notin V _ {1} \\bigcup V _ {2} \\bigcup \\dots \\bigcup V _ {s - 1} \\bigcup V _ {s} 。\n$$\n于是\n$$\nV _ {1} \\cup V _ {2} \\cup \\dots \\cup V _ {s - 1} \\cup V _ {s} \\neq V _ {\\circ}\n$$\n根据数学归纳法原理，对一切正整数 $s$ ，命题为真。\n点评：在例10的证明过程中，域 $F$ 含有无穷多个元素起着关键作用。\n如果域 $F$ 是特征为素数 $p$ 的有限域，那么例10的结论不一定成立。\n例如，在域 $\\mathbf{Z}_2$ 上的线性空间 $\\mathbf{Z}_2^3$ 中，考虑下述真子空间：\n$$\nV _ {1} = \\langle (1, 0, 0) ^ {\\prime} \\rangle , \\quad V _ {2} = \\langle (0, 1, 0) ^ {\\prime} \\rangle , \\quad V _ {3} = \\langle (0, 0, 1) ^ {\\prime} \\rangle , \\quad V _ {4} = \\langle (1, 1, 0) ^ {\\prime} \\rangle ,\n$$\n$$\nV _ {5} = \\langle (1, 0, 1) ^ {\\prime} \\rangle , \\quad V _ {6} = \\langle (0, 1, 1) ^ {\\prime} \\rangle , \\quad V _ {7} = \\langle (1, 1, 1) ^ {\\prime} \\rangle ,\n$$\n显然有 $V_{1}\\bigcup V_{2}\\bigcup V_{3}\\bigcup V_{4}\\bigcup V_{5}\\bigcup V_{6}\\bigcup V_{7} = \\mathbf{Z}_{2}^{3}$ 。\n如果域 $F$ 是特征为素数 $p$ 的无限域，那\n么例10的结论仍然成立。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "根据数学归纳法，当域 $ F $ 的特征为 0 时，存在元素 $ \\alpha \\in V $ 使得 $ \\alpha \\notin V_1 \\cup V_2 \\cup \\dots \\cup V_s $，从而 $ V_1 \\cup V_2 \\cup \\dots \\cup V_s \\neq V $。具体证明如下：\n\n1. **基础情形**：当 $ s = 1 $ 时，$ V_1 $ 是 $ V $ 的真子空间，故 $ V_1 \\neq V $。\n2. **归纳假设**：假设 $ s - 1 $ 时命题成立，即 $ V_1 \\cup \\dots \\cup V_{s-1} \\neq V $。\n3. **归纳步骤**：若 $ \\alpha \\notin V_1 \\cup \\dots \\cup V_s $，则 $ \\alpha \\notin V_1 \\cup \\dots \\cup V_s $。若 $ \\alpha \\in V_s $，则存在 $ \\beta \\notin V_1 \\cup \\dots \\cup V_{s-1} $。构造子空间 $ W = \\{k\\alpha + \\beta \\mid k \\in F\\} $，利用 $ F $ 的特征为 0（即 $ F $ 无限域）证明 $ W $ 中存在元素不在 $ V_1 \\cup \\dots \\cup V_{s-1} $，从而 $ V_1 \\cup \\dots \\cup V_s \\neq V $。\n\n**结论**：域 $ F $ 的特征为 0 时，$ V_1 \\cup \\dots \\cup V_s \\neq V $。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答给出了归纳法证明的概要，但缺少关键细节（如W中向量不在V_s的论证、每个V_i至多含一个W中向量的论证），且存在逻辑错误（归纳步骤中“若α∉V_1∪...∪V_s”是循环论证）。因此不完全正确，得1分。\n忠诚性：模型回答中的陈述（如基础情形、归纳假设、构造W）均可在参考资料中找到直接支持，没有超出资料的内容。得2分。\n答案相关性：模型回答直接回应了问题，没有偏离主题。得2分。\n上下文相关性：参考资料包含了完整的证明和讨论，与问题高度相关。得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "从四个维度评估模型回答：1) 正确性：模型回答整体思路正确，使用了数学归纳法，基础情形正确，但归纳步骤缺少关键细节，如没有明确说明如何找到β，以及没有详细证明为什么W中存在元素不在并集中。2) 忠诚性：大部分内容能在参考资料中找到支持，但有些表述与参考资料不完全一致，且缺少一些证明细节。3) 答案相关性：模型回答直接回应了问题，使用数学归纳法证明命题，没有偏离主题。4) 上下文相关性：参考资料包含完整题目和详细证明，与问题高度相关。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "### 证明过程：\n\n**假设存在**：设 $ V_1, V_2, \\dots, V_s $ 是域 $ F $ 上线性空间 $ V $ 的真子空间，且 $ F $ 的特征为 0。若 $ V_1 \\cup V_2 \\cup \\dots \\cup V_s = V $，则存在矛盾。\n\n1. **反证法**：  \n   假设 $ V_1 \\cup V_2 \\cup \\dots \\cup V_s = V $，则存在某个元素 $ x \\in V $，使得 $ x \\in V_i $ 对所有 $ i = 1, 2, \\dots, s $。  \n   但 $ V_i $ 是 $ V $ 的真子空间，因此 $ x \\in V_i $ 仅意味着 $ x $ 属于 $ V_i $，",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答仅开头部分，未完成证明，且存在逻辑错误（如假设存在x属于所有Vi），无法判断正确性，故0分。忠诚性：模型回答内容与参考资料不符，且未引用参考资料，但参考资料非空，故0分。答案相关性：模型回答尝试回答问题，但内容不完整且错误，部分相关，故1分。上下文相关性：参考资料包含完整证明和反例，与问题高度相关，故2分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答仅提供了一个不完整的证明开头，使用了反证法，但存在逻辑错误。它错误地假设'存在某个元素x∈V，使得x∈Vi对所有i=1,2,…,s'，这并不正确，因为并集等于V并不意味着存在一个元素属于所有Vi。参考答案使用的是数学归纳法，与模型回答的方法不同。模型回答没有完成整个证明过程，也没有使用参考答案中的关键构造（如W={kα+β|k∈F}）。虽然模型回答尝试回答问题，但内容不完整且不正确。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 20,
+        "query": "证明下述定理：定理1设 $V$ 是域 $F$ 上一个有限维线性空间， $W$ 是 $V$ 的一个子空间，则\n$$\n\\dim (V / W) = \\dim V - \\dim W 。 \\tag {8}\n$$",
+        "answer": "证明 在 $W$ 中取一个基 $\\alpha_{1},\\dots ,\\alpha_{s}$ ，把它扩充成 $V$ 的一个基 $\\alpha_{1},\\dots ,\\alpha_{s},\\alpha_{s + 1},\\dots ,\\alpha_{n}$ 。\n于是 $\\dim V - \\dim W = n - s$ 。\n下面来找商空间 $V / W$ 的一个基：任取 $\\beta +W\\in V / W$ ，设 $\\beta = b_{1}\\alpha_{1} + \\dots +b_{s}\\alpha_{s} + b_{s + 1}\\alpha_{s + 1} + \\dots +b_{n}\\alpha_{n}$ ，则\n$$\n\\begin{array}{l} \\beta + W = \\left(b _ {1} \\alpha_ {1} + W\\right) + \\dots + \\left(b _ {s} \\alpha_ {s} + W\\right) + \\left(b _ {s + 1} \\alpha_ {s + 1} + W\\right) + \\dots + \\left(b _ {n} \\alpha_ {n} + W\\right) \\\\ = W + \\dots + W + b _ {s + 1} (\\alpha_ {s + 1} + W) + \\dots + b _ {n} (\\alpha_ {n} + W) \\\\ = b _ {s + 1} \\left(\\alpha_ {s + 1} + W\\right) + \\dots + b _ {n} \\left(\\alpha_ {n} + W\\right) 。 \\\\ \\end{array}\n$$\n假设 $k_{1}(\\alpha_{s + 1} + W) + \\dots + k_{n - s}(\\alpha_{n} + W) = W$ ，则\n$$\n\\left(k _ {1} \\alpha_ {s + 1} + \\dots + k _ {n - s} \\alpha_ {n}\\right) + W = W,\n$$从而 $k_{1}\\alpha_{s + 1} + \\dots +k_{n - s}\\alpha_{n}\\in W$ 。于是存在 $l_{1},\\dots ,l_{s}\\in F$ ，使得\n$$\nk _ {1} \\alpha_ {s + 1} + \\dots + k _ {n - s} \\alpha_ {n} = l _ {1} \\alpha_ {1} + \\dots + l _ {s} \\alpha_ {s},\n$$\n即 $l_{1}\\alpha_{1} + \\dots + l_{s}\\alpha_{s} - k_{1}\\alpha_{s+1} - \\dots - k_{n-s}\\alpha_{n} = 0$ 。\n因此 $l_{1} = \\dots = l_{s} = k_{1} = \\dots = k_{n - s} = 0$ 。\n这表明 $\\alpha_{s + 1} + W, \\dots, \\alpha_{n} + W$ 是 $V / W$ 中线性无关的向量组，从而它们是 $V / W$ 的一个基，因此\n$$\n\\dim (V / W) = n - s = \\dim V - \\dim W 。\n$$",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "根据商空间的定义和线性代数中的维度公式，定理1的证明如下：\n\n设 $ V $ 是域 $ F $ 上的有限维线性空间，$ W $ 是 $ V $ 的一个子空间。  \n由商空间的构造可知，$ V/W $ 是由所有 $ v + W $（$ v \\in V $）构成的集合。  \n若 $ \\dim V = n $，$ \\dim W = k $，则 $ \\dim (V/W) = n - k $。\n\n**证明过程：**  \n1. **基的构造**：  \n   选取 $ V $ 的一个基 $ \\{v_1, v_2, \\dots, v_n\\} $。  \n   由于 $ W $ 是 $ V $ 的子空间，存在 $ \\{w_1, w_2, \\dots, w_k\\} $ 作为 $ W $ 的基。  \n   将 $ V $ 的基扩展为 $ \\{v_1, v_2, \\dots, v_n\\} $，并考虑 $ W $ 的基 $ \\{w_1, \\dots, w_k\\} $。  \n\n2. **商空间的维度**：  \n   通过线性代数中的维度公式，商空间 $ V/W $ 的维数等于 $ V $ 的维数减去 $ W $ 的维数。  \n   例如，若 $ V $ 的基中 $ k $ 个向量属于 $ W $，则 $ V/W $ 的基由 $ n - k $ 个向量构成，因此 $ \\dim(V/W) = n - k $。\n\n3. **结论**：  \n   由于 $ \\dim V = n $，$ \\dim W = k $，故 $ \\dim(V/W) = n - k $。\n\n**最终结论**：  \n$$\n\\dim(V/W) = \\dim V - \\dim W\n$$",
+            "deepseek": {
+                "reasoning": "正确性：模型回答没有给出严格的数学证明，只是描述了思路，缺少关键步骤（如基的扩充、线性无关性证明），且存在不严谨之处（如说“V的基中k个向量属于W”但未说明如何得到），因此不能算完全正确，得1分。\n忠诚性：参考资料中包含了定理的完整证明，但模型回答没有忠实引用，而是用自己的话概括，且缺少细节，但未与资料矛盾，得1分。\n答案相关性：模型回答直接针对问题，试图证明定理，没有偏离主题，得2分。\n上下文相关性：参考资料[1]直接给出了定理的完整证明，高度相关，得2分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "正确性(1分)：模型回答得出了正确的结论，但证明过程过于简化，缺少关键步骤。它没有明确说明如何从V的基和W的基构造商空间的基，也没有证明这些基向量在商空间中是线性无关的，导致证明不完整。忠诚性(1分)：模型回答中提到的'商空间的定义和线性代数中的维度公式'在参考资料中找不到直接支持。虽然参考资料[1]包含了定理1的陈述，但没有提供完整的证明过程。答案相关性(2分)：模型回答直接针对问题，提供了证明过程和结论，没有偏离主题或包含无关内容。上下文相关性(1分)：参考资料[1]直接包含了定理1的陈述，与问题高度相关，但缺少证明过程；参考资料[2]和[3]虽然包含了一些相关概念，但与当前问题的核心（商空间的维数）不完全匹配。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据参考资料[1]中的定理1，商空间 $V/W$ 的维数等于 $V$ 的维数减去 $W$ 的维数。以下是证明过程：\n\n1. **商空间的定义**：设 $V$ 是域 $F$ 上的有限维线性空间，$W$ 是 $V$ 的子空间。商空间 $V/W$ 的元素由 $v + W$ 构成，其中 $v \\in V$。  \n2. **基的构造**：假设 $V$ 的基为 $\\{v_1, v_2, \\dots, v_n\\}$，且 $W$ 的基为 $\\{w_1, w_2, \\dots, w_k\\}$，其中 $k = \\dim W$。  \n3. **分解 $V$**：由于 $W$ 是 $V$ 的子空间，存在 $W'$ 为 $V$ 的补空间，使得 $V = W \\oplus W'$。  \n4. **商空间的维数**：$V/W$ 的维数等于 $W'$ 的维数，即 $\\dim(V/W) = \\dim(W') = \\dim V - \\dim W$。  \n\n**结论**：  \n$$\n\\dim(V/W) = \\dim V - \\dim W\n$$\n\n证明完成。",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答给出了一个证明框架，但不够完整和严谨。它没有像参考答案那样具体构造基并证明线性无关，而是依赖于补空间的概念，但未证明补空间的存在性和维数关系，因此只能算部分正确。忠诚性：参考资料[1]只给出了定理陈述，没有证明过程；模型回答中的证明步骤（如基的构造、补空间）在参考资料中未出现，因此存在无依据的陈述。答案相关性：回答直接针对问题，没有偏离。上下文相关性：参考资料[1]只包含定理本身，没有证明细节，不足以充分回答证明问题，因此部分相关。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            },
+            "GLM": {
+                "reasoning": "1. 正确性：模型回答的结论正确，即 dim(V/W) = dim V - dim W，但证明过程不够严谨。模型假设了补空间 W' 的存在并直接使用了 V = W ⊕ W' 的分解，但没有证明这种补空间的存在性，也没有证明 {w_{k+1} + W, ..., w_n + W} 是 V/W 的基以及它们的线性无关性。参考答案提供了更完整的证明，包括从 W 的基扩展为 V 的基，以及证明 {α_{s+1} + W, ..., α_n + W} 是 V/W 的基。因此，正确性评分为 1 分。 2. 忠诚性：模型回答的基本内容与参考资料[1]一致，但使用了参考资料中未提及的补空间直接和分解概念。参考资料[1]的证明是通过扩展基来进行的，而不是使用补空间的直接和分解。因此，忠诚性评分为 1 分。 3. 答案相关性：模型回答直接回应了问题，提供了证明过程和结论，没有偏离主题或包含无关内容。因此，答案相关性评分为 2 分。 4. 上下文相关性：参考资料[1]直接包含了要证明的定理及其证明，与问题高度相关。但参考资料[2]和[3]的相关性较低，主要讨论正交空间和线性映射下的维数关系。因此，上下文相关性评分为 1 分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 1
+                }
+            }
+        }
+    },
+    {
+        "id": 21,
+        "query": "求解下述例题：例7设 $U,W$ 都是域 $F$ 上线性空间 $V$ 的子空间，证明： $(U + W) / W\\cong U / U\\cap W$",
+        "answer": "证明 令 $\\sigma: (U + W) / W \\longrightarrow U / U \\cap W$\n$$\n(\\gamma + \\delta) + W \\longmapsto \\gamma + U \\cap W,\n$$\n其中 $\\gamma \\in U, \\delta \\in W$ 。任取 $\\gamma_{1}, \\gamma_{2} \\in U, \\delta_{1}, \\delta_{2} \\in W$ ，则\n$$\n\\begin{array}{l} \\left(\\gamma_ {1} + \\delta_ {1}\\right) + W = \\left(\\gamma_ {2} + \\delta_ {2}\\right) + W \\\\ \\Longleftrightarrow \\quad (\\gamma_ {1} + \\delta_ {1}) - (\\gamma_ {2} + \\delta_ {2}) \\in W \\\\ \\Longleftrightarrow \\quad (\\gamma_ {1} - \\gamma_ {2}) + (\\delta_ {1} - \\delta_ {2}) \\in W \\\\ \\Longleftrightarrow \\quad \\gamma_ {1} - \\gamma_ {2} \\in W \\\\ \\Longleftrightarrow \\quad \\gamma_ {1} - \\gamma_ {2} \\in U \\cap W \\\\ \\Longleftrightarrow \\quad \\gamma_ {1} + U \\cap W = \\gamma_ {2} + U \\cap W, \\\\ \\end{array}\n$$\n因此 $\\sigma$ 是 $(U + W) / W$ 到 $U / U\\cap W$ 的一个映射，且 $\\sigma$ 是单射。显然 $\\sigma$ 是满射，从而 $\\sigma$ 是双射。任取 $(\\gamma_{1} + \\delta_{1}) + W, (\\gamma_{2} + \\delta_{2}) + W \\in (U + W) / W$ ，其中 $\\gamma_{1}, \\gamma_{2} \\in U, \\delta_{1}, \\delta_{2} \\in W$ ，则\n$$\n\\begin{array}{l} \\sigma \\left[ \\left(\\left(\\gamma_ {1} + \\delta_ {1}\\right) + W\\right) + \\left(\\left(\\gamma_ {2} + \\delta_ {2}\\right) + W\\right) \\right] = \\sigma \\left[ \\left(\\gamma_ {1} + \\gamma_ {2} + \\delta_ {1} + \\delta_ {2}\\right) + W \\right] \\\\ = \\left(\\gamma_ {1} + \\gamma_ {2}\\right) + U \\cap W \\\\ = \\left(\\left(\\gamma_ {1} + U \\cap W\\right) + \\left(\\gamma_ {2} + U \\cap W\\right) \\right. \\\\ = \\sigma \\left(\\left(\\gamma_ {1} + \\delta_ {1}\\right) + W\\right) + \\sigma \\left(\\left(\\gamma_ {2} + \\delta_ {2}\\right) + W\\right); \\\\ \\end{array}\n$$\n$$\n\\begin{array}{l} \\sigma \\left[ k \\left(\\left(\\gamma_ {1} + \\delta_ {1}\\right) + W\\right) \\right] = \\sigma \\left(\\left(k \\gamma_ {1} + k \\delta_ {1}\\right) + W\\right) \\\\ = k \\gamma_ {1} + U \\cap W \\\\ = k \\left(\\gamma_ {1} + U \\cap W\\right) \\\\ = k \\sigma \\left(\\left(\\gamma_ {1} + \\delta_ {1}\\right) + W\\right) 。 \\\\ \\end{array}\n$$\n因此 $\\sigma$ 保持加法和纯量乘法运算，从而 $\\sigma$ 是一个同构映射，因此 $(U + W) / W \\cong U / U \\cap W$ 。",
+        "Original": {
+            "response": "证明：设 $ U, W $ 为域 $ F $ 上线性空间 $ V $ 的子空间，构造映射 $ \\phi: U/(U \\cap W) \\to (U + W)/W $，定义为 $ \\phi(a + (U \\cap W)) = a + W $，其中 $ a \\in U $。\n\n1. **单射性**：若 $ \\phi(a + (U \\cap W)) = \\phi(b + (U \\cap W)) $，则 $ a + W = b + W $，即 $ a = b $，故 $ \\phi $ 是单射。\n\n2. **满射性**：对于任意 $ u + W \\in (U + W)/W $，取 $ a = u \\in U $，则 $ \\phi(a + (U \\cap W)) = a + W = u + W $，故 $ \\phi $ 是满射。\n\n3. **同构性**：由于 $ \\phi $ 是双射的，因此 $ U/(U \\cap W) \\cong (U + W)/W $。\n\n**结论**：$ (U + W)/W \\cong U/(U \\cap W) $。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答构造了从U/(U∩W)到(U+W)/W的映射，但参考答案是从(U+W)/W到U/(U∩W)的映射。模型未验证映射的线性性（加法和数乘），且单射性论证不完整（仅由a+W=b+W推出a=b，但未说明a-b∈W且a-b∈U，从而a-b∈U∩W）。因此正确性不完整，得1分。\n忠诚性：参考资料为空，模型输出了具体知识，违反忠诚性规则，得0分。\n答案相关性：模型回答直接回应了问题，尝试证明同构，得2分。\n上下文相关性：参考资料为空，与问题无关，得0分。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在数学证明过程中存在错误。首先，构造的映射方向与标准证明相反，应该是从 (U + W)/W 到 U/(U∩W)，而不是从 U/(U∩W) 到 (U + W)/W。其次，在证明单射性时，模型错误地认为 a + W = b + W 直接意味着 a = b，实际上应该意味着 a - b ∈ W，结合 a,b ∈ U 才能得到 a - b ∈ U∩W。第三，模型没有证明映射保持线性运算，这是证明同构的关键步骤之一。虽然最终结论正确，但证明过程有错误，因此正确性得分为0。参考资料为空，但模型输出了具体知识，根据忠诚性评分标准这种情况应判定为0分。模型回答确实尝试回答了问题，没有偏离主题，因此答案相关性得分为2分。参考资料为空，与问题无关，因此上下文相关性得分为0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "证明：设 $U, W$ 为域 $F$ 上线性空间 $V$ 的子空间，定义映射 $\\sigma: (U + W)/W \\rightarrow U/(U \\cap W)$ 为  \n$$\n\\sigma(\\gamma + W) = \\gamma + U \\cap W,\n$$  \n其中 $\\gamma \\in U$。\n\n**1. 单射性**  \n假设 $\\sigma((\\gamma_1 + \\delta_1) + W) = \\sigma((\\gamma_2 + \\delta_2) + W)$，即  \n$$\n(\\gamma_1 + \\delta_1) - (\\gamma_2 + \\delta_2) \\in W \\Longleftrightarrow \\gamma_1 - \\gamma_2 \\in W.\n$$  \n由于 $\\gamma_1, \\gamma_2 \\in U$，则 $\\gamma_1 - \\gamma_2 \\in U \\cap W$，因此 $\\gamma_1 + U \\cap W = \\gamma_2 + U \\cap W$，即 $\\sigma$ 是单射。\n\n**2. 满射性**  \n任取 $a + U \\cap W \\in U/(U \\cap W)$，取 $\\gamma = a \\in U$，则 $\\sigma(\\gamma + W) = a + U \\cap W$，故 $\\sigma$ 是满射。\n\n**3. 保持加法与乘法**  \n- **加法**：  \n  $\\sigma((\\gamma_1 + \\delta_1) + W + (\\gamma_2 + \\delta_2) + W) = \\sigma((\\gamma_1 + \\gamma_2 + \\delta_1 + \\delta_2) + W) = (\\gamma_1 + \\gamma_2) + U \\cap W = \\sigma(\\gamma_1 + W) + \\sigma(\\gamma_2 + W)$。  \n- **乘法**：  \n  $\\sigma(k(\\gamma + W)) = k\\gamma + U \\cap W = k(\\gamma + U \\cap W)$，即 $\\sigma$ 保持纯量乘法。\n\n综上，$\\sigma$ 是双射且保持加法与乘法，故 $(U + W)/W \\cong U/(U \\cap W)$。  \n\n**答案**：$(U + W)/W \\cong U/(U \\cap W)$。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答完整地给出了同构映射的定义，并验证了单射、满射和运算保持性，结论正确，得2分。忠诚性：模型回答严格基于参考资料中的定义和推导，没有引入额外信息，得2分。答案相关性：模型直接回答了问题，内容完全相关，得2分。上下文相关性：参考资料包含了完整的证明过程，与问题高度相关，得2分。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在数学上基本正确，但存在一些不完整之处和简化。在映射定义上，模型没有明确说明如何从 $(U + W)/W$ 中的元素 $\\gamma + \\delta + W$ 中提取 $\\gamma$，而参考答案中明确说明了 $\\gamma \\in U, \\delta \\in W$。在单射性证明中，模型缺少了一些中间步骤，直接跳到了结论。忠诚性方面，模型回答中的所有陈述都能在参考资料中找到支持，虽然在细节处理上有所简化，但没有超出参考资料的范围。答案相关性方面，模型回答完整地回答了问题，没有偏离主题或包含无关内容。上下文相关性方面，参考资料[1]和[2]直接提供了与题目完全相同的证明过程，能够充分回答所问问题。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "根据参考资料中的例题，证明 $(U + W)/W \\cong U/(U \\cap W)$ 的步骤如下：\n\n1. **定义映射 $\\sigma$**：  \n   设 $\\sigma: (U + W)/W \\to U/(U \\cap W)$ 为映射，定义为：  \n   $$\n   \\sigma\\left[(\\gamma + \\delta) + W\\right] = \\gamma + (U \\cap W)\n   $$  \n   其中 $\\gamma \\in U$, $\\delta \\in W$。\n\n2. **验证 $\\sigma$ 保持加法**：  \n   对任意 $(\\gamma_1 + \\delta_1) + W$ 和 $(\\gamma_2 + \\delta_2) + W$，  \n   $$\n   \\sigma\\left[(\\gamma_1 + \\delta_1 + \\gamma_2 + \\delta_2) + W\\right] = (\\gamma_1 + \\gamma_2) + (U \\cap W)\n   $$  \n   而  \n   $$\n   \\sigma\\left[(\\gamma_1 + \\delta_1) + W\\right] + \\sigma\\left[(\\gamma_2 + \\delta_2) + W\\right] = (\\gamma_1 + \\gamma_2) + (U \\cap W)\n   $$  \n   两者一致，故 $\\sigma$ 保持加法。\n\n3. **验证 $\\sigma$ 保持纯量乘法**：  \n   对任意 $k \\in F$，  \n   $$\n   \\sigma\\left[k \\left((\\gamma_1 + \\delta_1) + W\\right)\\right] = k \\gamma_1 + (U \\cap W)\n   $$  \n   而  \n   $$\n   k \\sigma\\left[(\\gamma_1 + \\delta_1) + W\\right] = k (\\gamma_1 + (U \\cap W))\n   $$  \n   两者一致，故 $\\sigma$ 保持纯量乘法。\n\n4. **证明 $\\sigma$ 是双射**：  \n   - **单射**：若 $\\sigma[(\\gamma_1 + \\delta_1) + W] = \\sigma[(\\gamma_2 + \\delta_2) + W]$，则 $\\gamma_1 + \\gamma_2 \\in U \\cap W$，故 $\\gamma_1 = \\gamma_2$，$\\delta_1 = \\delta_2$，即 $\\sigma$ 是单射。  \n   - **满射**：对于任意 $u \\in U$，存在 $\\gamma = u \\in U$，使得 $\\sigma[(\\gamma + 0) + W] = \\gamma + (U \\cap W)$，故 $\\sigma$ 是满射。\n\n综上，$\\sigma$ 是一个同构映射，因此 $(U + W)/W \\cong U/(U \\cap W)$。  \n\n**答案**：  \n$$\n\\boxed{(U + W)/W \\cong U/(U \\cap W)}\n$$",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答基本正确，但单射证明有误（条件应为γ1-γ2∈U∩W，而非γ1+γ2∈U∩W），且推导不完整，因此扣1分。忠诚性：所有陈述均来自参考资料，无额外信息。答案相关性：直接回答问题，无偏离。上下文相关性：参考资料完全覆盖问题所需证明。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "从四个维度对模型回答进行评估：1) 正确性：模型回答整体结构正确，但在证明单射的关键步骤上存在错误，从'$\\gamma_1 + \\gamma_2 \\in U \\cap W$'直接得出'$\\gamma_1 = \\gamma_2$'是不正确的，应该是'$\\gamma_1 - \\gamma_2 \\in U \\cap W$'。因此评分为1分（部分正确）。2) 忠诚性：模型回答的大部分内容可以在参考资料中找到支持，但在单射证明步骤上与参考资料不一致，存在错误。因此评分为1分（大部分陈述有据可查，但包含错误）。3) 答案相关性：模型回答直接回应了问题，提供了完整的证明过程，没有偏离主题或多余内容。因此评分为2分（完全相关）。4) 上下文相关性：参考资料[1]和[2]直接包含了与问题相同的例题及其完整证明，与问题高度相关。因此评分为2分（高度相关）。",
+                "scores": {
+                    "correctness": 1,
+                    "faithfulness": 1,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 22,
+        "query": "求解下述例题：例8 设 $V$ 是 $q$ 元有限域 $F_{q}$ 上的 $n$ 维线性空间, $n \\geqslant 3$ 。 $V_{1}$ 和 $V_{2}$ 都是 $V$ 的 $n - 1$ 维子空间, 且 $V_{1} \\neq V_{2}$ 。\n（1）任给 $\\alpha \\in V$ ，求 $|V_{1}\\cap (\\alpha +V_{2})|$\n（2）任给 $\\alpha \\in V$ ，能否把 $\\alpha$ 分解成 $\\alpha = \\alpha_{1} - \\alpha_{2}$ （其中 $\\alpha_{1} \\in V_{1}, \\alpha_{2} \\in V_{2}$ ？如果 $\\alpha$ 可以这样分解，那么把 $\\alpha$ 这样分解的方式有多少种？",
+        "answer": "解（1）由于 $V_{1} \\neq V_{2}$ ，因此 $V_{1} + V_{2} \\supseteq V_{1}$ 。又由于 $\\dim V_{1} = n - 1$ ，因此 $\\dim (V_{1} + V_{2}) = n$ ，从而\n$$\n\\dim \\left(V _ {1} \\cap V _ {2}\\right) = \\dim V _ {1} + \\dim V _ {2} - \\dim \\left(V _ {1} + V _ {2}\\right) = n - 2 。\n$$\n由于 $V_{1} + V_{2} = V$ ，因此对于 $\\alpha \\in V$ ，存在 $\\alpha_{1}\\in V_{1},\\alpha_{2}\\in V_{2}$ ，使得 $\\alpha = \\alpha_{1} + \\alpha_{2}$ 。\n任取 $\\eta \\in V_1 \\cap V_2$ ，则 $\\eta + \\alpha_1 \\in V_1$ ， $\\eta + \\alpha_1 = \\eta + \\alpha - \\alpha_2 \\in \\alpha + V_2$ ，从而 $\\eta + \\alpha_1 \\in V_1 \\cap (\\alpha + V_2)$ ，于是 $\\sigma: \\eta \\longmapsto \\eta + \\alpha_1$ 是 $V_1 \\cap V_2$ 到 $V_1 \\cap (\\alpha + V_2)$ 的一个映射。\n设 $\\sigma(\\eta_1) = \\sigma(\\eta_2)$ ，其中 $\\eta_1, \\eta_2 \\in V_1 \\cap V_2$ ，则 $\\eta_1 + \\alpha_1 = \\eta_2 + \\alpha_1$ ，从而 $\\eta_1 = \\eta_2$ ，因此 $\\sigma$ 是单射。\n任取 $\\beta \\in V_1 \\cap (\\alpha + V_2)$ ，令 $\\delta = \\beta - \\alpha_1$ ，则 $\\delta \\in V_1$ 。\n由于 $\\beta \\in \\alpha + V_2$ ，因此存在 $\\gamma_2 \\in V_2$ ，使得 $\\beta = \\alpha + \\gamma_2$ ，从而 $\\delta = \\alpha + \\gamma_2 - \\alpha_1 = \\alpha_2 + \\gamma_2 \\in V_2$ ，因此 $\\delta \\in V_1 \\cap V_2$ ，且 $\\sigma(\\delta) = \\delta + \\alpha_1 = (\\beta - \\alpha_1) + \\alpha_1 = \\beta$ 。\n这证明了 $\\sigma$ 是满射，从而 $\\sigma$ 是双射，于是\n$$\n\\left| V _ {1} \\cap \\left(\\alpha + V _ {2}\\right) \\right| = \\left| V _ {1} \\cap V _ {2} \\right| = \\left| F _ {q} ^ {n - 2} \\right| = q ^ {n - 2} 。\n$$\n$$\n\\begin{array}{l} \\alpha = \\alpha_ {1} - \\alpha_ {2}, \\alpha_ {1} \\in V _ {1}, \\alpha_ {2} \\in V _ {2} \\tag {2} \\\\ \\Longleftrightarrow \\alpha_ {1} = \\alpha + \\alpha_ {2}, \\alpha_ {1} \\in V _ {1}, \\alpha_ {2} \\in V _ {2} \\\\ \\Longleftrightarrow \\alpha_ {1} \\in V _ {1} \\cap (\\alpha + V _ {2}), \\\\ \\end{array}\n$$\n由于 $V_{1} \\cap (\\alpha + V_{2})$ 非空集，因此 $\\alpha$ 可以分解成 $\\alpha = \\alpha_{1} - \\alpha_{2}$ ，其中 $\\alpha_{1} \\in V_{1}, \\alpha_{2} \\in V_{2}$ 。\n给定 $V$ 中向量 $\\alpha$ 后， $\\alpha$ 作这样分解的方式数目等于分解式中 $\\alpha_{1}$ 的取法数目。\n从上述推导过程知道， $\\alpha_{1}$ 的取法数目等于 $|V_{1} \\cap (\\alpha + V_{2})|$ ，因此 $\\alpha$ 作这样分解的方式数目等于 $q^{n-2}$ 。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "（1）由于 $V_1 + V_2 = V$，且 $\\dim V_1 = \\dim V_2 = n-1$，根据维数公式有：\n$$\n\\dim(V_1 \\cap V_2) = \\dim V_1 + \\dim V_2 - \\dim(V_1 + V_2) = (n-1) + (n-1) - n = n-2.\n$$\n因此，$|V_1 \\cap V_2| = q^{n-2}$。  \n进一步推导可知，$|V_1 \\cap (\\alpha + V_2)| = |V_1 \\cap V_2| = q^{n-2}$。\n\n（2）存在分解：由于 $V_1 \\cap (\\alpha + V_2) \\neq \\varnothing$，故存在 $\\alpha_1 \\in V_1$ 和 $\\alpha_2 \\in V_2$ 使得 $\\alpha = \\alpha_1 - \\alpha_2$。  \n分解方式的数目等于 $|V_1 \\cap (\\alpha + V_2)| = q^{n-2}$。\n\n**答案：**  \n（1）$|V_1 \\cap (\\alpha + V_2)| = \\boxed{q^{n-2}}$；  \n（2）可以分解，方式数目为 $\\boxed{q^{n-2}}$。",
+            "deepseek": {
+                "reasoning": "正确性：模型回答正确给出了两个问题的答案，与参考答案一致，且步骤完整。\n忠诚性：模型回答的所有内容均可在参考资料中找到直接支持，没有超出资料的内容。\n答案相关性：模型回答直接回应了问题，没有无关内容。\n上下文相关性：参考资料包含了完整的解题过程和答案，高度相关。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在数学上完全正确，完整地回答了问题的两个部分。所有陈述都能在参考资料中找到直接支持，没有引入外部知识。模型回答直接针对问题，没有偏离主题或包含无关内容。参考资料与问题高度相关，包含所有必要信息。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        },
+        "Agent": {
+            "response": "（1）由资料[2]可知，$|V_1 \\cap (\\alpha + V_2)| = |V_1 \\cap V_2| = q^{n-2}$。  \n（2）由于$V_1 \\cap (\\alpha + V_2)$非空，故$\\alpha$可分解为$\\alpha = \\alpha_1 - \\alpha_2$，其中$\\alpha_1 \\in V_1$，$\\alpha_2 \\in V_2$。分解方式的数目等于$|V_1 \\cap (\\alpha + V_2)| = q^{n-2}$。  \n\n**答案：**  \n（1）$\\boxed{q^{n-2}}$  \n（2）$\\boxed{q^{n-2}}$",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "正确性：模型回答与参考答案一致，数学上正确完整。忠诚性：所有陈述均直接来自参考资料[2]，无额外信息。答案相关性：直接回答了问题的两个部分，无多余内容。上下文相关性：参考资料[2]包含了完整的解答过程，高度相关。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            },
+            "GLM": {
+                "reasoning": "1. 正确性：模型回答完全正确且完整。对于问题(1)，正确得出 $|V_1 \\cap (\\alpha + V_2)| = q^{n-2}$；对于问题(2)，正确指出$\\alpha$可以分解为$\\alpha = \\alpha_1 - \\alpha_2$，且分解方式数目为$q^{n-2}$，这与参考答案一致。\n2. 忠诚性：模型回答严格受限于提供的参考资料。所有陈述都能在参考资料[1]和[2]中找到直接支持，没有添加参考资料未提及的内容。\n3. 答案相关性：模型回答直接回应了问题的两个部分，没有偏离主题或添加无关内容，完全相关。\n4. 上下文相关性：参考资料[1]和[2]直接包含了例题的完整解答，与问题高度相关，能够充分回答所问问题。",
+                "scores": {
+                    "correctness": 2,
+                    "faithfulness": 2,
+                    "answer_relevance": 2,
+                    "context_relevance": 2
+                }
+            }
+        }
+    },
+    {
+        "id": 23,
+        "query": "求解下述证明：例5 设 $\\mathcal{A}, \\mathcal{B}$ 都是域 $F$ 上线性空间 $V$ 上的幂等变换，证明：\n（1） $\\mathcal{A}$ 与 $\\mathcal{B}$ 有相同的象当且仅当 $\\mathcal{AB} = \\mathcal{B}, \\mathcal{BA} = \\mathcal{A}$\n（2） $\\mathcal{A}$ 与 $\\mathcal{B}$ 有相同的核当且仅当 $\\mathcal{AB} = \\mathcal{A},\\mathcal{BA} = \\mathcal{B}$",
+        "answer": "证明 由于 $\\mathcal{A},\\mathcal{B}$ 都是 $V$ 上的幂等变换，因此根据本节命题3得， $\\mathcal{A}$ 是平行于Ker $\\mathcal{A}$ 在 $\\operatorname {Im}\\mathcal{A}$ 上的投影， $\\mathcal{B}$ 是平行于Ker $\\mathcal{B}$ 在 $\\operatorname {Im}\\mathcal{B}$ 上的投影。\n（1）必要性。\n设 $\\operatorname{Im} \\mathcal{A} = \\operatorname{Im} \\mathcal{B}$ 。\n任取 $\\alpha \\in V$ ，有 $\\mathcal{B}_{\\alpha} \\in \\operatorname{Im} \\mathcal{B}$ ，由已知条件得， $\\mathcal{B}_{\\alpha} \\in \\operatorname{Im} \\mathcal{A}$ 。\n根据投影的性质(9.1节的定理2)得\n$$\n\\mathcal {A} (\\mathcal {B} \\alpha) = \\mathcal {B} \\alpha ,\n$$\n由此得出， $\\mathcal{AB} = \\mathcal{B}$ 。由于 $\\mathcal{A}$ 与 $\\mathcal{B}$ 的地位对称，因此也有 $\\mathcal{BA} = \\mathcal{A}$\n充分性。\n设 $\\mathcal{AB} = \\mathcal{B}, \\mathcal{BA} = \\mathcal{A}$ 。\n任取 $\\gamma \\in \\operatorname{Im} \\mathcal{A}$ 。\n由投影的性质得， $\\mathcal{A}\\gamma = \\gamma$ ，由已知条件得， $(\\mathcal{BA})\\gamma = \\mathcal{A}\\gamma = \\gamma$ ，从而 $\\mathcal{B}(\\mathcal{A}\\gamma) = \\gamma$ ，于是 $\\gamma \\in \\operatorname{Im} \\mathcal{B}$ 。\n因此 $\\operatorname{Im} \\mathcal{A} \\subseteq \\operatorname{Im} \\mathcal{B}$ 。\n同理可证， $\\operatorname{Im} \\mathcal{B} \\subseteq \\operatorname{Im} \\mathcal{A}$ ，于是 $\\operatorname{Im} \\mathcal{A} = \\operatorname{Im} \\mathcal{B}$ 。\n(2）必要性。\n设 $\\mathrm{Ker}\\mathcal{A} = \\mathrm{Ker}\\mathcal{B}$ 。\n根据命题3得， $V = \\operatorname {Im}\\mathcal{A}\\oplus \\operatorname {Ker}\\mathcal{A}$ 。\n任取 $\\alpha \\in V$ ，有\n$$\n\\alpha = \\alpha_ {1} + \\alpha_ {2}, \\quad \\alpha_ {1} \\in \\operatorname {I m} \\mathcal {A}, \\quad \\alpha_ {2} \\in \\operatorname {K e r} \\mathcal {A},\n$$\n于是 $\\alpha -\\alpha_{1}\\in \\mathrm{Ker}\\mathcal{A}$ 。\n由已知条件得， $\\alpha -\\alpha_{1}\\in \\mathrm{Ker}\\mathcal{B}$ ，于是 $\\mathcal{B}(\\alpha -\\alpha_1) = 0$ ，即 $\\mathcal{B}\\alpha = \\mathcal{B}\\alpha_{1}$ 。\n由于 $\\mathcal{A}$ 是平行于 $\\mathrm{Ker}\\mathcal{A}$ 在 $\\operatorname {Im}\\mathcal{A}$ 上的投影，因此 $\\mathcal{A}\\alpha = \\alpha_{1}$ ，从而\n$$\n(\\mathcal {B} \\mathcal {A}) _ {\\alpha} = \\mathcal {B} (\\mathcal {A} _ {\\alpha}) = \\mathcal {B} _ {\\alpha_ {1}} = \\mathcal {B} _ {\\alpha} 。\n$$\n由此得出， $\\mathcal{BA} = \\mathcal{B}$ 。由于 $\\mathcal{A}$ 与 $\\mathcal{B}$ 的地位对称，因此也有 $\\mathcal{AB} = \\mathcal{A}$\n充分性。\n设 $\\mathcal{AB} = \\mathcal{A},\\mathcal{BA} = \\mathcal{B}$ 。\n任取 $\\delta \\in \\mathrm{Ker}\\mathcal{A}$ ，则 $\\mathcal{A}\\delta = 0$ ，从而 $\\mathcal{BA}\\delta = 0$ 。\n由于 $\\mathcal{BA} = \\mathcal{B}$ ，因此 $\\mathcal{B}\\delta = 0$ ，从而 $\\delta \\in \\mathrm{Ker}\\mathcal{B}$ ，于是 $\\mathrm{Ker}\\mathcal{A}\\subseteq \\mathrm{Ker}\\mathcal{B}$ 。\n同理可证 $\\mathrm{Ker}\\mathcal{B}\\subseteq \\mathrm{Ker}\\mathcal{A}_{\\circ}$ 因此 $\\mathrm{Ker}\\mathcal{A} = \\mathrm{Ker}\\mathcal{B}_{\\circ}$",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "",
+            "loop_counter": 0,
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 24,
+        "query": "求解下述例题：例10 设 $\\mathcal{A}$ 是数域 $K$ 上 $n$ 维线性空间 $V$ 上的线性变换，它在 $V$ 的一个基 $\\alpha_{1},\\alpha_{2},\\dots,\\alpha_{n}$ 下的矩阵 $\\mathbf{A}$ 为（空白处的元素为0，以后同此约定）\n$$\n\\mathbf {A} = \\left( \\begin{array}{c c c c c} & & & & 1 \\\\ & & & 1 \\\\ & & \\ddots & & \\\\ 1 & & & & \\\\ 1 & & & & \\end{array} \\right), \\tag {17}\n$$\n试问： $\\mathcal{A}$ 是否可对角化？如果 $\\mathcal{A}$ 可对角化，求 $V$ 的一个基，使得 $\\mathcal{A}$ 在此基下的矩阵为对角矩阵，且写出这个对角矩阵。",
+        "answer": "解 直接计算得， $A^2 = I$ ，因此 $\\mathcal{A}$ 是对合变换，从而根据本节习题第7题得， $\\mathcal{A}$ 可对角化。\n情形1 $n = 2m + 1$ 。此时\n$$\n\\boldsymbol {I} + \\boldsymbol {A} = \\left( \\begin{array}{c c c c c c c c c} 1 & & & & & & & & 1 \\\\ & 1 & & & & & & 1 \\\\ & & \\ddots & & & & \\ddots & & \\\\ & & & 1 & & 1 & & \\\\ & & & & 2 & & & \\\\ & & & 1 & & 1 & & \\\\ & & \\ddots & & & & \\ddots & \\\\ & 1 & & & & & & 1 \\\\ 1 & & & & & & & 1 \\end{array} \\right), \\tag {18}\n$$\n从而 $\\operatorname{rank}(\\mathbf{I} + \\mathbf{A}) = m + 1$ 。根据本节习题第7题得， $\\mathcal{A}$ 的标准形为\n$$\n\\boldsymbol {D} _ {1} = \\left( \\begin{array}{c c} I _ {m + 1} & 0 \\\\ 0 & - I _ {m} \\end{array} \\right), \\tag {19}\n$$于是存在 $2m + 1$ 级可逆矩阵 $\\pmb{P}_1$ ，使得 $\\pmb{P}_1^{-1}\\pmb{A}\\pmb{P}_1 = \\pmb{D}_1$ ，从而 $\\mathbf{A}\\mathbf{P}_1 = \\mathbf{P}_1\\mathbf{D}$ 。设 $\\pmb{P}_1 = (x_{ij})$ ，则\n$$\n\\begin{array}{l} \\left( \\begin{array}{c c c c c c} x _ {2 m + 1, 1} & \\dots & x _ {2 m + 1, m + 1} & x _ {2 m + 1, m + 2} & \\dots & x _ {2 m + 1, 2 m + 1} \\\\ x _ {2 m, 1} & \\dots & x _ {2 m, m + 1} & x _ {2 m, m + 2} & \\dots & x _ {2 m, 2 m + 1} \\\\ \\vdots & & \\vdots & \\vdots & & \\vdots \\\\ x _ {m + 1, 1} & \\dots & x _ {m + 1, m + 1} & x _ {m + 1, m + 2} & \\dots & x _ {m + 1, 2 m + 1} \\\\ \\vdots & & \\vdots & \\vdots & & \\vdots \\\\ x _ {2 1} & \\dots & x _ {2, m + 1} & x _ {2, m + 2} & \\dots & x _ {2, 2 m + 1} \\\\ x _ {1 1} & \\dots & x _ {1, m + 1} & x _ {1, m + 2} & \\dots & x _ {1, 2 m + 1} \\end{array} \\right) \\\\ = \\left( \\begin{array}{c c c c c c} x _ {1 1} & \\dots & x _ {1, m + 1} & - x _ {1, m + 2} & \\dots & - x _ {1, 2 m + 1} \\\\ x _ {2 1} & \\dots & x _ {2, m + 1} & - x _ {2, m + 2} & \\dots & - x _ {2, 2 m + 1} \\\\ \\vdots & & \\vdots & \\vdots & & \\vdots \\\\ x _ {m + 1, 1} & \\dots & x _ {m + 1, m + 1} & - x _ {m + 1, m + 2} & \\dots & - x _ {m + 1, 2 m + 1} \\\\ \\vdots & & \\vdots & \\vdots & & \\vdots \\\\ x _ {2 m, 1} & \\dots & x _ {2 m, m + 1} & - x _ {2 m, m + 2} & \\dots & - x _ {2 m, 2 m + 1} \\\\ x _ {2 m + 1, 1} & \\dots & x _ {2 m + 1, m + 1} & - x _ {2 m + 1, m + 2} & \\dots & - x _ {2 m + 1, 2 m + 1} \\end{array} \\right) 。 \\\\ \\end{array}\n$$由此得出\n$$\n\\boldsymbol {P} _ {1} = \\left( \\begin{array}{c c c c c c} x _ {1 1} & \\dots & x _ {1, m + 1} & x _ {1, m + 2} & \\dots & x _ {1, 2 m + 1} \\\\ x _ {2 1} & \\dots & x _ {2, m + 1} & x _ {2, m + 2} & \\dots & x _ {2, 2 m + 1} \\\\ \\vdots & & \\vdots & \\vdots & & \\vdots \\\\ x _ {m + 1, 1} & \\dots & x _ {m + 1, m + 1} & 0 & \\dots & 0 \\\\ \\vdots & & \\vdots & \\vdots & & \\vdots \\\\ x _ {2 1} & \\dots & x _ {2, m + 1} & - x _ {2, m + 2} & \\dots & - x _ {2, 2 m + 1} \\\\ x _ {1 1} & \\dots & x _ {1, m + 1} & - x _ {1, m + 2} & \\dots & - x _ {1, 2 m + 1} \\end{array} \\right) 。\n$$\n由于 $P_{1}$ 可逆，因此可取\n$$\n\\boldsymbol {P} _ {1} = \\left( \\begin{array}{c c c c c c c c c} 1 & & & & & & & & 1 \\\\ & 1 & & & & & & 1 & \\\\ & & \\ddots & & & & \\ddots & & \\\\ & & & 1 & & 1 & & \\\\ & & & & 1 & & & \\\\ & & & 1 & & - 1 & & \\\\ & & \\ddots & & & & \\ddots & \\\\ & 1 & & & & & - 1 & \\\\ 1 & & & & & & & - 1 \\end{array} \\right) 。 \\tag {20}\n$$\n于是 $\\mathcal{A}$ 在 $V$ 的基\n$$\n\\alpha_ {1} + \\alpha_ {2 m + 1}, \\alpha_ {2} + \\alpha_ {2 m}, \\dots , \\alpha_ {m} + \\alpha_ {m + 2}, \\alpha_ {m + 1}, \\alpha_ {m} - \\alpha_ {m + 2}, \\dots , \\alpha_ {2} - \\alpha_ {2 m}, \\alpha_ {1} - \\alpha_ {2 m + 1}\n$$\n下的矩阵为上述对角矩阵 $D_{1}$ 。情形2 $n = 2m$ 。此时\n$$\n\\boldsymbol {I} + \\boldsymbol {A} = \\left( \\begin{array}{c c c c c c c c} 1 & & & & & & & 1 \\\\ & 1 & & & & & 1 \\\\ & & \\ddots & & & \\ddots & & \\\\ & & & 1 & 1 & & \\\\ & & & 1 & 1 & & \\\\ & & \\ddots & & & \\ddots & \\\\ & 1 & & & & & 1 \\\\ 1 & & & & & & 1 \\end{array} \\right), \\tag {21}\n$$\n于是 $\\operatorname{rank}(\\mathbf{I} + \\mathbf{A}) = m$ ，从而 $\\mathcal{A}$ 的标准形为\n$$\n\\boldsymbol {D} _ {2} = \\left( \\begin{array}{c c} I _ {m} & 0 \\\\ 0 & - I _ {m} \\end{array} \\right), \\tag {22}\n$$\n因此存在 $2m$ 级可逆矩阵 $\\pmb{P}_2$ ，使得 $\\pmb{P}_2^{-1}\\pmb{A}\\pmb{P}_2 = \\pmb{D}_2$ ，即 $\\mathbf{A}\\mathbf{P}_2 = \\mathbf{P}_2\\mathbf{D}_2$ 。类似于情形1的方法，经过计算，可取\n$$\n\\boldsymbol {P} _ {2} = \\left( \\begin{array}{c c c c c c c c} 1 & & & & & & & 1 \\\\ & 1 & & & & & 1 & \\\\ & & \\ddots & & & \\ddots & & \\\\ & & & 1 & 1 & & & \\\\ & & & 1 & - 1 & & & \\\\ & & \\ddots & & & \\ddots & & \\\\ & 1 & & & & - 1 & \\\\ 1 & & & & & & - 1 \\end{array} \\right) 。 \\tag {23}\n$$\n于是 $\\mathcal{A}$ 在 $V$ 的基\n$$\n\\alpha_ {1} + \\alpha_ {2 m}, \\alpha_ {2} + \\alpha_ {2 m - 1}, \\dots , \\alpha_ {m} + \\alpha_ {m + 1}, \\alpha_ {m} - \\alpha_ {m + 1}, \\dots , \\alpha_ {2} - \\alpha_ {2 m - 1}, \\alpha_ {1} - \\alpha_ {2 m}\n$$\n下的矩阵为上述对角矩阵 $D_{2}$ 。",
+        "Original": {
+            "response": "$\\mathcal{A}$ 是单位矩阵，因此其特征值均为1，且每个特征向量都是标准基向量。因此，$\\mathcal{A}$ 可对角化，对应的对角矩阵为单位矩阵。\n\n**答案：**  \n$\\mathcal{A}$ 可对角化，其对角矩阵为单位矩阵，即  \n$$\n\\text{diag}(1, 1, \\dots, 1)\n$$",
+            "deepseek": {
+                "reasoning": "正确性：模型回答错误，因为矩阵A不是单位矩阵，而是反单位矩阵，其特征值为±1，对角矩阵应为diag(1,...,1,-1,...,-1)或类似形式。忠诚性：参考资料为空，模型输出了具体知识，因此忠诚性为0。答案相关性：模型回答了问题，但答案错误，仍算相关，得2分。上下文相关性：参考资料为空，无法判断相关性，但根据定义，空资料应得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答错误地认为线性变换$\\mathcal{A}$对应的矩阵A是单位矩阵，而实际上A是一个在反对角线上有1，其余位置为0的矩阵。根据参考答案，$\\mathcal{A}$是对合变换，满足$A^2 = I$，但不是单位矩阵。由于参考资料为空，而模型输出了具体知识，忠诚性得分为0。模型虽然尝试回答问题，但答案错误，答案相关性得分为1。参考资料为空，上下文相关性得分为0。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "该线性变换$\\mathcal{A}$在基$\\alpha_1, \\alpha_2, \\dots, \\alpha_n$下的矩阵为对角矩阵，其对角线元素均为1。因此，$\\mathcal{A}$可对角化，且其对角矩阵为：\n\n$$\n\\mathbf{D} = \\left( \\begin{array}{c c c c c} 1 & 0 & 0 & \\cdots & 0 \\\\ 0 & 1 & 0 & \\cdots & 0 \\\\ 0 & 0 & 1 & \\cdots & 0 \\\\ \\vdots & \\vdots & \\vdots & \\ddots & 0 \\\\ 0 & 0 & 0 & \\cdots & 1 \\end{array} \\right)\n$$\n\n**证明过程：**  \n1. **矩阵结构分析**：题目中给出的矩阵为对角矩阵，对角线元素均为1，其他元素为0。  \n2. **可对角化的条件**：对角矩阵的特征值均为1，且其特征多项式为$(x-1)^n$，满足可对角化的条件。  \n3. **基的选择**：原基$\\alpha_1, \\alpha_2, \\dots, \\alpha_n$即为对角矩阵的基，因此$\\mathcal{A}$在该基下的矩阵为对角矩阵$\\mathbf{D}$。  \n\n**结论**：$\\mathcal{A}$可对角化，其对角矩阵为上述形式。",
+            "loop_counter": 1,
+            "deepseek": {
+                "reasoning": "正确性：模型回答错误，因为题目中矩阵A不是对角矩阵，且参考答案显示A^2=I，特征值为±1，模型错误地认为特征值全为1。忠诚性：参考资料未提供任何关于该问题的信息，模型回答中的陈述（如矩阵为对角矩阵）在参考资料中无依据，因此得0分。答案相关性：模型回答直接回应了问题，但回答错误，不过仍相关。上下文相关性：参考资料与问题完全无关，得0分。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 2,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "模型回答在正确性方面得0分，因为它错误地将题目中的矩阵识别为对角矩阵，而实际上这是一个反对角矩阵。忠诚性方面得0分，因为模型回答没有基于提供的参考资料。答案相关性方面得1分，因为模型尝试回答了问题，但由于对矩阵结构的错误理解，回答不正确。上下文相关性方面得0分，因为提供的参考资料与题目相关性较低。",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 1,
+                    "context_relevance": 0
+                }
+            }
+        }
+    },
+    {
+        "id": 25,
+        "query": "求解下述例题：例11 设 $V$ 是域 $F$ 上的线性空间， $W, U_1, U_2$ 都是 $V$ 的子空间，且 $V = U_1 \\oplus W$ ， $V = U_2 \\oplus W$ 。用 $\\mathcal{P}_i$ 表示平行于 $W$ 在 $U_i$ 上的投影， $i = 1, 2$ 。令 $\\mathcal{A} = \\mathcal{P}_2\\mathcal{P}_1$ 。证明：\n(1) $\\mathcal{A} = \\mathcal{P}_2$\n（2）设 $U_{1}$ 和 $U_{2}$ 都是有限维的，则 $\\mathcal{A}$ 把 $U_{1}$ 的一个基映成 $U_{2}$ 的一个基；\n（3）设 $\\dim V = n$ ，则 $V$ 中存在一个基，使得 $\\mathcal{A}$ 在此基下的矩阵是对角矩阵，并且写出这个对角矩阵。",
+        "answer": "证明 (1) 任取 $\\alpha \\in V$ , 由于 $V = U_{1} \\oplus W$ , 因此\n$$\n\\alpha = \\alpha_ {1} + \\delta_ {1}, \\quad \\alpha_ {1} \\in U _ {1}, \\quad \\delta_ {1} \\in W, \\tag {24}\n$$\n由于 $\\mathcal{P}_i$ 是平行于 $W$ 在 $U_{i}$ 上的投影， $i = 1,2$ ，因此根据9.1节的定理2得\n$$\n\\mathcal {P} _ {2} (\\alpha) = \\mathcal {P} _ {2} (\\alpha_ {1}) = \\mathcal {P} _ {2} \\left(\\mathcal {P} _ {1} (\\alpha)\\right) = \\left(\\mathcal {P} _ {2} \\mathcal {P} _ {1}\\right) (\\alpha), \\quad \\forall \\alpha \\in V,\n$$\n由此得出 $\\mathcal{P}_2 = \\mathcal{P}_2\\mathcal{P}_1 = \\mathcal{A}$\n（2）在 $U_{1}$ 中取一个基 $\\eta_1,\\eta_2,\\dots ,\\eta_s$ 。设\n$$\nk _ {1} \\mathcal {P} _ {2} (\\eta_ {1}) + k _ {2} \\mathcal {P} _ {2} (\\eta_ {2}) + \\dots + k _ {s} \\mathcal {P} _ {2} (\\eta_ {s}) = 0, \\tag {25}\n$$\n则 $P_{2}(k_{1}\\eta_{1} + k_{2}\\eta_{2} + \\dots +k_{s}\\eta_{s}) = 0,$\n从而 $k_{1}\\eta_{1} + k_{2}\\eta_{2} + \\dots +k_{s}\\eta_{s}\\in \\mathrm{Ker}\\mathcal{P}_{2},$由于 $V = U_{2} \\oplus W$ ，因此根据9.2节推论2得， $W = \\operatorname{Ker} \\mathcal{P}_2$ ，于是 $k_{1}\\eta_{1} + k_{2}\\eta_{2} + \\dots + k_{s}\\eta_{s} \\in W$ 。又 $k_{1}\\eta_{1} + k_{2}\\eta_{2} + \\dots + k_{s}\\eta_{s} \\in U_{1}$ ，由于 $V = U_{1} \\oplus W$ ，因此\n$$\nk _ {1} \\eta_ {1} + k _ {2} \\eta_ {2} + \\dots + k _ {s} \\eta_ {s} = 0,\n$$\n于是 $k_{1} = k_{2} = \\dots = k_{s} = 0$\n从而 $\\mathcal{P}_2(\\eta_1),\\mathcal{P}_2(\\eta_2),\\dots ,\\mathcal{P}_2(\\eta_s)$ 线性无关。\n由于 $V = U_{1} \\oplus W, V = U_{2} \\oplus W$ ，因此根据8.4节典型例题的例1得， $U_{1} \\cong V / W, U_{2} \\cong V / W$ ，从而 $U_{1} \\cong U_{2}$ ，因此 $\\dim U_{2} = \\dim U_{1} = s$ ，于是 $\\mathcal{P}_2(\\eta_1), \\mathcal{P}_2(\\eta_2), \\dots, \\mathcal{P}_2(\\eta_s)$ 是 $U_{2}$ 的一个基。\n由于 $\\mathcal{P}_2 = \\mathcal{A}$ ，因此 $\\mathcal{A}$ 把 $U_{1}$ 的一个基 $\\eta_1, \\eta_2, \\dots, \\eta_s$ 映成 $U_{2}$ 的一个基 $\\mathcal{A}(\\eta_1), \\mathcal{A}(\\eta_2), \\dots, \\mathcal{A}(\\eta_s)$ 。3）在 $U_{2}$ 中取一个基 $\\beta_{1},\\beta_{2},\\dots ,\\beta_{s}$ ，在 $W$ 中取一个基 $\\delta_1,\\delta_2,\\dots ,\\delta_t$ ，由于投影 $\\mathcal{P}_2$ 是 $V$ 上的幂等变换，因此 $\\mathcal{P}_2$ 在 $V$ 的一个基 $\\beta_{1},\\beta_{2},\\dots ,\\beta_{s},\\delta_{1},\\delta_{2},\\dots ,\\delta_{t}$ 下的矩阵为\n$$\n\\boldsymbol {D} = \\left( \\begin{array}{c c} I _ {s} & 0 \\\\ 0 & 0 \\end{array} \\right), \\tag {26}\n$$\n其中 $s = \\mathrm{rank}(\\mathcal{P}_2)$\n由于 $\\mathcal{A} = \\mathcal{P}_2$ ，因此 $\\mathcal{A}$ 在 $V$ 的上述基下的矩阵为对角矩阵 $\\pmb{D}$ 。\n点评：例11证明的关键是去证 $\\mathcal{P}_2\\mathcal{P}_1 = \\mathcal{P}_2$ ，这时 $V,W,U_{1},U_{2}$ 都可以是无限维的；第(2)小题才需要假设 $U_{1},U_{2}$ 是有限维的，此时 $V$ 仍可以是无限维的；第(3)小题才需要假设 $V$ 是有限维的。",
+        "Original": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "RAG": {
+            "response": "",
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        },
+        "Agent": {
+            "response": "",
+            "loop_counter": 1,
+            "deepseek": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            },
+            "GLM": {
+                "reasoning": "",
+                "scores": {
+                    "correctness": 0,
+                    "faithfulness": 0,
+                    "answer_relevance": 0,
+                    "context_relevance": 0
+                }
+            }
+        }
+    }
+]

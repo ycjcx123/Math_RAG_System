@@ -1,6 +1,6 @@
 import re
 import logging
-from typing import Literal
+from typing import Literal, Optional
 from openai import OpenAI
 
 from src.utils.config_loader import load_config
@@ -107,22 +107,26 @@ class RouterNode:
             logging.error(f"路由节点 LLM 调用失败: {e}")
             return self.default_path
 
-    def _parse_output(self, llm_output: str) -> Literal["Chat", "Math"]:
+    def _parse_output(self, llm_output: str) -> Optional[Literal["Chat", "Math"]]:
         cleaned = llm_output.strip().upper()
-
         if re.search(r'\bCHAT\b', cleaned):
             return "Chat"
-        else:
-            # 任何包含 Math 或默认情况都走 Math
+        if re.search(r'\bMATH\b', cleaned):
             return "Math"
+        return None
 
     def route(self, question: str) -> Literal["Chat", "Math"]:
         logging.info(f"路由节点处理问题: {question[:60]}...")
-        llm_output = self._call_llm(question)
-        logging.info(f"路由节点 LLM 输出: {llm_output}")
-        route_decision = self._parse_output(llm_output)
-        logging.info(f"路由决策: {route_decision}")
-        return route_decision
+        for attempt in range(3):  # 首次 + 2 次重试
+            llm_output = self._call_llm(question)
+            logging.info(f"路由节点 LLM 输出: {llm_output}")
+            decision = self._parse_output(llm_output)
+            if decision is not None:
+                logging.info(f"路由决策: {decision}")
+                return decision
+            logging.warning(f"路由输出无法识别 ({llm_output!r})，重试 {attempt+1}/2")
+        logging.warning(f"重试 2 次后仍无法识别，走默认路径: {self.default_path}")
+        return self.default_path
 
     def __call__(self, state: dict) -> dict:
         question = state.get("question", "")
