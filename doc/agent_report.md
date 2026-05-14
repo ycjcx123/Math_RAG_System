@@ -60,6 +60,8 @@ class AgentState(TypedDict):
 
 **设计选择**：v2.1 曾有三元路径（Chat/Math/Math_RAG），实验发现小模型做"是否需要检索"的元判断准确率低。v2.2 改为统一走 Math，将"是否检索"下沉到 Reflective_Grader 的评分区间。
 
+v2.3在v2.2的基础上增加了PreRetrieve，使得能够在书中找到的原文的query，直接回答。
+
 ##### 2.2 MathSolverNode — 直接求解
 
 **职责**：不检索的前提下让模型直接尝试解答。
@@ -170,35 +172,92 @@ Top-1 → 上下文感知扩展（前向/后向）
 **裁判模型**：DeepSeek-chat + GLM-4 双裁判，从 correctness、faithfulness、answer_relevance、context_relevance 四个维度打分（0/1/2）。
 
 **Agent vs RAG-only 对比（测试集 A, 60 条）**：
+> 注:实际有效50条,在测试过程中,由于本地硬件问题,导致某些case被跳过
 
-```
-=================================================================
-系统            | correctness | faithfulness | answer_relevance | context_relevance
-                | avg  >=1%   | avg  >=1%    | avg   >=1%       | avg   >=1%
------------------------------------------------------------------
-RAG-only        | 1.52  87%   | 1.42  80.6%    | 1.92  100%       | 1.85  98.1%
-Agent(Fast-Track)|1.17  72.2%  | N/A   N/A    | 1.84  98.9%       | N/A   N/A
-Agent(RAG)      | 1.56  83.3%   | 1.50  83.3%    | 1.89  94.4%        | 1.83  94.4%
-=================================================================
-```
+| 系统             | correctness<br>avg ≥1%   | faithfulness<br>avg ≥1% | answer_relevance<br>avg ≥1% | context_relevance<br>avg ≥1%
+| :---             | :---:         | :---:        | :---:            | :---             
+|original          | 1.22   74%    | -            | 1.84  97%        | -
+|Agent(Fast-Track) |1.08    75%    |  -           | 1.75  95.8%      | -
+|RAG-only          | 1.63   92%    | 1.49  87%    | 1.9  100%        | 1.85  100%
+|Agent(RAG)        | 1.64   93.4%  | 1.61  90.8%  | 1.95  100%       | 1.92  100%
 
-Agent Fast-Track 正确率和回答相关性均优于 RAG-only，且零检索延迟。Agent RAG 路径指标低于 RAG-only，主要原因是检索策略不同——Agent 使用 Rewriter 生成的关键词检索，而 RAG-only 使用原始问题，原始问题的语义保真度更高。
+Agent Fast-Track 正确率低于original,但是占比略高。Agent RAG 路径指标高于 RAG-only。
 
 **路径分布（测试集 A）**：
 
+v2.2
 ```
 Fast-Track: 35 条 (58.3%)
 RAG:        21 条 (35.0%)  — loop=0: 20, loop=1: 1
 Fallback:    4 条 ( 6.7%)
 ```
 
-约 58% 的问题可通过 Fast-Track 直接回答，无需检索。
+v2.3
+```
+Fast-Track: 12 条 (24%)
+RAG:        38 条 (76%)  — loop=0: 38, loop=1: 0, loop=2:0
+Fallback:    0 条 ( 0%)
+```
 
+约 24% 的问题可通过 Fast-Track 直接回答，无需检索。\
+v2.2 Fast-Track占比58.3%（无PreRetrieve），v2.3降至24%（有PreRetrieve），说明PreRetrieve有效拦截了可以在书上直接找到的内容。
+
+**Agent vs RAG-only 对比（测试集 B, 25 条）**：
+> 注:实际有效24条,在测试过程中,由于本地硬件问题,导致某些case被跳过
+> 注:该测试集为压力测试,模型表现有限
+
+| 系统             | correctness<br>avg ≥1%   | faithfulness<br>avg ≥1% | answer_relevance<br>avg ≥1% | context_relevance<br>avg ≥1%
+| :---             | :---:         | :---:        | :---:            | :---             
+|original          | 0.46   43.8%    | -            | 1.46  83.3%        |  -
+|v2.3(Fast-Track) | 0.25    12.5%   |  -           | 1.63  100%      | -
+|RAG-only          | 0.73   58.3%    | 0.75  52.1%    | 1.71  91.7%        | 1.53  91.7%
+|v2.3(RAG)        | 0.65   57.5%    | 0.7  45%  | 1.65  90%       | 1.45  95%
 ---
+
+**路径分布（测试集 B）**：
+
+```
+Fast-Track: 4 条 (16.7%)
+RAG:        20 条 (83.3%)  — loop=0: 15, loop=1: 5, loop=2:0
+Fallback:    0 条 ( 0%)
+```
+约 16.7% 的问题可通过 Fast-Track 直接回答，无需检索。
+
+#### 第五阶段：结果分析
+- 5.1 在常规情况下,框架整体增益显著
+  - 关于回答正确性:Agent RAG路径correctness达1.64，与RAG-only(1.63)持平，均显著优于裸模型(1.22)。
+  - 测试集A中:Agent RAG路径在correctness、faithfulness、context_relevance上均优于RAG-only，证明Agent闭环（Grader评分+上下文聚合）对生成质量有正向作用。
+
+- 5.2 Fast-Track路径效果有限
+  - Fast-Track correcteness (1.08) 低于裸模型 (1.22)，分析原因：
+    - 1.7B模型自反能力弱，"生成→评分→重写"流程中，模型难以基于自身反馈有效修正
+    - Fast-Track意图识别可能将部分需检索的问题误判为简单问题
+
+- 5.3 在测试集A中,Fast-Track触发条数相较v2.2下滑(58.3%->24%)
+  - v2.3新增PreRetrieve节点后，部分原走Fast-Track的问题因检索置信度>0.9被拦截，转入RAG直接生成路径。这解释了Fast-Track占比从v2.2的58.3%下降至v2.3的24%。
+
+#### 第六阶段：结论、已知局限与优化方向
+
+**核心结论**：
+v2.3验证了"Agent闭环可提升RAG生成质量"的核心假设（测试集A：Agent RAG correctness 1.64 vs RAG-only 1.63），但暴露了小模型自反能力的瓶颈（Fast-Track correctness 1.08 < 裸模型 1.22）。
+
+**已知局限**：
+1. 小模型自反能力弱：Fast-Track路径效果低于裸模型，Self-Refine触发率极低
+2. 长证明Agent RAG表现下滑：测试集B中Agent RAG(0.65) < RAG-only(0.73)，推测系上下文遗忘与检索噪声
+3. 分布式检索在复杂问题中可能引入噪声：检索到问题本身而非解答
+
+**优化方向**：
+1. 引入外部Grader模型，解耦生成与评估
+2. 在3B/7B模型上验证扩展性
+3. 数据库升级：加入"定理-证明"双向索引
+
 
 #### 配置说明
 
 ```yaml
+generator:
+  n_ctx: 32768  # 最大上下文窗口
+  max_tokens: 16384
 agent:
   max_loop_count: 2              # RAG 重试上限
   self_refine_max: 2             # Self-Refine 轮次上限
@@ -228,7 +287,9 @@ agent:
 #### 部署说明
 
 1. **启动 Qdrant**：`docker run -d -p 6333:6333 -p 6334:6334 -v "${PWD}/qdrant_storage:/qdrant/storage:z" --name MathRAG qdrant/qdrant`
-2. **启动 llm.cpp server**：`docker run -d -p 8080:8080 ...`（建议 Qwen2.5-7B/14B 以获得最佳生成体验）
+2. **启动 llm.cpp server**：`docker run -d -p 8080:8080 ...` 
+- 生产环境建议采用vLLM替代llama.cpp以实现并发批处理，本地验证阶段使用llama.cpp以适配8GB显存约束。
+> python -m vllm.entrypoints.openai.api_server --model {model_path} --host 0.0.0.0 --port 8000 --served-model-name {model_name} --max-model-len 32768 --max-num-seqs 3 --gpu-memory-utilization 0.8 --dtype bfloat16
 3. **配置 API Key**：在 `configs/config.yaml` 或 `.env` 中配置 SiliconFlow API Key（Reranker）和 DeepSeek/GLM API Key（评测裁判）
 
 ```python
@@ -241,41 +302,25 @@ print(result["answer"])
 
 ```mermaid
 graph TD
-    subgraph "Agent Graph (LangGraph StateGraph)"
-        START --> Router
-        Router -- Chat --> Chat_Node
-        Router -- Math --> PreRetrieve
-        Router -- Fallback --> Fallback_Node
+    START --> Router{Router}
+    Router -- Chat --> Chat_Node
+    Router -- Math --> PreRetrieve
+    Router -- Fallback --> Fallback_Node
 
-        PreRetrieve -- score > 0.9 --> Generate
-        PreRetrieve -- score <= 0.9 --> Math_Solver
+    PreRetrieve -- score > 0.9 --> Generate
+    PreRetrieve -- score <= 0.9 --> Math_Solver
 
-        Math_Solver --> Reflective_Grader
-        Reflective_Grader -- score >= 85 --> Generate
-        Reflective_Grader -- 60 <= score < 85 --> Math_Solver
-        Reflective_Grader -- score < 60 --> Rewriter
+    Math_Solver --> Reflective_Grader
+    Reflective_Grader -- score >= 85 --> Generate
+    Reflective_Grader -- 60 <= score < 85 --> Math_Solver
+    Reflective_Grader -- score < 60 --> Rewriter
 
-        Rewriter --> Retrieve
-        Retrieve -- 相关 --> Generate
-        Retrieve -- 不相关+有次数 --> Rewriter
-        Retrieve -- 不相关+达上限 --> Fallback_Node
+    Rewriter --> Retrieve
+    Retrieve -- 相关 --> Generate
+    Retrieve -- 不相关+有次数 --> Rewriter
+    Retrieve -- 不相关+达上限 --> Fallback_Node
 
-        Generate --> END
-        Chat_Node --> END
-        Fallback_Node --> END
-    end
-
-    subgraph "底层 RAG 系统"
-        Qdrant[(Qdrant 向量库)]
-        Retriever[QdrantRetriever<br/>BGE-M3 Hybrid Search]
-        Reranker[BGE-Reranker-V2-M3]
-        Generator[Qwen3 LLM]
-    end
-
-    Retrieve --> Retriever
-    Retriever --> Qdrant
-    Retriever --> Reranker
-    Generate --> Generator
-    PreRetrieve --> Retriever
-    PreRetrieve --> Reranker
+    Generate --> END
+    Chat_Node --> END
+    Fallback_Node --> END
 ```

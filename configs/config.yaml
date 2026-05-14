@@ -119,12 +119,12 @@ retriever:
 
 # 生成的配置，影响src/generator
 generator:
-  model_name: "Qwen3-1.7B-Q8_0.gguf"
-  base_url: "http://localhost:8080/v1"
+  model_name: "qwen3"
+  base_url: "http://localhost:8000/v1"
   api_key: "llama-cpp"
   temperature: 0.1
-  n_ctx: 16384          # 与 --ctx-size 保持一致
-  max_tokens: 4096
+  n_ctx: 32768           # 与 --ctx-size 保持一致
+  max_tokens: 16384
 
 # Agentic RAG 配置 v2.3
 agent:
@@ -230,6 +230,7 @@ test:
       - 正确性应该基于标准数学知识和参考答案进行判断，而不限于提供的上下文。
       - 答案相关性不依赖正确性：即使答案错误，只要它在尝试回答问题，仍可得到较高的答案相关性分数。
       - 上下文相关性是独立维度，仅评估检索到的资料质量，不影响忠诚性或答案相关性（但忠诚性要求模型不超出资料）。
+      - 如果 模型回答 是 error, 那么直接回答正确性为 0，忠诚性为 0，答案相关性为 0，但上下文相关性仍需评估。
 
       输出格式：严格输出一个 JSON 对象，不要包含任何 Markdown 格式符号（如 ```json）或额外的解释文本。包含以下字段：
       - "reasoning": 一个字符串，包含对每个指标评分理由的简短说明。

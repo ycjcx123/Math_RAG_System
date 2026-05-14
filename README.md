@@ -1,4 +1,4 @@
-# MathRAG-Algebra: 语义感知的数学 Agentic RAG 系统
+# MathRAG-System: 语义感知的数学 Agentic RAG 系统
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Python](https://img.shields.io/badge/python-3.10%2B-green)
@@ -36,6 +36,7 @@
 
 ### 3. 语义感知切分与聚合 (Logic-aware Strategy)
 - **结构路径注入**：在每一个 Chunk 头部自动补全章节路径（如 `[第7章 > 7.1 > 定理]`），强化空间特征。
+- **三级语义切分**: L1根据“定义/定理/证明/…”切分，L2根据逻辑衔接词如“由于/因此/…”，L3根据符号切分。
 - **Block ID 关联**：基于数学逻辑边界（定义/定理/证明）分配 Block ID，在检索时实现“前向引理+后向推论”的动态上下文扩展。
 
 ---
@@ -44,49 +45,74 @@
 为了保证 README 的简洁性，详细的 **双轨检索流程图** 请参阅doc/rag_report.md：
 ```mermaid
 graph TD
-    A[用户问题] --> B{Router}
+    START --> Router{Router}
+    Router -- Chat --> Chat_Node
+    Router -- Math --> PreRetrieve
+    Router -- Fallback --> Fallback_Node
 
-    B -->|Chat| C[直接生成]
+    PreRetrieve -- score > 0.9 --> Generate
+    PreRetrieve -- score <= 0.9 --> Math_Solver
 
-    B -->|Math| D[Hybrid Retrieval]
+    Math_Solver --> Reflective_Grader
+    Reflective_Grader -- score >= 85 --> Generate
+    Reflective_Grader -- 60 <= score < 85 --> Math_Solver
+    Reflective_Grader -- score < 60 --> Rewriter
 
-    D --> E[Reranker]
+    Rewriter --> Retrieve
+    Retrieve -- 相关 --> Generate
+    Retrieve -- 不相关+有次数 --> Rewriter
+    Retrieve -- 不相关+达上限 --> Fallback_Node
 
-    E --> F{Score 判断}
-
-    F -->|高置信| G[Direct RAG]
-
-    F -->|低置信| H[Agent]
-    
-    H --> I[Math Solver]
-    I --> J[Grader]
-    J -->|高分| K[输出]
-    J -->|低分| L[RAG]
+    Generate --> END
+    Chat_Node --> END
+    Fallback_Node --> END
 ```
 
 ---
 
 ## 📊 实验表现
 
-- **测试基准**：基于《高等代数》标准教材构建的 85 条 QA 测试集（包含常规题与长证明压力测试）。
+- **测试基准**：基于《高等代数》标准教材构建的 85 条 QA 测试集（包含60条常规题与25条长证明压力测试）。
 
 - **测试模型**：Qwen3-1.7B（本地llama.cpp部署）。
-- **设计意图**：验证轻量模型在优质框架加持下能否突破其原生能力边界。基线对比实验进行中。
+- **设计意图**：验证"轻量模型+优质框架"能否突破其原生能力边界。常规题对比已完成，长证明压力测试中Block聚合机制有效（correctness 0.48→0.77）。
+
+- **名称说明**：MathRAG 指"结构注入 + 三级语义切分"
+- **系统说明**：Agent 效能对比中，RAG-only 与 v2.3 均基于 MathRAG + BlockGet 构建
+
 
 ### 1. 检索性能对比 (Retrieval Quality)
-| 方案版本 | MAP@20 | MRR@20 | Recall@20 | 备注 |
+| 方案版本 | MAP | MRR | Recall | 备注 |
 | :--- | :---: | :---: | :---: | :--- |
-| Baseline (Hybrid) | 0.3677 | 0.4916 | 0.6428 | 固定长度切分 |
+| Baseline (Hybrid) | 0.4641 | 0.6222 | 0.5236 | 固定长度切分 |
 | **MathRAG (v2.3)** | **0.6125** | **0.7083** | **0.7194** | **Block 聚合 + 结构注入** |
 
-### 2. Agent 系统效能 (Generation & Cost)
-| 版本 | 正确性 (Avg) | 忠诚度 (Faith) | 备注 |
-| :--- | :---: | :---: | :---: |
-| Origin |  xxx   | xxx | - |
-| 纯血RAG | 1.52/2.0 | 1.412 | - | 
-| **v2.2** | **1.23 / 2.0** | **1.5 / 2.0** | xx%调用了RAG，其中xx%一次调用回答成功
-| **v2.3 (Latest)** | *Testing...* | *Testing...* | xx%调用了RAG，其中xx%一次调用回答成功
+>注：这里的MAP，MRR，Recall是召回top-20后，rerank得到top-3计算出来的
 
+### 2. RAG 系统效能
+> 注：以下数据在长证明中测得：
+> 注：这里系统指的是：Qwen3-1.7B+RAG数据库，采用经典的“检索-召回-重排-生成”
+
+| 系统 | correctness<br>avg ≥1% | faithfulness<br>avg ≥1% | answer_relevance<br> | context_relevance |
+|:---|:---|:---|:---|:---
+| Baseline (Hybrid) | 0.44 10.5% | 0.52 9.5% | 1.73 | 1.31 |
+| MathRAG(语义切分，无 Block 聚合) | 0.48 11.5% | 0.65 10% | 1.83 | 1.48 |
+| **MathRAG + BlockGet** | **0.77** **13%** | **1.00** **14.5%** | **1.75** | **1.46** |
+
+### 3. Agent 系统效能 (Generation & Cost)
+> 注：以下数据是在常规测试集中测得
+
+| 版本 | 正确性 (Avg) | 忠诚度 (Faith) | 上下文相关度 |备注 |
+| :--- | :---: | :---: | :---: | :---: |
+| Origin |  1.22/2.0   | -| - | 直接使用模型进行回答 |
+| RAG-only | 1.63/2.0 | 1.49/2.0 | 1.85/2.0 |- | 
+| **v2.3 (RAG路径)** | **1.64/2.0** | **1.61/2.0** | 1.92/2.0 |  Agent架构+RAG，含PreRetrieve
+
+**效果：** v2.3 RAG路径correctness与RAG-only持平，但faithfulness（1.61 vs 1.49）与context_relevance（1.92 vs 1.85）均有提升，Agent闭环（Grader评分+上下文聚合）有效提升了生成质量与稳定性。
+
+>注：v2.3 新增 PreRetrieve 节点后，原 Fast-Track 部分问题被高置信检索拦截，转入 RAG 直接生成，故 RAG 路径占比从 v2.2 的 42% 上升至 76%; 在v2.3中，常规测试集的RAG路径都是走PreRetrieve
+
+>注：长证明压力测试（24条）：Origin 异常率 16.67%（4/24），RAG 异常率 4.17%（1/24），Agent 异常率 4.17%（1/24）。框架显著提升了生成稳定性。
 ---
 
 ## 🛠️ 快速开始
@@ -102,7 +128,39 @@ pip install -r requirements_agent.txt
 # 在 .env 中配置 API_KEY (支持 Qwen, GLM-4, DeepSeek)
 ```
 
-### 3. 运行 Agent
+### 3. llama.cpp或者vllm部署
+```bash
+# 使用llama.cpp
+docker run -d \
+  --name llama-server \
+  -p 8080:8080 \
+  -v {GGUF_model_path}:/models \
+  ghcr.io/ggml-org/llama.cpp:server-cuda \
+  -m /models/{model_name} \
+  --port 8080 \
+  --host 0.0.0.0 \
+  -n 4096 \
+  -ngl 99 \
+  -c 16384
+# port:指定服务监听的端口; n:控制生成的最大 token 数量; ngl:将模型的前 99 层加载到 GPU 显存; c:设置上下文长度
+```
+
+```bash
+# 使用vllm(推荐在Linux上运行)
+pip install vllm
+
+python -m vllm.entrypoints.openai.api_server \
+  --model {model_path} \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --served-model-name {model_name} \
+  --max-model-len 32768 \
+  --max-num-seqs 3 \
+  --gpu-memory-utilization 0.8 \
+  --dtype bfloat16
+```
+
+### 4. 运行 Agent
 ```bash
 python example_agent.py --query "如何证明实对称矩阵必可对角化？"
 ```
@@ -220,12 +278,41 @@ Math_RAG_System
 
 ---
 ## 🚀 Roadmap
-- [ ] **Pre-Retrieval Probe (v2.3)**：引入前置低成本探针，针对高置信度命中（原文提取）实现极速截断。
+- [x] ~~**Pre-Retrieval Probe (v2.3)**：引入前置低成本探针，针对高置信度命中（原文提取）实现极速截断。~~
 - [ ] **Small-Model Distillation**：针对 1.7B 模型在长逻辑场景下的“幻觉自信”进行微调优化。
 - [ ] **LLM-based Context-Aware Chunking**：针对当前基于规则的三段切分（L2/L3）局限性，调研并实现基于大模型的上下文感知切分逻辑。
 - [ ] **Multi-Modal Support**：支持教材插图与矩阵图像的语义解析。
-- [ ] **Theorem-Proof Connect**：block级的“定理-证明”双向索引添加
+- [ ] **Theorem-Proof Bidirectional Index**：block级的“定理-证明”双向索引添加
 - [ ] **Cross-Scale Validation**：在Qwen3-32B等多参数量模型上验证框架扩展性，建立1.7B→32B的能力增益曲线。
+---
+
+## 更新日志：
+
+v2.2 → v2.3
+- 新增 PreRetrieve 快速预检节点（graph.py）—— 路由判定为 Math 后，先用原始问题快速检索 + Rerank 打分：
+- 新增 pre_retrieve_threshold 配置项（config.yaml），默认 0.9
+- 完整 v2.3 版本发布，包含 Agent 系统效能评测
+- **效果**：v2.3 RAG路径correctness达1.64，较RAG-only(1.63)持平，但长证明异常输出率从16.67%(Baseline)降至4.17%(v2.3)；PreRetrieve分流使RAG路径占比从42%升至76%，Fallback率从6.7%（v2.2）降至0%。
+
+v2.1 → v2.2
+- 实现了更好的 Agent 架构：引入 LangGraph 编排的 Agentic RAG 系统
+- 新增路由节点（RAG/Chat 分流）、查询重写、文档相关性评分等 Agent 节点
+- 针对小模型的优化：结构化 JSON 输出、循环限制、Fallback 机制
+
+v2.0 → v2.1
+- 分布式检索：检索节点从单查询改为多关键词分组检索 → 各自 rerank + block 聚合 → 候选池二次重排精选
+- 查询重写升级：输出从单字符串改为关键词数组（最多 4 组），"锚点优先"原则，LaTeX 转义修复的 JSON 解析
+- 新增 keyword_groups AgentState 字段
+- 新增 rerank_texts 方法：支持纯文本列表重排
+
+v1.0 → v2.0
+- 新增 math_solver.py — 数学求解节点，增强 Agent 的数学推理能力
+- 重写 graph.py — LangGraph 编排逻辑大幅重构
+- 重写 grader/rewriter/router — 各节点逻辑优化
+- state.py 扩展 — AgentState 增加新字段
+
+v1.0
+- 从零搭建了完整的 RAG pipeline
 ---
 ## ⚖️ 免责声明 / Disclaimer
 

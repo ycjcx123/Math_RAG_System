@@ -24,7 +24,7 @@ class Generator:
         self.client = OpenAI(
             api_key=self.api_key,
             base_url=self.base_url,
-            timeout=240
+            timeout=600
         )
 
         logging.info(f"Generator 初始化完成，使用模型: {self.model_name}, "

@@ -7,3 +7,4 @@ Data/raw/*.pdf
 .claude/
 CLAUDE.md
 .vscode
+temp/
